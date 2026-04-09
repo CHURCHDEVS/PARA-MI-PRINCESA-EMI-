@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="referrer" content="no-referrer">
+<title>Para Emi 🌷</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Caveat:wght@400;500;600;700&display=swap');
+:root{--rose:#e8637a;--rose-l:#f7b8c4;--rose-d:#c0374f;--gold:#d4a044;--gold-l:#f0c978;--bg:#0c0408;--tw:#fdf0e8;--ts:#f5c8d8;--tf:rgba(245,200,216,.5);--f0:#fdebc0;--f1:#f5c86a;--f2:#d49030;--f3:#a06018;--f4:#7a4010;--fnose:#1a0a04}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--tw);overflow-x:hidden;min-height:100%;min-height:-webkit-fill-available}
+.bgl{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 15% 92%,rgba(210,50,80,.22) 0%,transparent 60%),radial-gradient(ellipse 58% 42% at 88% 6%,rgba(212,155,60,.16) 0%,transparent 55%),linear-gradient(160deg,#1e0a10 0%,#2a0c18 38%,#160a12 65%,#070204 100%);animation:bga 11s ease-in-out infinite alternate}
+@keyframes bga{from{opacity:1}to{opacity:.78}}
+#pw{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.pt{position:absolute;bottom:-40px;opacity:0;animation:pta linear infinite}
+@keyframes pta{0%{transform:translateY(0) rotate(0deg) scale(.45);opacity:0}9%{opacity:.85}84%{opacity:.2}100%{transform:translateY(-115vh) rotate(380deg) scale(1.3);opacity:0}}
+.scene{position:relative;z-index:2;min-height:100vh;min-height:-webkit-fill-available;display:flex;flex-direction:column;align-items:center;padding:0 22px 110px}
+.hdr{margin-top:44px;padding-top:38px;text-align:center;opacity:0;animation:fdw 1.2s ease forwards .35s}
+.eyebrow{font-size:9.5px;letter-spacing:5px;text-transform:uppercase;color:var(--gold-l);font-weight:300;margin-bottom:10px}
+.tit{font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:400;font-style:italic;color:var(--tw);line-height:1.25}
+.tit em{color:var(--rose-l);font-style:normal}
+.sub{font-size:11.5px;color:var(--tf);margin-top:8px;letter-spacing:2.5px}
+.halo{position:absolute;top:-70px;left:50%;transform:translateX(-50%);width:280px;height:280px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(232,100,122,.25) 0%,transparent 68%);filter:blur(28px);animation:hap 6s ease-in-out infinite alternate}
+@keyframes hap{from{transform:translateX(-50%) scale(1);opacity:.4}to{transform:translateX(-50%) scale(1.35);opacity:.9}}
+.bwrap{position:relative;width:280px;margin:22px auto 0;opacity:0;animation:fup 1.4s ease forwards .9s}
+.bglow{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:190px;height:55px;background:radial-gradient(ellipse,rgba(232,100,120,.48),transparent 70%);filter:blur(18px);border-radius:50%;z-index:-1}
+.sw1{animation:sw1 4.2s ease-in-out infinite;transform-origin:50% 100%}
+.sw2{animation:sw2 5.0s ease-in-out infinite .5s;transform-origin:50% 100%}
+.sw3{animation:sw3 3.8s ease-in-out infinite .9s;transform-origin:50% 100%}
+.sw4{animation:sw1 4.7s ease-in-out infinite 1.2s;transform-origin:50% 100%}
+@keyframes sw1{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(3deg)}}
+@keyframes sw2{0%,100%{transform:rotate(2deg)}50%{transform:rotate(-3deg)}}
+@keyframes sw3{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(2.5deg)}}
+.ps{animation:psh 3.2s ease-in-out infinite alternate}
+@keyframes psh{from{filter:brightness(1)}to{filter:brightness(1.15) saturate(1.12)}}
+.loki-wrap{position:relative;width:240px;height:220px;margin:14px auto 0;opacity:0;animation:fup 1.2s ease forwards 1.35s}
+.dog-shadow{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:120px;height:18px;background:radial-gradient(ellipse,rgba(40,5,0,.6),transparent 70%);border-radius:50%;animation:shsc .95s ease-in-out infinite alternate}
+@keyframes shsc{from{transform:translateX(-50%) scaleX(1) scaleY(1)}to{transform:translateX(-50%) scaleX(.78) scaleY(.7)}}
+.dog{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:120px;height:110px;animation:dbc .9s ease-in-out infinite}
+@keyframes dbc{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+.d-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:84px;height:54px;background:linear-gradient(135deg,var(--f1) 0%,var(--f2) 55%,var(--f3) 100%);border-radius:44% 48% 36% 36% / 52% 52% 44% 44%;box-shadow:inset -9px -7px 16px rgba(100,40,0,.28),inset 5px 5px 12px rgba(255,220,120,.2)}
+.d-body::before{content:'';position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:46px;height:30px;background:radial-gradient(ellipse at 50% 40%,var(--f0) 0%,var(--f1) 70%);border-radius:50%;opacity:.7}
+.d-body::after{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:54px;height:20px;background:radial-gradient(ellipse,var(--f1) 0%,var(--f2) 80%);border-radius:50%;box-shadow:inset 0 -4px 8px rgba(100,40,0,.2)}
+.legs{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:84px}
+.leg{position:absolute;bottom:0;width:18px;height:30px;background:linear-gradient(180deg,var(--f2) 0%,var(--f3) 100%);border-radius:5px 5px 10px 10px;transform-origin:top center;box-shadow:inset -3px -3px 6px rgba(0,0,0,.2)}
+.leg::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:20px;height:10px;background:var(--f3);border-radius:50%;box-shadow:inset 0 -2px 4px rgba(0,0,0,.25)}
+.leg::before{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:18px;height:5px;background:linear-gradient(90deg,var(--f4) 0 30%,transparent 30% 35%,var(--f4) 35% 65%,transparent 65% 70%,var(--f4) 70% 100%);border-radius:50%;z-index:1}
+.l-fl{left:4px;animation:lf .9s ease-in-out infinite}
+.l-fr{right:4px;animation:lf .9s ease-in-out infinite .45s}
+.l-bl{left:16px;animation:lb .9s ease-in-out infinite .22s}
+.l-br{right:16px;animation:lb .9s ease-in-out infinite .67s}
+@keyframes lf{0%,100%{transform:rotate(7deg)}50%{transform:rotate(-10deg)}}
+@keyframes lb{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(10deg)}}
+.tail-root{position:absolute;bottom:30px;right:-5px;width:18px;height:58px;transform-origin:bottom center;animation:tw .28s ease-in-out infinite alternate}
+@keyframes tw{from{transform:rotate(-38deg)}to{transform:rotate(38deg)}}
+.tail-inner{width:100%;height:100%;background:linear-gradient(0deg,var(--f0) 0%,var(--f1) 40%,var(--f2) 100%);border-radius:10px 10px 5px 5px;animation:tw .28s ease-in-out infinite alternate-reverse;box-shadow:0 -8px 0 5px var(--f0)}
+.d-head{position:absolute;top:0;left:50%;transform:translateX(-26%);width:68px;height:64px;animation:htilt 2.3s ease-in-out infinite;transform-origin:bottom left}
+@keyframes htilt{0%,100%{transform:translateX(-26%) rotate(-4deg)}30%{transform:translateX(-26%) rotate(9deg)}62%{transform:translateX(-26%) rotate(-2deg)}}
+.skull{position:absolute;top:0;left:0;width:68px;height:62px;background:radial-gradient(ellipse at 46% 38%,var(--f0) 0%,var(--f1) 38%,var(--f2) 68%,var(--f3) 100%);border-radius:54% 54% 44% 44% / 58% 58% 46% 46%;box-shadow:inset -7px -5px 14px rgba(100,40,0,.25),inset 4px 4px 10px rgba(255,230,140,.18)}
+.skull::before{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:34px;height:18px;background:radial-gradient(ellipse,var(--f0) 0%,var(--f1) 80%);border-radius:50%;opacity:.65}
+.muzzle{position:absolute;bottom:6px;left:50%;transform:translateX(-42%);width:32px;height:22px;background:radial-gradient(ellipse at 50% 35%,var(--f0) 0%,var(--f1) 55%,var(--f2) 100%);border-radius:50% 50% 40% 40% / 55% 55% 44% 44%}
+.nose{position:absolute;top:3px;left:50%;transform:translateX(-50%);width:12px;height:8px;background:radial-gradient(ellipse,#3a1a0a 0%,var(--fnose) 80%);border-radius:50% 50% 40% 40%;box-shadow:0 0 4px rgba(0,0,0,.5)}
+.nose::before{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:7px;height:3px;background:rgba(255,255,255,.18);border-radius:50%}
+.mouth{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:16px;height:5px;border-bottom:2px solid rgba(120,60,20,.5);border-radius:0 0 50% 50%}
+.ear{position:absolute;top:6px;width:20px;height:28px;background:linear-gradient(180deg,var(--f2) 0%,var(--f3) 100%);border-radius:50% 50% 35% 35%}
+.ear-l{left:-5px;transform-origin:top right;animation:earfl 2.5s ease-in-out infinite alternate .3s}
+.ear-r{right:-5px;transform-origin:top left;animation:earfr 2.5s ease-in-out infinite alternate .6s}
+@keyframes earfl{from{transform:rotate(-18deg)}to{transform:rotate(-8deg)}}
+@keyframes earfr{from{transform:rotate(18deg)}to{transform:rotate(8deg)}}
+.eye-l,.eye-r{position:absolute;top:20px;width:10px;height:11px;background:radial-gradient(circle at 38% 35%,#8b5a2b 0%,#3a1a06 60%,#1a0a02 100%);border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,200,100,.25);animation:eblink 4.5s infinite}
+.eye-l{left:13px}.eye-r{right:12px;animation-delay:2.2s}
+@keyframes eblink{0%,91%,96%,100%{transform:scaleY(1)}93%{transform:scaleY(.08)}}
+.eye-l::after,.eye-r::after{content:'';position:absolute;top:1px;left:2px;width:4px;height:4px;background:rgba(255,255,255,.65);border-radius:50%}
+.loki-lbl{text-align:center;margin:12px 0 20px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:12.5px;color:var(--gold-l);letter-spacing:1.5px;opacity:0;animation:fdi 1s ease forwards 2.4s}
+.dvd{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--rose-l),transparent);margin:0 auto 24px;opacity:0;animation:fdi 1s ease forwards 2.6s}
+.romantic{text-align:center;padding:0 10px;opacity:0;animation:fup 1.2s ease forwards 2.8s}
+.romantic .ln1{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:15.5px;color:var(--ts);line-height:1.5;margin-bottom:6px}
+.romantic .ln2{font-size:13px;color:var(--tf);margin-bottom:5px;letter-spacing:.5px}
+.romantic .ln3{font-size:11px;color:rgba(240,200,120,.6);letter-spacing:2px}
+.btn-open{display:flex;align-items:center;justify-content:center;gap:8px;margin:26px auto 0;padding:14px 36px;background:linear-gradient(135deg,var(--rose-d),var(--rose));color:#fff;border:none;border-radius:50px;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 24px rgba(192,55,79,.4),0 0 0 1px rgba(255,255,255,.06);transition:transform .15s,box-shadow .15s;-webkit-appearance:none}
+.btn-open:active{transform:scale(.97)}
+.secret{position:fixed;inset:0;z-index:100;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;transition:opacity .35s ease}
+.secret.open{pointer-events:all;opacity:1}
+.sbg{position:absolute;inset:0;background:rgba(8,2,6,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.scard{position:relative;z-index:2;width:100%;max-width:420px;background:#fdf9f1 url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z' fill='%23f0ebd8' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");border-top-left-radius:18px;border-top-right-radius:18px;border:1px solid #e0d8c8;padding-bottom:24px;transform:translateY(100%);transition:transform .42s cubic-bezier(.25,.8,.25,1);overflow:hidden;max-height:92vh;box-shadow:0 -10px 30px rgba(0,0,0,.6)}
+.secret.open .scard{transform:translateY(0)}
+.prog-wrap{height:4px;background:rgba(0,0,0,.08);width:100%}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--rose-d),var(--rose));transition:width .4s ease}
+.dots{display:flex;justify-content:center;gap:6px;padding:12px 0 4px}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.15);transition:background .3s,transform .3s}
+.dot.act{background:var(--rose);transform:scale(1.25)}
+#pages{position:relative;width:100%}
+.page{display:none;padding:24px 26px 12px;animation:pgfade .4s ease forwards;max-height:68vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+.page::-webkit-scrollbar{width:6px}
+.page::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+.page.active{display:block}
+@keyframes pgfade{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.cicon{font-size:32px;display:block;text-align:center;margin-bottom:15px;opacity:0.8}
+.page h2{font-family:'Caveat',cursive;font-size:30px;font-weight:700;color:#2c2c2c;margin-bottom:14px;text-align:center;border-bottom:1px dashed #dcd0ba;padding-bottom:8px}
+.page p{font-family:'Caveat',cursive;font-size:22px;line-height:1.35;color:#3a322e;margin-bottom:12px;font-weight:600}
+.page p.gold{color:#a96a1d;font-weight:700}
+.page p.soft{color:#6d5952;opacity:0.9}
+.note{font-family:'Caveat',cursive;font-size:18px;color:#85766d;text-align:center;margin-top:10px}
+.sig{font-family:'Caveat',cursive;font-size:26px;font-weight:700;color:#c0374f;text-align:right;margin-top:14px;line-height:1.2}
+.loki-quote{font-family:'Caveat',cursive;background:rgba(192,55,79,.06);border-left:2px solid #e8637a;border-radius:6px;padding:14px 16px;font-size:22px;color:#2c2c2c;font-weight:600;line-height:1.35;margin:12px 0}
+.cnav{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px 6px}
+.btn-n{flex:1;max-width:120px;padding:10px 0;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.08);border-radius:24px;color:#444;font-family:'Lato',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;-webkit-appearance:none;transition:background .15s}
+.btn-n:active{background:rgba(0,0,0,.08)}
+.btn-cl{flex:1;max-width:120px;padding:10px 0;background:rgba(192,55,79,.15);border:1px solid rgba(232,100,122,.3);border-radius:24px;color:var(--rose-d);font-family:'Lato',sans-serif;font-weight:600;font-size:12.5px;cursor:pointer;-webkit-appearance:none}
+@keyframes fdw{from{opacity:0;transform:translateY(-22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fup{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fdi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.canvas-box{position:relative;width:100%;max-width:360px;height:240px;margin:20px auto;background:rgba(255,255,255,0.03);border:1px solid rgba(232,100,122,0.15);border-radius:18px;overflow:hidden;opacity:0;animation:fup 1.2s ease forwards 0.6s;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+#aniCanvas{width:100%;height:100%;display:block}
+.loki-gallery{width:100%;max-width:380px;margin:30px auto;text-align:center;opacity:0;animation:fup 1.2s ease forwards 0.9s}
+.loki-gallery h3{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--gold-l);margin-bottom:20px;letter-spacing:1px}
+.g-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:0 10px}
+.polaroid-item{background:#fff;padding:8px 8px 18px;box-shadow:0 8px 20px rgba(0,0,0,0.4);border-radius:2px;transition:transform 0.3s ease}
+.polaroid-item:nth-child(odd){transform:rotate(-3deg)}
+.polaroid-item:nth-child(even){transform:rotate(3deg)}
+.polaroid-item:hover{transform:rotate(0deg) scale(1.05);z-index:10}
+.polaroid-item img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:1px;background:#1a0a10}
+.polaroid-item .p-lbl{font-family:'Playfair Display',serif;font-style:italic;font-size:11px;color:var(--bg);margin-top:8px}
+.btn-gold{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 36px;background:linear-gradient(135deg,#f0c978,#d4a044);color:#fff;border:none;border-radius:50px;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 24px rgba(212,160,68,.4);transition:transform .15s,box-shadow .15s;-webkit-appearance:none;text-shadow:0 1px 2px rgba(0,0,0,.15)}
+.btn-gold:active{transform:scale(.97)}
+.loki-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .4s ease}
+.loki-modal.open{pointer-events:all;opacity:1}
+.loki-modal .lbg{position:absolute;inset:0;background:rgba(20,10,5,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.loki-card{position:relative;z-index:2;width:92%;max-width:480px;background:linear-gradient(145deg,rgba(255,250,240,0.95),rgba(255,245,230,0.9));border:1px solid rgba(212,160,68,.4);border-radius:24px;padding:30px 24px;box-shadow:0 20px 60px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.5);transform:scale(.9) translateY(20px);transition:all .42s cubic-bezier(.25,.8,.25,1);max-height:85vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(212,160,68,.4) transparent}
+.loki-modal.open .loki-card{transform:scale(1) translateY(0)}
+.loki-card::-webkit-scrollbar{width:6px}
+.loki-card::-webkit-scrollbar-thumb{background:rgba(212,160,68,.4);border-radius:3px}
+.lq-title{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:#8c5a2b;text-align:center;margin-bottom:18px;border-bottom:1px dashed rgba(212,160,68,.4);padding-bottom:10px}
+.lq-text{font-family:'Lato',sans-serif;font-size:15px;line-height:1.65;color:#4a3a30;margin-bottom:16px;text-align:justify}
+.v-list{display:none;flex-direction:column;gap:15px;margin:20px 0}
+.v-item{width:100%;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);border:2px solid #e8d0a5;background:#000;aspect-ratio:3/4}
+.v-item video{width:100%;height:100%;object-fit:cover;display:block}
+.floating-paws{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.fpaw{position:absolute;font-size:24px;opacity:0.08;color:#f0c978;animation:fpaw linear infinite}
+@keyframes fpaw{0%{transform:translateY(100vh) rotate(0deg)}100%{transform:translateY(-100px) rotate(360deg)}}
+
+/* HEART MUSIC PLAYER CSS */
+.heart-player{position:fixed;top:16px;right:16px;z-index:1000;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.heart-btn{width:52px;height:52px;background:none;border:none;cursor:pointer;font-size:44px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));transition:transform .2s;-webkit-appearance:none;padding:0;line-height:1;animation:heartbeat 2s ease-in-out infinite}
+.heart-btn:active{transform:scale(.88)}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.heart-btn.paused{animation:none;filter:drop-shadow(0 2px 5px rgba(0,0,0,.3)) grayscale(0.4)}
+.mini-player{background:rgba(20,8,14,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(232,100,122,.3);border-radius:16px;padding:14px 16px;width:220px;display:none;flex-direction:column;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.5);animation:fdi .3s ease}
+.mini-player.show{display:flex}
+.mp-title{font-family:'Lato',sans-serif;font-size:11px;color:var(--gold-l);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp-controls{display:flex;align-items:center;justify-content:center;gap:16px}
+.mp-btn{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px;opacity:.85;transition:opacity .15s}
+.mp-btn:hover{opacity:1}
+.mp-btn.active{color:var(--rose)}
+.mp-vol{display:flex;align-items:center;gap:6px}
+.mp-vol label{font-size:12px;color:#aaa}
+.mp-vol input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:2px;outline:none}
+.mp-vol input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--rose);cursor:pointer}
+.mp-progress{display:flex;align-items:center;gap:6px}
+.mp-progress input[type=range]{-webkit-appearance:none;flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;outline:none}
+.mp-progress input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:#fff;cursor:pointer}
+.mp-time{font-size:10px;color:#999;font-family:'Lato',sans-serif;min-width:30px}
+
+/* SPOTIFY STYLE CSS */
+.btn-spot{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 36px;background:#1db954;color:#fff;border:none;border-radius:50px;font-family:'Lato',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 20px rgba(29,185,84,.3);transition:transform .15s,box-shadow .15s;-webkit-appearance:none}
+.btn-spot:active{transform:scale(.97);background:#1aa34a}
+.sp-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;transition:opacity .4s ease}
+.sp-modal.open{pointer-events:all;opacity:1}
+.sp-bg{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+.sp-card{position:relative;z-index:2;width:100%;max-width:440px;background:linear-gradient(180deg,#282828 0%,#121212 100%);border-top-left-radius:24px;border-top-right-radius:24px;padding:24px 20px 30px;transform:translateY(100%);transition:transform .4s cubic-bezier(.25,.8,.25,1);max-height:92vh;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,0.1)}
+.sp-modal.open .sp-card{transform:translateY(0)}
+.sp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.sp-hdr h2{font-family:'Lato',sans-serif;color:#fff;font-size:18px;font-weight:700}
+.sp-close{background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer}
+.sp-album-art{width:160px;height:160px;margin:0 auto 20px;border-radius:8px;box-shadow:0 12px 30px rgba(0,0,0,.5);background:linear-gradient(135deg,#555,#222);display:flex;align-items:center;justify-content:center;font-size:60px;position:relative;overflow:hidden}
+.sp-album-art img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.8}
+.sp-title{text-align:center;color:#fff;font-family:'Lato',sans-serif;font-size:22px;font-weight:700;margin-bottom:4px}
+.sp-artist{text-align:center;color:#b3b3b3;font-family:'Lato',sans-serif;font-size:14px;margin-bottom:20px}
+.sp-progress{width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:2px;margin-bottom:12px;position:relative}
+.sp-bar{height:100%;background:#fff;border-radius:2px;width:0%}
+.sp-controls{display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:24px}
+.sp-btn{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;opacity:0.8;transition:opacity .2s}
+.sp-btn:hover{opacity:1}
+.sp-play{width:54px;height:54px;border-radius:50%;background:#1db954;color:#000;font-size:22px;display:flex;align-items:center;justify-content:center;opacity:1}
+.sp-play:active{transform:scale(.95)}
+.sp-msg{font-family:'Lato',sans-serif;font-size:13px;color:#1db954;text-align:center;margin-bottom:15px;font-style:italic;min-height:20px}
+.track-list{flex:1;overflow-y:auto;padding-right:4px;padding-bottom:20px}
+.track-list::-webkit-scrollbar{width:4px}
+.track-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:2px}
+.track-item{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:6px;cursor:pointer;transition:background .2s}
+.track-item:hover{background:rgba(255,255,255,.08)}
+.track-item.playing{background:rgba(29,185,84,.15)}
+.track-item.playing .t-title{color:#1db954}
+.t-num{color:#b3b3b3;font-size:14px;width:16px;text-align:center}
+.t-info{flex:1}
+.t-title{color:#fff;font-size:15px;font-weight:600;margin-bottom:3px}
+.t-artist{color:#b3b3b3;font-size:13px}
+.sp-unlock-btn{width:100%;padding:14px;margin-top:10px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:24px;font-size:13px;font-weight:700;display:none;cursor:pointer}
+.sp-unlock-btn.pulse{animation:spup 1.5s infinite}
+@keyframes spup{0%{box-shadow:0 0 0 0 rgba(29,185,84,.4)}70%{box-shadow:0 0 0 10px rgba(29,185,84,0)}100%{box-shadow:0 0 0 0 rgba(29,185,84,0)}}
+.sp-video-wrap{width:100%;max-width:320px;margin:0 auto 16px;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.4);background:#000;display:none;border:2px solid rgba(29,185,84,.3)}
+.sp-video-wrap video{width:100%;display:block}
+.sp-video-wrap.show{display:block}
+.sp-vol-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:0 10px}
+.sp-vol-row label{font-size:12px;color:#b3b3b3}
+.sp-vol-row input[type=range]{-webkit-appearance:none;flex:1;height:4px;background:rgba(255,255,255,.2);border-radius:2px;outline:none}
+.sp-vol-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#1db954;cursor:pointer}
+.sp-seek-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;padding:0 10px}
+.sp-seek-row input[type=range]{-webkit-appearance:none;flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;outline:none}
+.sp-seek-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:#fff;cursor:pointer}
+.sp-seek-row .sp-time{font-size:10px;color:#999;font-family:'Lato',sans-serif;min-width:30px}
+.heart-lbl{font-family:'Lato',sans-serif;font-size:9px;color:rgba(255,255,255,.6);text-align:center;letter-spacing:1px;text-transform:uppercase;margin-top:-4px}
+</style>
+</head>
+<body>
+<audio id="bgMusic" src="MUSICA DE FONDO/Morat - Mi Vida Entera (Live)  Vevo X.mp3" loop preload="auto"></audio>
+<div class="heart-player" id="heartPlayer">
+  <button class="heart-btn" id="heartBtn" onclick="toggleMiniPlayer()">❤️</button>
+  <div class="heart-lbl">Music</div>
+  <div class="mini-player show" id="miniPlayer">
+    <div class="mp-title">Mi Vida Entera — Morat</div>
+    <div class="mp-progress">
+      <span class="mp-time" id="mpCur">0:00</span>
+      <input type="range" id="mpSeek" min="0" max="100" value="0" oninput="seekBgMusic(this.value)">
+      <span class="mp-time" id="mpDur">0:00</span>
+    </div>
+    <div class="mp-controls">
+      <button class="mp-btn" onclick="bgRewind()">⏪</button>
+      <button class="mp-btn active" id="mpPlayBtn" onclick="toggleBgMusic()">⏸</button>
+      <button class="mp-btn" onclick="bgForward()">⏩</button>
+    </div>
+    <div class="mp-vol">
+      <label>🔉</label>
+      <input type="range" id="mpVol" min="0" max="100" value="80" oninput="setBgVolume(this.value)">
+    </div>
+  </div>
+</div>
+<div class="bgl"></div>
+<div id="pw"></div>
+<div class="scene">
+  <div class="hdr">
+    <div class="eyebrow">✦ solo para ti, Emi ✦</div>
+    <h1 class="tit">Esto lo escribí<br><em>con calma y sin afán</em></h1>
+    <p class="sub">— Reydel ✨</p>
+  </div>
+
+  <!-- BOUQUET -->
+  <div class="bwrap">
+    <div class="bglow"></div>
+    <svg viewBox="0 0 290 260" xmlns="http://www.w3.org/2000/svg" width="100%">
+      <g stroke="#5a8a3a" stroke-linecap="round" fill="none">
+        <path class="sw1" d="M145 250 C143 210 130 180 120 140" stroke-width="2.8"/>
+        <path class="sw2" d="M145 250 C145 215 145 185 145 145" stroke-width="2.8"/>
+        <path class="sw3" d="M145 250 C147 210 158 182 165 142" stroke-width="2.8"/>
+        <path class="sw4" d="M145 250 C149 218 168 196 178 158" stroke-width="2.2"/>
+        <path class="sw1" d="M145 250 C141 222 126 200 114 168" stroke-width="2.2"/>
+        <path d="M133 190 Q118 178 120 162" stroke-width="2" stroke="#4a7a2a"/>
+        <path d="M154 195 Q170 185 168 170" stroke-width="2" stroke="#4a7a2a"/>
+      </g>
+      <g class="sw2 ps" transform="translate(145,125)">
+        <circle r="18" fill="#c0374f"/><circle r="14" fill="#d94462"/><circle r="10" fill="#e8637a"/>
+        <circle r="6" fill="#f0899a"/><circle r="2.5" fill="#fcc"/>
+        <ellipse cx="-10" cy="-8" rx="10" ry="7" fill="#c0374f" opacity=".7" transform="rotate(-30)"/>
+        <ellipse cx="11" cy="-7" rx="10" ry="7" fill="#c0374f" opacity=".7" transform="rotate(25)"/>
+        <ellipse cx="0" cy="13" rx="9" ry="6" fill="#c0374f" opacity=".6"/>
+      </g>
+      <g class="sw1 ps" transform="translate(113,122)">
+        <circle r="15" fill="#c0374f"/><circle r="11" fill="#d94462"/><circle r="7" fill="#e8637a"/>
+        <circle r="3.5" fill="#fcc"/>
+        <ellipse cx="-8" cy="-6" rx="8" ry="5.5" fill="#c0374f" opacity=".65" transform="rotate(-28)"/>
+        <ellipse cx="9" cy="-5" rx="8" ry="5.5" fill="#c0374f" opacity=".65" transform="rotate(22)"/>
+      </g>
+      <g class="sw3 ps" transform="translate(175,124)">
+        <circle r="15" fill="#c0374f"/><circle r="11" fill="#d94462"/><circle r="7" fill="#e8637a"/>
+        <circle r="3.5" fill="#fcc"/>
+        <ellipse cx="-8" cy="-6" rx="8" ry="5.5" fill="#c0374f" opacity=".65" transform="rotate(-28)"/>
+        <ellipse cx="9" cy="-5" rx="8" ry="5.5" fill="#c0374f" opacity=".65" transform="rotate(22)"/>
+      </g>
+      <g class="sw4 ps" transform="translate(192,152)"><circle r="11" fill="#c0374f"/><circle r="8" fill="#d94462"/><circle r="4.5" fill="#e8637a"/><circle r="2" fill="#fcc"/></g>
+      <g class="sw1 ps" transform="translate(103,158)"><circle r="11" fill="#c0374f"/><circle r="8" fill="#d94462"/><circle r="4.5" fill="#e8637a"/><circle r="2" fill="#fcc"/></g>
+      <g fill="white" opacity=".82">
+        <g transform="translate(128,105)"><circle r="3.5"/><circle cx="7" cy="-4" r="3"/><circle cx="-7" cy="-4" r="3"/><circle cx="4" cy="7" r="3"/><circle cx="-4" cy="7" r="3"/><circle r="2.5" fill="#f0c978"/></g>
+        <g transform="translate(162,108)"><circle r="3"/><circle cx="6" cy="-3.5" r="2.5"/><circle cx="-6" cy="-3.5" r="2.5"/><circle cx="3" cy="6" r="2.5"/><circle cx="-3" cy="6" r="2.5"/><circle r="2" fill="#f0c978"/></g>
+      </g>
+      <ellipse cx="108" cy="175" rx="14" ry="9" fill="#4a8a35" opacity=".55" transform="rotate(-30,108,175)"/>
+      <ellipse cx="180" cy="178" rx="14" ry="9" fill="#4a8a35" opacity=".55" transform="rotate(28,180,178)"/>
+      <path d="M118 248 L108 215 Q145 205 182 215 L172 248 Z" fill="#e8d5b0" opacity=".6"/>
+      <path d="M118 248 L108 215 Q120 222 130 218 L130 248 Z" fill="#d4c090" opacity=".4"/>
+      <path d="M160 248 L162 218 Q170 222 182 215 L172 248 Z" fill="#d4c090" opacity=".4"/>
+      <path d="M130 238 Q145 230 160 238" stroke="#e8637a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- LOKI DOG -->
+  <div class="loki-wrap">
+    <div class="dog-shadow"></div>
+    <div class="dog">
+      <div class="d-body">
+        <div class="legs">
+          <div class="leg l-fl"></div><div class="leg l-fr"></div>
+          <div class="leg l-bl"></div><div class="leg l-br"></div>
+        </div>
+      </div>
+      <div class="tail-root"><div class="tail-inner"></div></div>
+      <div class="d-head">
+        <div class="skull">
+          <div class="ear ear-l"></div><div class="ear ear-r"></div>
+          <div class="eye-l"></div><div class="eye-r"></div>
+          <div class="muzzle"><div class="nose"></div><div class="mouth"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loki-lbl">El hijo de los dos 🤎</div>
+  <div class="dvd"></div>
+
+  <div class="romantic">
+    <p class="ln1">"Las cosas bonitas no necesitan afán —<br>solo buena energía y el momento justo."</p>
+    <p class="ln2">Aquí estoy, pasito a pasito 💖</p>
+    <p class="ln3">— Reydel ✨</p>
+  </div>
+
+  <div class="canvas-box">
+    <canvas id="aniCanvas"></canvas>
+  </div>
+
+  <div class="loki-gallery">
+    <h3>🐾 Momentos de Loki</h3>
+    <div class="g-grid">
+      <div class="polaroid-item">
+        <img src="https://i.imgur.com/0vMWAC8.jpeg" crossorigin="anonymous" alt="Loki 1">
+        <div class="p-lbl">Nuestro cachorrito</div>
+      </div>
+      <div class="polaroid-item">
+        <img src="https://i.imgur.com/B158rd4.jpeg" crossorigin="anonymous" alt="Loki 2">
+        <div class="p-lbl">Puro amor</div>
+      </div>
+      <div class="polaroid-item">
+        <img src="https://i.imgur.com/j2I5JmB.jpeg" crossorigin="anonymous" alt="Loki 3">
+        <div class="p-lbl">Travieso</div>
+      </div>
+      <div class="polaroid-item">
+        <img src="https://i.imgur.com/AVoBflH.jpeg" crossorigin="anonymous" alt="Loki 4">
+        <div class="p-lbl">El más consentido</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:15px; width:100%; max-width:260px; margin:26px auto 0;">
+    <button class="btn-gold" style="width:100%; margin:0;" onclick="openLokiModal()">🐾 &nbsp;Loki Recuerdos</button>
+    <button class="btn-open" style="width:100%; margin:0;" onclick="openCarta()">💌 &nbsp;Ábrelo, Emi</button>
+  </div>
+</div>
+
+<!-- CARTA MODAL -->
+<div class="secret" id="secret" style="display:none">
+  <div class="sbg" onclick="closeCarta()"></div>
+  <div class="scard">
+    <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:25%"></div></div>
+    <div class="dots" id="dots"></div>
+    <div id="pages">
+
+      <div class="page active">
+        <h2>Para esos días grises</h2>
+        <p>No necesitas leer esto hoy. Cuando lo leas, espero que te tomes el tiempo, así como yo me tomé el tiempo de hacértela. Quiero que tomes esta carta como algo motivacional, para que la leas cada vez que te sientas mal y recuerdes lo muy importante que eres.</p>
+        <p>La he realizado con lo poquito que me contaste, y créeme que fue suficiente para saber lo muy importante que eres.</p>
+        <p>Así que, hagas lo que hagas, te pongas lo que te pongas, elijas el camino que elijas… nunca, jamás, te preguntes "¿qué va a decir la gente?". Pregúntate: "¿me hace feliz?" y sigue, sin mirar atrás.</p>
+        <p class="gold">Tú eres más importante que la opinión de todo el mundo.</p>
+      </div>
+
+      <div class="page">
+        <h2>Eres suficiente</h2>
+        <p>Aún estás joven. Te falta vivir mil cosas. No dejes que una mala experiencia te amargue el corazón. Solo mírate: eres inteligente, eres joven, eres linda, eres muy alegre, muy divertida y estás llena de sueños. Y por supuesto que los vas a lograr.</p>
+        <p>Solo no te rindas, corazón.</p>
+        <p class="gold">Eres suficiente. Eres capaz. Eres fuerte. Eres noble. Eres disciplinada. Eres y siempre serás capaz de lograr todo lo que quieras.</p>
+        <p>Te mereces todo lo bonito que la vida tiene para ti.</p>
+        <p>Tú estás hecha para grandes cosas. Así que no te conformes con menos. Sueña en grande, ponle límites a las personas, haz cosas aún con miedo y siéntete muy orgullosa de ti. Porque eres tú quien lo ha logrado.</p>
+      </div>
+
+      <div class="page">
+        <h2>Un vuelo con turbulencias</h2>
+        <p>Un día vas a mirar atrás y te darás cuenta de que fuiste lo suficientemente valiente para perseguir la vida que siempre quisiste. No te atrevas a rendirte con algo en lo que piensas todos los días.</p>
+        <p>A veces el destino tarda porque está buscando el momento perfecto para que tú brilles. Si Dios puso ese sueño en tu corazón, es porque sabe que puedes lograrlo.</p>
+        <p>Nunca regreses a lo que te dañó. No permitas que las cosas malas entren a tu vida de nuevo y te hagan sentir que no eres suficiente.</p>
+        <p>Así como las turbulencias de un avión no son para bajarse de él, sino para abrocharse el cinturón… las turbulencias de la vida no son para que renuncies a nada, sino para que te mantengas firme ante lo que estás atravesando.</p>
+      </div>
+
+      <div class="page">
+        <h2>Simplemente tú</h2>
+        <p>Tienes un buen corazón. Y va a terminar en buenas manos.</p>
+        <p>Tan tierna, tan impaciente, tan valiente, tan dramática, delicada o atrevida, y a veces tan loca… mira que mereces que te quieran en cada una de tus facetas. Porque perfecta quizás no eres, pero única siempre serás.</p>
+        <p>La vida cambia por completo cuando entiendes que tu futuro depende de las decisiones y sacrificios de tu juventud. No todos los días te vas a sentir bien, pero recuerda que estás haciendo lo que puedes y lo que debes. Eres una princesa y vas a poder con todo eso.</p>
+        <p>Ponle corazón a todo lo que hagas. Mírate: te levantas con toda la actitud, te pones bonita, sales, robas miradas. Te la crees.</p>
+        <p>Nunca cambies tu forma de ser por aquellos que te hicieron daño. Hazte un favor y nunca dejes de ser tú.</p>
+      </div>
+
+      <div class="page">
+        <h2>Mi princesa valiente</h2>
+        <p>Eres la niña que aprendió a estar sola antes de tiempo, a temprana edad. La que pasaba sus tardes jugando con su prima en la guardería, esperando que alguien llegara.</p>
+        <p>Siendo aún muy joven, te viste forzada a asumir responsabilidades que no te correspondían. Cargar con una familia y soportar tantas tonterías. Aunque el miedo te invadía, hiciste lo imposible por quienes amabas.</p>
+        <p>En el intento de ser fuerte para ellos, pospusiste tu juventud y callaste tus propias necesidades. Aprendiste demasiado pronto a sobrevivir en lugar de vivir. Por eso te entiendo.</p>
+        <p class="gold">Quiero reconocerte. Porque ha debido ser muy difícil contener tanto dolor para no dejar caer a quienes amas. Ha tenido que ser tremendo pasar por tantas cosas.</p>
+      </div>
+
+      <div class="page">
+        <h2>Tus estaciones</h2>
+        <p>Sé que a veces sientes que vas atrasada, mientras ves las vidas de los demás como si fueran perfectas.</p>
+        <p>Pero escúchame: no te apresures comparando tus estaciones con las de los otros. No estás viendo el invierno de nadie. Solo ves su primavera, y la primavera siempre llega para quien sabe esperar.</p>
+        <p>La vida no es una carrera contras los demás. Es un camino hacia tu propia primavera. Sigue caminando, aunque sea despacio. Que llegar, vas a llegar.</p>
+        <p>Aprendiste que las personas se van, que los brazos que deberían sostener se cruzan. Y ahora buscas esa seguridad. Crees que buscas intensidad, pero quieres que alguien no se vaya. Por eso te duele tanto cuando se quedan.</p>
+      </div>
+
+      <div class="page">
+        <h2>Autonomía</h2>
+        <p>Entiendo que no necesitas a un hombre que te entienda. Necesitas entenderte tú misma. No necesitas que alguien te rescate. Necesitas dejar de necesitar que te rescaten.</p>
+        <p>Necesitas autonomía emocional. Que tu estabilidad no dependa de quién te escribe o quién te ignora. Que la soledad no sea abandono, sino compañía contigo misma.</p>
+        <p>Necesitas aprender a decir "esto no me hace bien" y alejarte antes de que te duela. Que tu valor no se mide en miradas, y que tu historia no la escriben los que se van.</p>
+        <p class="gold">Eres valiente porque sigues ahí a pesar del miedo. Has sobrevivido a un vacío que no te enseñaron a llenar. Eres una guerrera.</p>
+      </div>
+
+      <div class="page">
+        <h2>Y sobre Loki 🐾</h2>
+        <p>Loki es el único ser vivo que nunca ha dejado de verte con el mismo amor como la primera vez. Él no juzga. Él solo está.</p>
+        <p>Cuídalo. Él no entiende de indirectas, ni de idas y vueltas. Él solo entiende que estés ahí.</p>
+        <p>Ojalá algún día, cuando él ladre sin motivo, sea porque está hablando de mí. Los perros escuchan y entienden. Y él sabe quién lo quiso de verdad, aunque no pudiera quedarme.</p>
+        <p>Y si algún día le hablas de mí, dile que yo también lo quiero. Que no me fui de él. Que me fui de lo que no podía quedarse.</p>
+        <p class="soft">Loki, cuídala. Ella no sabe estar sola. Pero contigo, no lo está.</p>
+      </div>
+
+      <div class="page">
+        <h2>Mi corazón</h2>
+        <p>Lo siento. Te he vuelto a escribir. Te habla mi corazón terco, ese que insiste en no dejarte ir.</p>
+        <p>Discúlpame por no poder corresponder a tu olvido. Pero se me van los días extrañando tu presencia, perdido en los ojos que quería ver toda mi vida.</p>
+        <p>Te he dado el espacio necesario para que sanes tu duda. Noche tras noche, espero que llegue un mensaje tuyo o una señal que me diga, en silencio, que me necesitas y que aún me quieres.</p>
+        <p>A pesar de todo lo que sucedió, no me arrepiento de haberte conocido. Fui como te enseñé a amar, para que cuando llegue el amor de tu vida, sepas reconocerlo.</p>
+        <p class="gold">Y tú me enseñaste a no volver a poner a nadie por encima de mi salud mental.</p>
+      </div>
+
+      <div class="page">
+        <h2>No es coincidencia</h2>
+        <p>No busco ser tu prioridad. Tus prioridades deben ser tus sueños, tu familia y tú.</p>
+        <p>Yo solo quiero ser la compañía con la que elijas compartir todo eso. El que se sienta en la banca mientras tú corres. El que está, no el que exige.</p>
+        <p>Debe existir una razón por la que, entre tantas personas, logramos encontrarnos. Sea mala o buena, todo tiene un significado. De pronto, el tuyo sería aprender algo de mí. O yo de ti.</p>
+        <p>Me enamoré de tu corazón, sabiendo que jamás latiría para mí. Pero los humanos aceptamos el amor que creemos merecer. Y ahí fue donde entendí todo. Lástima que no fuera la persona esperada.</p>
+      </div>
+
+      <div class="page">
+        <h2>La verdad</h2>
+        <p>Hablar claro duele un rato. Callar duele para siempre. No hay nada más egoísta que mantener a alguien al lado solo porque nos gusta cómo nos quiere.</p>
+        <p>Por eso necesito que me respondas con la verdad, sin pensar mucho. Sin miedo a herirme.</p>
+        <p class="gold">¿Me voy? ¿Me quedo? ¿Te espero? ¿Me alejo? ¿Te busco? ¿Te olvido? ¿Te dejo en paz? ¿Te importo? ¿Me quieres? ¿Qué hago?</p>
+        <p>Nunca jugué el papel para salvarte. Yo fui el que se sentó a observar tu caos y a quererte entera, con tu zona más lejana superficial. Eres una niña de gran valor.</p>
+      </div>
+
+      <div class="page">
+        <h2>Una última cosa</h2>
+        <p>Sé que un día, cuando estés llorando, cuando no quieras hablar con nadie, en esos días oscuros que parece que se te cae la vida en pedazos... Acuérdate de mí, tati. Acuérdate de mí.</p>
+        <p>Guarda esta carta. No la muestres ni la compartas. Es tuya. Y cuando la vida te golpee y no sepas para dónde correr, acuérdate que alguien, desde el silencio, ya te había visto ganar.</p>
+        <p class="gold">Ese alguien fui yo.</p>
+        <div class="sig">Con mucho amor de REYDEL,<br>el loco intenso que te tocó conocer ✨</div>
+        <button class="btn-spot" style="width:100%; margin-top:28px;" onclick="openSpotify()">🎵 &nbsp;Continúa la Aventura ✨</button>
+      </div>
+
+    </div>
+    <div class="cnav">
+      <button class="btn-n" id="bprev" onclick="cambiar(-1)">← Antes</button>
+      <button class="btn-n" id="bnext" onclick="cambiar(1)">Siguiente →</button>
+      <button class="btn-cl" onclick="closeCarta()">Cerrar 🌷</button>
+    </div>
+  </div>
+</div>
+
+<div class="loki-modal" id="lokiModal" style="display:none">
+  <div class="floating-paws" id="fpaws"></div>
+  <div class="lbg" onclick="closeLokiModal()"></div>
+  <div class="loki-card">
+    <div id="lokiLetterSection">
+      <div class="cicon" style="font-size:40px;margin-bottom:5px">🐾</div>
+      <h2 class="lq-title">Para Loki...</h2>
+      <p class="lq-text">Tati, quiero contarte algo que nunca te dije. Ese día que saqué a Loki al parque… no fue un día cualquiera. Fue uno de esos días que se quedan grabados en el alma sin que uno lo decida. Loki estaba feliz. Pero no feliz como siempre. Estaba feliz de una forma que nunca había visto. Corría, olfateaba, movía la cola sin parar.</p>
+      <p class="lq-text">Pero lo más bonito fue verlo jugar en una cancha de fútbol con unos niños que no conocía de nada. Los niños se reían, Loki ladraba de emoción, y por un rato todo fue puro amor sin condiciones. Tanto que los niños se acercaron a preguntarme si era mi perro. Ahí, en ese momento, se me ocurrió la idea del video que te hice. Ese video no fue casualidad. Nació de ver a Loki feliz, de ver cómo un perro puede unir a desconocidos solo con su alegría.</p>
+      <p class="lq-text">Y te voy a ser sincero, tati. Me va a doler. Me va a dar rabia. Me van a dar unos celos horribles saber que Loki está paseando con otro chico. Que otro lo lleve al parque, que otro lo haga feliz, que otro ocupe el lugar que yo soñaba tener. Y lo mismo con vos. No puedo obligarte a quererme, nunca pude, nunca quise. Pero sí puedo decirte que me va a doler verte con otro. Me va a doler saber que otro te da los buenos días, que otro te hace reír, que otro está ahí donde yo quise estar.</p>
+      <p class="lq-text">Pero no te preocupes. Esta vez no voy a romperme. Porque todo esto que viví me enseñó algo muy valioso: a tenerme como prioridad. A quererme aunque duela. A soltar sin dejar de amar. Así que espero, de corazón, que esa persona te quiera tanto como yo pretendía quererte. Y que quiera a Loki igualmente. Porque Loki se merece lo mejor, y vos también.</p>
+      <p class="lq-text">Así que sea lo que sea que decidas, tati, te deseo que seas feliz. De verdad. Tomá tus decisiones, equivócate si hace falta, pero viví. Y si algún día recordás este día, acordate que Loki fue feliz conmigo, y que yo fui feliz viéndolo ser feliz. Eso no te lo quita nadie.</p>
+      <button class="btn-gold" style="width:100%;margin-top:24px" onclick="showLokiVideos()">Ver recuerdos mágicos ✨</button>
+      <button class="btn-n" style="width:100%;margin-top:12px;background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.05)" onclick="closeLokiModal()">Volver 🌷</button>
+    </div>
+    <div id="lokiVideoSection" style="display:none">
+      <h2 class="lq-title">Recuerdos Inolvidables 🐾</h2>
+      <p style="text-align:center;color:#665;font-size:13px;margin-bottom:10px;font-family:'Lato',sans-serif">Dale play para ver cada momento.</p>
+      <div class="v-list" id="vlist">
+        <div class="v-item"><video src="VIDEO%20RECUERDO%20DE%20LOKI%20CON%20REYDEL/WhatsApp%20Video%202026-04-08%20at%2011.12.34%20PM.mp4" controls muted playsinline preload="metadata"></video></div>
+        <div class="v-item"><video src="VIDEO%20RECUERDO%20DE%20LOKI%20CON%20REYDEL/WhatsApp%20Video%202026-04-08%20at%2011.12.51%20PM.mp4" controls muted playsinline preload="metadata"></video></div>
+        <div class="v-item"><video src="VIDEO%20RECUERDO%20DE%20LOKI%20CON%20REYDEL/WhatsApp%20Video%202026-04-08%20at%2011.13.32%20PM.mp4" controls muted playsinline preload="metadata"></video></div>
+        <div class="v-item"><video src="VIDEO%20RECUERDO%20DE%20LOKI%20CON%20REYDEL/WhatsApp%20Video%202026-04-08%20at%2011.13.52%20PM.mp4" controls muted playsinline preload="metadata"></video></div>
+        <div class="v-item"><video src="VIDEO%20RECUERDO%20DE%20LOKI%20CON%20REYDEL/WhatsApp%20Video%202026-04-08%20at%2011.14.13%20PM.mp4" controls muted playsinline preload="metadata"></video></div>
+      </div>
+      <button class="btn-gold" style="width:100%;margin-top:20px" onclick="closeLokiModal()">Cerrar y leer carta principal 💌</button>
+    </div>
+  </div>
+</div>
+
+<!-- SPOTIFY MODAL -->
+<div class="sp-modal" id="spModal" style="display:none">
+  <div class="sp-bg" onclick="closeSpotify()"></div>
+  <div class="sp-card">
+    <div class="sp-hdr">
+      <h2>Música Dedicada</h2>
+      <button class="sp-close" onclick="closeSpotify()">✕</button>
+    </div>
+    <div class="sp-video-wrap" id="spVideoWrap"><video id="sp-video" playsinline></video></div>
+    <div class="sp-title" id="spCurTitle">Selecciona una canción</div>
+    <div class="sp-artist" id="spCurArtist">—</div>
+    <div class="sp-seek-row">
+      <span class="sp-time" id="spTimeCur">0:00</span>
+      <input type="range" id="spSeek" min="0" max="100" value="0" oninput="spSeekTo(this.value)">
+      <span class="sp-time" id="spTimeDur">0:00</span>
+    </div>
+    <div class="sp-controls">
+      <button class="sp-btn" onclick="spPrev()">⏮</button>
+      <button class="sp-play" id="spPlayBtn" onclick="spTogglePlay()">▶</button>
+      <button class="sp-btn" onclick="spNext()">⏭</button>
+    </div>
+    <div class="sp-vol-row">
+      <label>🔉</label>
+      <input type="range" id="spVol" min="0" max="100" value="100" oninput="spSetVol(this.value)">
+    </div>
+    <div class="sp-msg" id="spMsg"></div>
+    <div class="track-list" id="spTrackList"></div>
+    <button class="sp-unlock-btn" id="spUnlockBtn" onclick="spUnlockNext()">Desbloquear siguiente nivel 🔓</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var pw=document.getElementById('pw'),em=['🌸','🌷','💕','✨','🌺','💫'];
+  function mk(){var el=document.createElement('span');el.className='pt';el.textContent=em[Math.floor(Math.random()*em.length)];el.style.cssText='left:'+Math.random()*100+'%;animation-duration:'+(9+Math.random()*10)+'s;animation-delay:'+Math.random()*6+'s;font-size:'+(10+Math.random()*8)+'px';pw.appendChild(el);setTimeout(function(){el.remove()},22000)}
+  for(var i=0;i<14;i++)setTimeout(mk,i*500);
+  setInterval(mk,2800);
+})();
+var cur=0,tot=document.querySelectorAll('.page').length;
+function buildDots(){var d=document.getElementById('dots');d.innerHTML='';for(var i=0;i<tot;i++){var s=document.createElement('span');s.className='dot'+(i===cur?' act':'');d.appendChild(s)}}
+function setPage(n){document.querySelectorAll('.page').forEach(function(p,i){p.className='page'+(i===n?' active':'')});document.getElementById('prog').style.width=((n+1)/tot*100)+'%';document.getElementById('bprev').style.opacity=n===0?'.35':'1';document.getElementById('bnext').style.opacity=n===tot-1?'.35':'1';buildDots()}
+function cambiar(d){var nx=cur+d;if(nx<0||nx>=tot)return;cur=nx;setPage(cur)}
+function openCarta(){cur=0;setPage(0);var s=document.getElementById('secret');s.style.display='flex';requestAnimationFrame(function(){requestAnimationFrame(function(){s.classList.add('open')})});document.body.style.overflow='hidden'}
+function closeCarta(){var s=document.getElementById('secret');s.classList.remove('open');setTimeout(function(){s.style.display='none';document.body.style.overflow=''},420)}
+buildDots();
+
+function spawnPaws(){var c=document.getElementById('fpaws');if(!c)return;c.innerHTML='';for(var i=0;i<12;i++){var p=document.createElement('div');p.className='fpaw';p.textContent='🐾';p.style.left=Math.random()*100+'%';p.style.animationDuration=(15+Math.random()*15)+'s';p.style.animationDelay='-'+Math.random()*15+'s';p.style.fontSize=(20+Math.random()*15)+'px';c.appendChild(p);}}
+function openLokiModal(){var m=document.getElementById('lokiModal');m.style.display='flex';document.getElementById('lokiLetterSection').style.display='block';document.getElementById('lokiVideoSection').style.display='none';document.getElementById('vlist').style.display='none';spawnPaws();requestAnimationFrame(function(){requestAnimationFrame(function(){m.classList.add('open')})});document.body.style.overflow='hidden';}
+function closeLokiModal(){var m=document.getElementById('lokiModal');m.classList.remove('open');setTimeout(function(){m.style.display='none';document.body.style.overflow='';},420);document.querySelectorAll('.v-item video').forEach(function(v){v.pause();});}
+function showLokiVideos(){document.getElementById('lokiLetterSection').style.display='none';document.getElementById('lokiVideoSection').style.display='block';document.getElementById('vlist').style.display='flex';}
+
+/* BG MUSIC LOGIC */
+var bgMusic = document.getElementById('bgMusic');
+var heartBtn = document.getElementById('heartBtn');
+var mpPlayBtn = document.getElementById('mpPlayBtn');
+var bgUserPaused = false;
+var bgInitialized = false;
+bgMusic.volume = 0.8;
+
+function toggleMiniPlayer() {
+  var mp = document.getElementById('miniPlayer');
+  mp.classList.toggle('show');
+}
+
+function toggleBgMusic() {
+  if (!bgInitialized) bgInitialized = true;
+  if (bgMusic.paused) {
+    bgMusic.play().catch(function(){}); 
+    bgUserPaused = false;
+    heartBtn.classList.remove('paused');
+    mpPlayBtn.innerText = '⏸';
+  } else {
+    bgMusic.pause();
+    bgUserPaused = true;
+    heartBtn.classList.add('paused');
+    mpPlayBtn.innerText = '▶';
+  }
+}
+
+function setBgVolume(v) { bgMusic.volume = v / 100; }
+function bgRewind() { bgMusic.currentTime = Math.max(0, bgMusic.currentTime - 10); }
+function bgForward() { bgMusic.currentTime = Math.min(bgMusic.duration || 0, bgMusic.currentTime + 10); }
+function seekBgMusic(v) { if(bgMusic.duration) bgMusic.currentTime = (v / 100) * bgMusic.duration; }
+
+function fmtTime(s) { if(!s||isNaN(s)) return '0:00'; var m=Math.floor(s/60); var sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+bgMusic.addEventListener('timeupdate', function(){
+  if(!bgMusic.duration) return;
+  document.getElementById('mpCur').innerText = fmtTime(bgMusic.currentTime);
+  document.getElementById('mpDur').innerText = fmtTime(bgMusic.duration);
+  document.getElementById('mpSeek').value = (bgMusic.currentTime / bgMusic.duration) * 100;
+});
+
+function autoPauseBgMusic() {
+  if (!bgMusic.paused) {
+    bgMusic.pause();
+    heartBtn.classList.add('paused');
+    mpPlayBtn.innerText = '▶';
+  }
+}
+
+function autoResumeBgMusic() {
+  if (!bgUserPaused && bgMusic.paused && bgInitialized) {
+    bgMusic.play().catch(function(){});
+    heartBtn.classList.remove('paused');
+    mpPlayBtn.innerText = '⏸';
+  }
+}
+
+function startBgOnInteraction(e) {
+  if (e.target.closest && e.target.closest('.heart-player')) return;
+  if (!bgInitialized || bgMusic.paused) {
+    bgInitialized = true;
+    bgMusic.play().then(function(){
+      heartBtn.classList.remove('paused');
+      mpPlayBtn.innerText = '⏸';
+    }).catch(function(){});
+  }
+  document.removeEventListener('click', startBgOnInteraction);
+  document.removeEventListener('touchstart', startBgOnInteraction);
+  document.removeEventListener('scroll', startBgOnInteraction);
+}
+document.addEventListener('click', startBgOnInteraction);
+document.addEventListener('touchstart', startBgOnInteraction);
+document.addEventListener('scroll', startBgOnInteraction, {once:true});
+
+// INTENTAR AUTOPLAY INMEDIATO
+bgInitialized = true;
+bgMusic.play().then(function(){
+  heartBtn.classList.remove('paused');
+  mpPlayBtn.innerText = '⏸';
+}).catch(function(){
+  // Navegador bloqueó autoplay, se activará con interacción
+  mpPlayBtn.innerText = '▶';
+});
+
+/* SPOTIFY LOGIC */
+var spData = [
+  { group: "Corridos", 
+    msg: "Quiero comenzar por uno de mis gustos que son los corridos weee. De pronto no te guste, pero ni modo 🤠",
+    tracks: [
+      { title: "Corrido 1", artist: "Desconocido", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/CORRIDOS/WhatsApp%20Video%202026-04-08%20at%2011.38.35%20PM.mp4" },
+      { title: "Corrido 2", artist: "Desconocido", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/CORRIDOS/WhatsApp%20Video%202026-04-08%20at%2011.41.24%20PM.mp4" },
+      { title: "Corrido 3", artist: "Desconocido", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/CORRIDOS/WhatsApp%20Video%202026-04-08%20at%2011.44.19%20PM.mp4" }
+    ]
+  },
+  { group: "Silvestre Dangond", 
+    msg: "Ahora viene lo bueno, lo fuerte. Comencemos con uno de mis cantantes favoritos: Silvestre 🪗",
+    tracks: [
+      { title: "Silvestre 1", artist: "Silvestre Dangond", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/SILVESTRE/WhatsApp%20Video%202026-04-08%20at%2011.51.36%20PM.mp4" },
+      { title: "Silvestre 2", artist: "Silvestre Dangond", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/SILVESTRE/WhatsApp%20Video%202026-04-08%20at%2011.52.17%20PM.mp4" },
+      { title: "Silvestre 3", artist: "Silvestre Dangond", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/SILVESTRE/WhatsApp%20Video%202026-04-08%20at%2011.55.11%20PM.mp4" }
+    ]
+  },
+  { group: "Kaleth Morales", 
+    msg: "Se pone más intenso. Las que no pueden faltar, las del super Kaleth. Te las dedico todas, pero elegiré 3 nada más 💔",
+    tracks: [
+      { title: "Kaleth 1", artist: "Kaleth Morales", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/KALET/WhatsApp%20Video%202026-04-09%20at%2012.05.46%20AM.mp4" },
+      { title: "Kaleth 2", artist: "Kaleth Morales", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/KALET/WhatsApp%20Video%202026-04-09%20at%2012.06.58%20AM.mp4" },
+      { title: "Kaleth 3", artist: "Kaleth Morales", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/KALET/WhatsApp%20Video%202026-04-09%20at%2012.07.47%20AM.mp4" }
+    ]
+  },
+  { group: "Morat", 
+    msg: "Ahora sí viene lo bueno, tu gusto. Me sabía varias de Morat, pero he comenzado a escucharla, me ha gustado, y por ley las escogí todas para ti. Espero que te guste 🎸",
+    tracks: [
+      { title: "Morat 1", artist: "Morat", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/MORAT/ULTIMO%20VIDEO%20PORFA.mp4" },
+      { title: "Morat 2", artist: "Morat", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/MORAT/WhatsApp%20Video%202026-04-09%20at%2012.10.03%20AM.mp4" },
+      { title: "Morat 3", artist: "Morat", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/MORAT/WhatsApp%20Video%202026-04-09%20at%2012.16.42%20AM.mp4" },
+      { title: "Morat 4", artist: "Morat", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/MORAT/WhatsApp%20Video%202026-04-09%20at%2012.19.13%20AM.mp4" },
+      { title: "Morat 5", artist: "Morat", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/MORAT/WhatsApp%20Video%202026-04-09%20at%2012.22.19%20AM.mp4" },
+      { title: "Morat 6", artist: "Morat", src: "ALBUM%20DE%20MUSICA%20QUE%20LE%20QUIERO%20DEDICAR/MORAT/morat2.mp4" }
+    ]
+  }
+];
+
+var spStage = 0; // Current unlocked stage
+var allTracks = [];
+var curTrackIdx = -1;
+var spPlayer = document.getElementById('sp-video');
+var isPlaying = false;
+
+function buildSpTracks() {
+  allTracks = [];
+  var html = '';
+  var gIdx = 0;
+  for(var i=0; i<=spStage; i++){
+    var group = spData[i];
+    html += '<div style="color:#1db954;font-size:12px;font-weight:700;margin:12px 0 6px;text-transform:uppercase;letter-spacing:1px">'+group.group+'</div>';
+    for(var j=0; j<group.tracks.length; j++){
+      var t = group.tracks[j];
+      allTracks.push(t);
+      var currentGlobalIdx = allTracks.length - 1;
+      html += '<div class="track-item" id="trk_'+currentGlobalIdx+'" onclick="spPlayTrack('+currentGlobalIdx+')">';
+      html += '<div class="t-num">'+(j+1)+'</div>';
+      html += '<div class="t-info"><div class="t-title">'+t.title+'</div><div class="t-artist">'+t.artist+'</div></div>';
+      html += '</div>';
+    }
+  }
+  document.getElementById('spTrackList').innerHTML = html;
+  document.getElementById('spMsg').innerText = spData[spStage].msg;
+  
+  var btn = document.getElementById('spUnlockBtn');
+  if(spStage < spData.length - 1) {
+    btn.style.display = 'block';
+    btn.classList.add('pulse');
+    btn.innerText = 'Desbloquear: ' + spData[spStage+1].group + ' 🔓';
+  } else {
+    btn.style.display = 'none';
+  }
+  
+  if (curTrackIdx >= 0 && curTrackIdx < allTracks.length) {
+    var el = document.getElementById('trk_'+curTrackIdx);
+    if(el) el.classList.add('playing');
+  }
+}
+
+function openSpotify() {
+  if (allTracks.length === 0) buildSpTracks();
+  var m = document.getElementById('spModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ m.classList.add('open'); }); });
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSpotify() {
+  var m = document.getElementById('spModal');
+  m.classList.remove('open');
+  spPlayer.pause(); isPlaying = false;
+  document.getElementById('spVideoWrap').classList.remove('show');
+  setTimeout(function(){ m.style.display = 'none'; document.body.style.overflow = ''; }, 400);
+}
+
+function spPlayTrack(idx) {
+  if (idx < 0 || idx >= allTracks.length) return;
+  curTrackIdx = idx;
+  var track = allTracks[idx];
+  
+  document.querySelectorAll('.track-item').forEach(function(el){ el.classList.remove('playing'); });
+  var trkEl = document.getElementById('trk_'+idx);
+  if(trkEl) trkEl.classList.add('playing');
+  
+  document.getElementById('spCurTitle').innerText = track.title;
+  document.getElementById('spCurArtist').innerText = track.artist;
+  
+  // Show the video player
+  var wrap = document.getElementById('spVideoWrap');
+  wrap.classList.add('show');
+  
+  spPlayer.src = track.src;
+  spPlayer.play().catch(function(){});
+  isPlaying = true;
+  document.getElementById('spPlayBtn').innerText = '⏸';
+}
+
+function spTogglePlay() {
+  if(curTrackIdx === -1) { if(allTracks.length > 0) spPlayTrack(0); return; }
+  if(isPlaying) { spPlayer.pause(); isPlaying = false; document.getElementById('spPlayBtn').innerText = '▶'; }
+  else { spPlayer.play(); isPlaying = true; document.getElementById('spPlayBtn').innerText = '⏸'; }
+}
+
+function spNext() { if(curTrackIdx < allTracks.length - 1) spPlayTrack(curTrackIdx + 1); }
+function spPrev() { if(curTrackIdx > 0) spPlayTrack(curTrackIdx - 1); }
+function spSetVol(v) { spPlayer.volume = v / 100; }
+function spSeekTo(v) { if(spPlayer.duration) spPlayer.currentTime = (v / 100) * spPlayer.duration; }
+
+spPlayer.addEventListener('timeupdate', function(){
+  if(!spPlayer.duration) return;
+  var pct = (spPlayer.currentTime / spPlayer.duration) * 100;
+  document.getElementById('spSeek').value = pct;
+  document.getElementById('spTimeCur').innerText = fmtTime(spPlayer.currentTime);
+  document.getElementById('spTimeDur').innerText = fmtTime(spPlayer.duration);
+});
+
+spPlayer.addEventListener('ended', function(){
+  if(curTrackIdx < allTracks.length - 1) spNext();
+  else { isPlaying = false; document.getElementById('spPlayBtn').innerText = '▶'; }
+});
+
+// Ligar musica de fondo con interacciones de otros medios
+spPlayer.addEventListener('play', autoPauseBgMusic);
+spPlayer.addEventListener('pause', autoResumeBgMusic);
+spPlayer.addEventListener('ended', autoResumeBgMusic);
+document.querySelectorAll('.v-item video').forEach(function(vid) {
+  vid.addEventListener('play', autoPauseBgMusic);
+  vid.addEventListener('pause', autoResumeBgMusic);
+  vid.addEventListener('ended', autoResumeBgMusic);
+});
+
+function spUnlockNext() {
+  if(spStage < spData.length - 1) {
+    spStage++;
+    buildSpTracks();
+    // Auto play the first track of the newly unlocked album
+    var newGroupFirstIdx = allTracks.length - spData[spStage].tracks.length;
+    spPlayTrack(newGroupFirstIdx);
+  }
+}
+
+// ANIMATION LOGIC - IMPROVED VERSION
+(function(){
+  const C = document.getElementById('aniCanvas');
+  if (!C) { console.warn('aniCanvas not found'); return; }
+  const X = C.getContext('2d');
+  if (!X) { console.warn('Canvas context not available'); return; }
+  
+  // POLYFILL FOR roundRect (Older iOS support)
+  if (!X.roundRect) {
+    X.roundRect = function(x, y, w, h, r) {
+      if (w < 2 * r) r = w / 2; if (h < 2 * r) r = h / 2;
+      this.beginPath(); this.moveTo(x + r, y); this.arcTo(x + w, y, x + w, y + h, r);
+      this.arcTo(x + w, y + h, x, y + h, r); this.arcTo(x, y + h, x, y, r);
+      this.arcTo(x, y, x + w, y, r); this.closePath(); return this;
+    };
+  }
+
+  let W, H, cx, cy, gY;
+  
+  function resize(){ 
+    const b = C.parentElement.getBoundingClientRect();
+    W = C.width = b.width; H = C.height = b.height; 
+    cx = W / 2; cy = H / 2; gY = H * 0.88;
+  }
+  window.addEventListener('resize', resize); resize();
+
+  let state = 1, sT = 0, last = performance.now();
+  let hearts = [];
+  const colors = {
+    rose: '#e8637a', roseL: '#f7b8c4', roseD: '#c0374f',
+    gold: '#d4a044', goldL: '#f0c978',
+    dog1: '#fdebc0', dog2: '#f5c86a', dog3: '#d49030', dog4: '#1a0a04',
+    bg: '#160a12' // Dark wine background
+  };
+
+  function addHearts(x,y,n){ 
+    for(let i=0;i<n;i++) hearts.push({x:x+(Math.random()*40-20),y:y+(Math.random()*20-10),vy:-Math.random()*2-1,vx:(Math.random()-0.5)*2.5,s:Math.random()*0.5+0.3,o:1}); 
+  }
+  
+  function drawHeart(x,y,s,o){ 
+    X.save(); X.translate(x,y); X.scale(s,s); X.globalAlpha=o; X.fillStyle=colors.rose;
+    X.beginPath(); X.moveTo(0,0); X.bezierCurveTo(0,-3,-5,-15,-15,-15); X.bezierCurveTo(-35,-15,-35,7.5,-35,7.5);
+    X.bezierCurveTo(-35,20,-15,33,0,45); X.bezierCurveTo(15,33,35,20,35,7.5);
+    X.bezierCurveTo(35,7.5,35,-15,15,-15); X.bezierCurveTo(5,-15,0,-3,0,0); X.fill(); X.restore(); 
+  }
+
+  function drawRealisticBouquet(x,y,sc){
+    X.save(); X.translate(x,y); X.scale(sc,sc);
+    // Wrap
+    X.fillStyle='#e8d5b0'; X.beginPath(); X.moveTo(-10,120); X.lineTo(-70,-10); X.lineTo(70,-10); X.lineTo(10,120); X.fill();
+    // Stems
+    X.strokeStyle='#5a8a3a'; X.lineWidth=5; X.lineCap='round';
+    for(let i=0;i<6;i++){ X.beginPath(); X.moveTo(0,30); X.quadraticCurveTo((i-2.5)*20,-50,(i-2.5)*15,-110); X.stroke(); }
+    // Tulips
+    function tulip(tx,ty,ang){
+      X.save(); X.translate(tx,ty); X.rotate(ang);
+      X.fillStyle=colors.roseD; X.beginPath(); X.arc(0,0,16,0,Math.PI*2); X.fill();
+      X.fillStyle=colors.rose; X.beginPath(); X.ellipse(0,-8,14,20,0,0,Math.PI*2); X.fill();
+      X.fillStyle=colors.roseL; X.beginPath(); X.ellipse(0,-12,8,12,0,0,Math.PI*2); X.fill();
+      X.restore();
+    }
+    tulip(-25,-105,-0.3); tulip(25,-105,0.3); tulip(0,-115,0); tulip(-10,-120,-0.1); tulip(10,-120,0.1);
+    X.restore();
+  }
+
+  class Char {
+    constructor(r){this.role=r;this.x=0;this.y=0;this.sc=1;this.fr=r==='emily';this.st='idle';this.at=0;}
+    draw(){
+      X.save(); X.translate(this.x,this.y); X.scale(this.fr?this.sc:-this.sc,this.sc);
+      this.at+=0.06;
+      let b = (this.st==='run')?Math.abs(Math.sin(this.at*4))*5:(this.st==='idle'?Math.sin(this.at)*1.5:(this.st==='excited'?Math.abs(Math.sin(this.at*6))*10:0));
+      if(this.st==='sitting'||this.st==='petting') b=0;
+
+      // Legs
+      X.lineWidth=12; X.lineCap='round';
+      if(this.role==='me'){
+        X.strokeStyle='#1a2a40'; // Dark pants
+        if(this.st==='sitting'||this.st==='petting'){
+          X.beginPath(); X.moveTo(-5,15); X.quadraticCurveTo(-15,25,-25,35); X.stroke();
+          X.beginPath(); X.moveTo(5,15); X.quadraticCurveTo(15,25,25,35); X.stroke();
+        } else {
+          let ls=(this.st==='run')?Math.sin(this.at*4)*12:0;
+          X.beginPath(); X.moveTo(0,15); X.lineTo(-10+ls,40); X.stroke();
+          X.beginPath(); X.moveTo(0,15); X.lineTo(10-ls,40); X.stroke();
+        }
+      } else {
+        X.strokeStyle='#fff'; X.beginPath(); X.moveTo(-6,15); X.lineTo(-6,40); X.stroke(); X.beginPath(); X.moveTo(6,15); X.lineTo(6,40); X.stroke();
+      }
+
+      X.translate(0,-b);
+
+      // Torso
+      if(this.role==='me'){
+        X.fillStyle='#fff'; X.beginPath(); X.roundRect(-15,-15,30,40,6); X.fill();
+        X.fillStyle='#1c315e'; X.beginPath(); X.ellipse(0,-8,18,10,0,0,Math.PI*2); X.fill(); // Vest
+      } else {
+        X.fillStyle=colors.rose; X.beginPath(); X.moveTo(-15,-15); X.lineTo(15,-15); X.lineTo(20,20); X.lineTo(-20,20); X.fill(); // Dress
+      }
+
+      // Head
+      X.save(); X.translate(0,-26);
+      if(this.st==='petting') X.rotate(0.2); // Leaning forward to pet
+      X.fillStyle='#ffe0b2'; X.beginPath(); X.arc(0,0,20,0,Math.PI*2); X.fill(); // Face
+      X.fillStyle=this.role==='emily'?'#5d4037':'#4e342e'; // Hair
+      X.beginPath(); X.arc(0,-5,22,Math.PI,Math.PI*2); X.fill();
+      X.beginPath(); X.ellipse(-15,0,10,18,0.2,0,Math.PI*2); X.fill();
+      X.beginPath(); X.ellipse(15,0,10,18,-0.2,0,Math.PI*2); X.fill();
+
+      // Blushing
+      X.fillStyle='rgba(232,99,122,0.3)'; X.beginPath(); X.arc(-12,8,5,0,Math.PI*2); X.fill(); X.beginPath(); X.arc(12,8,5,0,Math.PI*2); X.fill();
+
+      // Eyes
+      X.fillStyle='#000'; 
+      if(this.st==='excited') {
+         X.strokeStyle='#000'; X.lineWidth=2; X.beginPath(); X.arc(-8,2,4,Math.PI,0); X.stroke(); X.beginPath(); X.arc(8,2,4,Math.PI,0); X.stroke();
+      } else {
+         X.beginPath(); X.arc(-8,0,3,0,Math.PI*2); X.fill(); X.beginPath(); X.arc(8,0,3,0,Math.PI*2); X.fill();
+      }
+      
+      // Smiling
+      X.strokeStyle='#000'; X.lineWidth=1.5; X.beginPath(); X.arc(0,8,4,0,Math.PI); X.stroke();
+      X.restore();
+
+      // Arms
+      X.strokeStyle='#ffe0b2'; X.lineWidth=10;
+      if(this.role==='emily'){
+        if(this.st==='flowers'){ drawRealisticBouquet(25,0,0.25); X.beginPath(); X.moveTo(-5,0); X.lineTo(15,10); X.stroke(); }
+        else if(this.st==='excited'){ let w=Math.sin(this.at*12)*10; X.beginPath(); X.moveTo(-5,-5); X.lineTo(-25,-30+w); X.stroke(); X.beginPath(); X.moveTo(5,-5); X.lineTo(25,-30-w); X.stroke(); }
+        else if(this.st==='dog'){ X.beginPath(); X.moveTo(-5,5); X.quadraticCurveTo(15,10,25,0); X.stroke(); }
+        else { X.beginPath(); X.moveTo(0,-5); X.lineTo(15,15); X.stroke(); }
+      } else {
+        if(this.st==='hasFlowers'){ 
+          // CLEAR DELIVERY GESTURE
+          let tX = 25 + Math.sin(this.at*2)*5;
+          X.beginPath(); X.moveTo(0,-5); X.lineTo(tX, 0); X.stroke(); 
+          drawRealisticBouquet(tX, -15, 0.28); 
+        }
+        else if(this.st==='walking_dog'){ 
+          let p=Math.sin(this.at*10)*15; 
+          X.beginPath(); X.moveTo(0,-5); X.lineTo(20+p,10); X.stroke(); // Holding the leash
+        }
+        else { let as=(this.st==='run'||this.st==='walking_dog')?Math.sin(this.at*4)*12:0; X.beginPath(); X.moveTo(0,-5); X.lineTo(15-as,20); X.stroke(); }
+      }
+      X.restore();
+    }
+  }
+
+  class Dog {
+    constructor(){this.x=0;this.y=0;this.sc=0.8;this.st='carried';this.fr=true;this.at=0;}
+    draw(){
+      X.save(); X.translate(this.x,this.y); X.scale(this.fr?this.sc:-this.sc,this.sc);
+      this.at+=0.08; 
+      let t = Math.sin(this.at*10)*8;
+      
+      // Body
+      X.fillStyle=colors.dog2; X.beginPath(); X.ellipse(0,0,24,18,0,0,Math.PI*2); X.fill();
+      
+      // Tail (wagging)
+      X.save(); X.translate(-20,0); X.rotate(t*0.05);
+      X.strokeStyle=colors.dog2; X.lineWidth=10; X.lineCap='round';
+      X.beginPath(); X.moveTo(0,0); X.quadraticCurveTo(-15,-15+t,-25,0); X.stroke();
+      X.restore();
+
+      // Head
+      X.save(); X.translate(18,-15);
+      X.fillStyle=colors.dog2; X.beginPath(); X.arc(0,0,18,0,Math.PI*2); X.fill();
+      // Ears (puppy flopping)
+      X.fillStyle=colors.dog3;
+      X.beginPath(); X.ellipse(-14,-10,8,14,0.4+t*0.01,0,Math.PI*2); X.fill();
+      X.beginPath(); X.ellipse(14,-10,8,14,-0.4-t*0.01,0,Math.PI*2); X.fill();
+      // Muzzle
+      X.fillStyle=colors.dog1; X.beginPath(); X.ellipse(6,6,10,8,0,0,Math.PI*2); X.fill();
+      X.fillStyle=colors.dog4; X.beginPath(); X.arc(12,4,2.5,0,Math.PI*2); X.fill(); // Nose
+      // Eyes
+      X.fillStyle='#000'; X.beginPath(); X.arc(-6,0,3,0,Math.PI*2); X.fill(); X.beginPath(); X.arc(8,0,3,0,Math.PI*2); X.fill();
+      X.restore();
+
+      // Paws
+      X.fillStyle=colors.dog3;
+      if(this.st==='carried'){
+        X.beginPath(); X.ellipse(-10,15,6,4,0,0,Math.PI*2); X.fill();
+        X.beginPath(); X.ellipse(10,15,6,4,0,0,Math.PI*2); X.fill();
+      } else if(this.st==='walking'){
+        let r=Math.sin(this.at*10)*10;
+        X.beginPath(); X.ellipse(-12+r,15,5,8,0,0,Math.PI*2); X.fill();
+        X.beginPath(); X.ellipse(12-r,15,5,8,0,0,Math.PI*2); X.fill();
+      } else {
+        X.beginPath(); X.ellipse(-15,15,6,8,0,0,Math.PI*2); X.fill();
+        X.beginPath(); X.ellipse(15,15,6,8,0,0,Math.PI*2); X.fill();
+      }
+      
+      X.restore();
+    }
+  }
+
+  let emily = new Char('emily'), reydel = new Char('me'), loki = new Dog();
+
+  function loop(){
+    let now=performance.now(), dt=(now-last)/1000; last=now; if(dt>0.1)dt=0.1; sT+=dt;
+    X.clearRect(0,0,W,H);
+    X.fillStyle='#160a12'; X.fillRect(0,0,W,H); // Wine background
+    
+    // Bottom floor line
+    X.strokeStyle='rgba(255,255,255,0.05)'; X.lineWidth=2; X.beginPath(); X.moveTo(0,gY+5); X.lineTo(W,gY+5); X.stroke();
+
+    for(let i=hearts.length-1;i>=0;i--){ 
+      let h=hearts[i]; h.x+=h.vx; h.y+=h.vy; h.o-=0.4*dt; if(h.o<=0)hearts.splice(i,1); 
+    }
+    hearts.forEach(h=>drawHeart(h.x,h.y,h.s,h.o));
+
+    let eX=W*0.35; emily.x=eX; emily.y=gY-40;
+    if(state===1){ // REYDEL WALKING TOWARDS EMILY
+      reydel.st='run'; reydel.fr=false; emily.st='dog';
+      let t=Math.min(sT/4,1); reydel.x=W+50-(W+50-eX-120)*t; reydel.y=gY-40;
+      reydel.st=t<1?'run':'hasFlowers';
+      loki.x=emily.x+22; loki.y=emily.y-5; loki.st='carried';
+      if(t>=1){ state=2; sT=0; }
+    } else if(state===2){ // EXCHANGE ANIMATION
+      if(sT<2){ // Offering tulips
+        reydel.st='hasFlowers'; emily.st='dog'; loki.x=emily.x+22; 
+      }
+      else if(sT<4){ // Receiving dog
+        reydel.st='idle'; emily.st='flowers'; loki.fr=false; 
+        loki.x=reydel.x-22; loki.y=gY-45+((sT-2)/2)*35; 
+      }
+      else { state=3; sT=0; addHearts(emily.x,emily.y-60,15); }
+    } else if(state===3){ // EMILY EXCITED
+      emily.st='excited'; reydel.st='idle'; loki.y=gY-15; loki.st='idle'; loki.fr=true;
+      if(Math.random()<0.15) addHearts(emily.x+20,emily.y-50,2);
+      if(sT>4){ state=5; sT=0; }
+    } else if(state===5){ // WALKING LOKI HAPPILY
+      reydel.st='walking_dog'; emily.st='flowers'; loki.st='walking';
+      let walkPos = Math.sin(sT*1.2) * 40; // Moving back and forth slightly
+      reydel.x=eX+120 + walkPos; reydel.y=gY-40; reydel.fr=true;
+      loki.x=reydel.x+35; loki.y=gY-15; loki.fr=true;
+      
+      // Draw Leash (Correa)
+      X.strokeStyle=colors.goldL; X.lineWidth=1.5; X.beginPath();
+      X.moveTo(reydel.x+15, reydel.y-5); X.quadraticCurveTo(reydel.x+25, reydel.y+10, loki.x+5, loki.y-10); X.stroke();
+
+      if(Math.random()<0.08) addHearts(reydel.x,reydel.y-50,1);
+      if(sT>12){ state=1; sT=0; }
+    }
+    
+    emily.draw(); reydel.draw(); loki.draw();
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+</body>
+</html>
