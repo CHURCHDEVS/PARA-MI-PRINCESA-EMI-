@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para ti ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(ellipse at center, #1a0a2e 0%, #0d0015 60%, #000 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Estrellas de fondo */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+                radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                radial-gradient(1px 1px at 65% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.5) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Caja de mensaje */
+        #message-box {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 40px 45px;
+            border-radius: 24px;
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(162, 89, 230, 0.15),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 85vw;
+            width: 420px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        #message-box.fade-out {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        /* Emoji decorativo arriba */
+        .emoji-header {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: floatEmoji 3s ease-in-out infinite;
+        }
+
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Texto del mensaje */
+        #message-container {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: #f0e0ff;
+            min-height: 80px;
+            margin-bottom: 25px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Cursor parpadeante mientras escribe */
+        #message-container::after {
+            content: '|';
+            display: inline;
+            animation: blink 0.8s step-end infinite;
+            color: #c084fc;
+            font-weight: bold;
+        }
+
+        #message-container.done::after {
+            display: none;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Botón de Presionar */
+        #showMessageButton {
+            padding: 13px 35px;
+            font-size: 1rem;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            border: 1.5px solid rgba(162, 89, 230, 0.6);
+            border-radius: 50px;
+            background: linear-gradient(135deg, #a259e6, #7c3aed);
+            color: white;
+            box-shadow: 0 0 20px rgba(162, 89, 230, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        #showMessageButton:hover {
+            background: linear-gradient(135deg, #c084fc, #a259e6);
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.6);
+            transform: scale(1.04);
+        }
+
+        #showMessageButton:active {
+            transform: scale(0.97);
+        }
+
+        /* Botón Siguiente (Siempre visible ahora) */
+        #btn-continuar {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 13px 35px;
+            font-size: 1rem;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            border: 1.5px solid rgba(255, 200, 100, 0.5);
+            border-radius: 50px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        #btn-continuar:hover {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            transform: scale(1.04);
+        }
+
+        @keyframes fadeInBtn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Flores flotantes generadas en JS */
+        #flowers-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 1s ease;
+            will-change: transform, opacity;
+            animation: floatDown linear forwards;
+        }
+
+        @keyframes floatDown {
+            0%   { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 0.9; }
+            100% { transform: translateY(20vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="flowers-container"></div>
+
+    <div id="message-box">
+        <span class="emoji-header">🌷</span>
+        <div id="message-container"></div>
+        <button id="showMessageButton">Presiona ✨</button>
+        <button id="btn-continuar" onclick="window.location.href='ramos-azules.html'">Siguiente 🌹</button>
+    </div>
+
+    <audio id="bgm" src="Morat - Enamórate De Alguien Más (Video Oficial).mp3" loop playsinline autoplay></audio>
+
+    <script>
+        const audio = document.getElementById('bgm');
+        audio.volume = 0.8;
+
+        // Recuperar tiempo si existe
+        const savedTime = localStorage.getItem('bgm_time');
+        if(savedTime) audio.currentTime = parseFloat(savedTime);
+
+        // Guardar el tiempo cada segundo
+        setInterval(() => {
+            if(!audio.paused) {
+                localStorage.setItem('bgm_time', audio.currentTime);
+            }
+        }, 1000);
+
+        // Intentar reproducir al cargar o al interactuar
+        const startAudio = () => { audio.play().catch(() => {}); };
+        window.addEventListener('load', startAudio);
+        document.addEventListener('click', startAudio, { once: true });
+
+        const flowersContainer = document.getElementById('flowers-container');
+        const messageContainer = document.getElementById('message-container');
+        const showMessageButton = document.getElementById('showMessageButton');
+        const btnContinuar = document.getElementById('btn-continuar');
+
+        const emojis = ['🌷', '🌻', '🌷', '🌻', '❤️', '🥰', '😍', '🌹', '🌸', '🌺', '🌼', '🌷', '🌻', '💖', '💘', '💝'];
+
+        let flowersCount = 0;
+        let interval = 150;
+
+        function generateFlower() {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+            flower.style.left = `${Math.random() * 95}vw`;
+            flower.style.top = `${Math.random() * 100}vh`;
+
+            const size = 1.2 + Math.random() * 2.5;
+            flower.style.fontSize = `${size}rem`;
+
+            const duration = 1.5 + Math.random() * 2;
+            flower.style.animationDuration = `${duration}s`;
+            
+            flowersContainer.appendChild(flower);
+            flower.addEventListener('animationend', () => flower.remove());
+
+            flowersCount++;
+
+            if (flowersCount < 600) {
+                interval = Math.max(10, interval * 0.95);
+                setTimeout(generateFlower, interval);
+            }
+        }
+
+        showMessageButton.addEventListener('click', () => {
+            showMessageButton.style.display = 'none';
+
+            const message = "Sé que estoy a kilómetros de distancia, pero eso no evita que te mande tus flores... Te amo mucho, ternurita 🌷";
+            let index = 0;
+
+            const typeMessage = () => {
+                if (index < message.length) {
+                    messageContainer.textContent += message.charAt(index);
+                    index++;
+                    setTimeout(typeMessage, 25);
+                } else {
+                    messageContainer.classList.add('done');
+                    setTimeout(generateFlower, 150);
+                }
+            };
+
+            typeMessage();
+        });
+    </script>
+
+</body>
+</html>

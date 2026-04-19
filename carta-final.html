@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Mi Última Carta — Emelis</title>
 
-  <!-- Fuentes más legibles y Premium -->
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Playfair para Títulos, Lora para lectura cómoda, Caveat para detalles a mano -->
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
 
   <!-- GSAP + DrawSVG -->
@@ -23,15 +22,17 @@
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
 body {
+  background: #1c1b22;
+  font-family: 'Lora', serif;
   overflow-x: hidden;
+  color: #fff;
 }
 body.locked {
   overflow: hidden;
-}
-  background: #1c1b22; /* Un fondo gris/azul oscuro elegante */
-  font-family: 'Lora', serif; /* Fuente de lectura súper clara */
-  overflow-x: hidden;
-  color: #fff;
+  height: 100vh;
+  touch-action: none;
+  position: fixed;
+  width: 100%;
 }
 
 /* ===================================================
@@ -143,11 +144,10 @@ svg#flower-frame {
   box-shadow: 0 12px 25px rgba(143, 45, 42, 0.6);
 }
 
-/* Hidden helpers for SVG animation */
 #Footer_group_1_, [id^="PinkFlowerGroup"], [id^="BaseGroup"] path, [id^="LeafGroup"] path, path[id^="Stroke"], g[id^="BudGroup"] g[id^="BudGroup"] g[id^="Bud"], #Bud8_1_, #Bud10_1_, #Bud23_1_, #Bud26_1_, [id^="Dots"], [id^="Flourish"] { visibility: hidden; }
 
 /* ===================================================
-   SECTION 2 — THE BOOK (Optimizado para legibilidad móvil)
+   SECTION 2 — THE BOOK
 =================================================== */
 #section-book {
   min-height: 100vh;
@@ -160,7 +160,6 @@ svg#flower-frame {
   overflow: hidden;
 }
 
-/* Luces de fondo sutiles */
 #section-book::before {
   content: '';
   position: absolute;
@@ -184,15 +183,14 @@ svg#flower-frame {
 
 .book-wrapper {
   position: relative;
-  width: 90vw;
-  max-width: 450px;
-  height: 75vh;
-  max-height: 600px;
+  width: 95vw;
+  max-width: 550px;
+  height: 80vh;
+  max-height: 700px;
   margin: 0 auto;
   perspective: 2500px;
 }
 
-/* El estilo de cada página */
 .hidden-section {
   display: none !important;
 }
@@ -201,7 +199,7 @@ svg#flower-frame {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background-color: #fdfbf7; /* Color crema suave legible */
+  background-color: #fdfbf7;
   border-radius: 4px 16px 16px 4px;
   box-shadow: inset 6px 0 15px rgba(0,0,0,0.06), 4px 8px 25px rgba(0,0,0,0.2);
   transform-origin: left center;
@@ -213,7 +211,6 @@ svg#flower-frame {
   background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
 }
 
-/* Lomo del libro simulado */
 .book-page::before {
   content: '';
   position: absolute;
@@ -227,44 +224,63 @@ svg#flower-frame {
   transform: rotateY(-180deg);
 }
 
-/* Portada del libro */
 .page-cover {
-  background: linear-gradient(135deg, #461715, #2e0e0c);
-  color: #fdfbf7;
-  justify-content: center;
+  background: #333;
+  color: #fff;
+  justify-content: flex-end;
   align-items: center;
   text-align: center;
+  padding: 0;
+  overflow: hidden;
+  border-right: 5px solid rgba(0,0,0,0.3);
 }
-.page-cover::before { background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.1)); }
-.cover-title {
+.page-cover::before { 
+  background: linear-gradient(to right, rgba(0,0,0,0.4), transparent, rgba(0,0,0,0.4)); 
+  z-index: 2;
+}
+.leer-btn {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 12px 35px;
+  border-radius: 50px;
   font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
-  font-style: italic;
-  font-weight: 700;
-  color: #e0c897;
-  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  animation: pulseBtn 2s infinite;
 }
-.cover-subtitle {
-  font-family: 'Lora', serif;
-  font-size: 1.1rem;
-  letter-spacing: 2px;
-  color: #fdfbf7;
-  opacity: 0.8;
+.leer-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateX(-50%) scale(1.05);
+}
+@keyframes pulseBtn {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
 }
 
 .page-content {
   flex: 1;
-  overflow: hidden;
+  overflow-y: scroll;
+  touch-action: pan-y;
   color: #2c241b;
-  padding-right: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding-right: 15px;
+  display: block;
 }
 
-/* Scrollbar estilizada */
-.page-content::-webkit-scrollbar { width: 4px; }
-.page-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+.page-content::-webkit-scrollbar { width: 8px; }
+.page-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+.page-content::-webkit-scrollbar-thumb { background: rgba(70,23,21,0.3); border-radius: 4px; }
 
 .page-title {
   font-family: 'Playfair Display', serif;
@@ -277,11 +293,10 @@ svg#flower-frame {
   padding-bottom: 10px;
 }
 
-/* TEXTO SUPER LEGIBLE */
 .page-content p {
   font-family: 'Lora', serif;
-  font-size: 1.05rem; /* Tamaño perfecto móvil */
-  line-height: 1.65;
+  font-size: 0.95rem;
+  line-height: 1.6;
   margin-bottom: 1.2rem;
   text-align: left;
 }
@@ -294,10 +309,9 @@ svg#flower-frame {
   margin-top: 10px;
 }
 
-/* Controles del libro debajo */
 .book-controls {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 90vw;
   max-width: 450px;
@@ -309,24 +323,17 @@ svg#flower-frame {
   background: rgba(255,255,255,0.1);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.2);
-  padding: 10px 20px;
-  border-radius: 30px;
+  padding: 12px 30px;
+  border-radius: 50px;
   font-family: 'Lora', serif;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: background 0.3s;
-  min-width: 110px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 .book-btn:disabled { opacity: 0.3; cursor: default; }
 .book-btn:not(:disabled):hover { background: rgba(255,255,255,0.2); }
 
-.global-page-indicator {
-  font-family: 'Caveat', cursive;
-  font-size: 1.3rem;
-  color: #e0c897;
-}
-
-/* Botón final del libro */
 .recuerdos-btn {
   display: block;
   margin: 1.5rem auto 0;
@@ -390,8 +397,6 @@ svg#flower-frame {
   position: relative;
   transition: transform 0.3s;
 }
-
-/* Efecto al pasar por encima en dispositivos táctiles/mouse */
 .polaroid:active { transform: scale(0.98); }
 
 .polaroid img, .polaroid video {
@@ -405,7 +410,7 @@ svg#flower-frame {
 
 .polaroid-caption {
   font-family: 'Caveat', cursive;
-  font-size: 1.35rem; /* Ajustado para que los textos largos quepan bellamente */
+  font-size: 1.35rem;
   color: #2c241b;
   text-align: center;
   margin-top: 15px;
@@ -417,7 +422,6 @@ svg#flower-frame {
   margin-bottom: 5px;
 }
 
-/* Stickers sobre el collage */
 .decor-sticker {
   position: absolute;
   width: 60px;
@@ -519,21 +523,67 @@ svg#flower-frame {
   display: block;
 }
 
+/* ===================================================
+   DECORACIONES DEL LIBRO
+=================================================== */
+.floral-divider {
+  text-align: center;
+  color: #8f2d2a;
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+  opacity: 0.6;
+}
+.first-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.8;
+  margin-right: 8px;
+  margin-top: 5px;
+  color: #8f2d2a;
+}
+.highlight {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(120deg, rgba(224, 200, 151, 0.6) 0%, rgba(224, 200, 151, 0.6) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 40%;
+  background-position: 0 88%;
+  font-style: italic;
+  font-weight: 500;
+  color: #461715;
+}
+.bookmark {
+  position: absolute;
+  top: -10px;
+  right: 25px;
+  width: 25px;
+  height: 60px;
+  background: #8f2d2a;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+.bookmark::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  border-width: 12.5px;
+  border-style: solid;
+  border-color: #8f2d2a #8f2d2a transparent #8f2d2a;
+}
 </style>
 </head>
 <body class="locked">
 
-  <!-- Audio -->
-  <audio id="bgm"
-    src="MUSICA DE FONDO/Jósean Log - Chachachá (Lyric Video) - Jósean Log (128k).map3.mp3"
-    type="audio/mpeg" autoplay loop playsinline></audio>
-  <button id="soundBtn">🔇 Silenciar</button>
+  <audio id="bgm" src="Morat - Enamórate De Alguien Más (Video Oficial).mp3" type="audio/mpeg" loop playsinline autoplay></audio>
+  <button id="soundBtn">🔊 Música On</button>
 
 <!-- ========================================================
      SECTION 1: INTRO
 ======================================================== -->
 <section id="section-intro">
-  <!-- Flower Frame SVG (Simplificado el path para visibilidad, mismo del original) -->
   <svg id="flower-frame" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 641.5 637.3">
     <g id="Footer_group_1_">
       <path id="Dots_1_" class="st0" d="M556.2,110c0,1.7-1.4,3.1-3.1,3.1c-1.7,0-3.1-1.4-3.1-3.1s1.4-3.1,3.1-3.1l0,0 C554.9,106.9,556.2,108.3,556.2,110z M631.5,446.1c-1.7,0-3.1,1.4-3.1,3.1s1.4,3.1,3.1,3.1c1.7,0,3.1-1.4,3.1-3.1l0,0 C634.6,447.5,633.2,446.1,631.5,446.1L631.5,446.1z M508.8,64.1c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5 S510.2,64.1,508.8,64.1L508.8,64.1L508.8,64.1z M542.3,273.9c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5l0,0 C544.8,275.1,543.7,273.9,542.3,273.9C542.4,273.9,542.4,273.9,542.3,273.9L542.3,273.9z M605.7,424.2c-1.4,0-2.5,1.1-2.5,2.5 s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5l0,0C608.2,425.3,607.1,424.2,605.7,424.2L605.7,424.2L605.7,424.2z M476.5,502.4 c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5S477.9,502.4,476.5,502.4L476.5,502.4z M548,479.8c-0.7,0-1.2,0.6-1.2,1.2 s0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C549.2,480.4,548.7,479.8,548,479.8z M418.8,581.7c-0.7,0-1.2,0.6-1.2,1.2 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C420.1,582.2,419.5,581.7,418.8,581.7z M562.8,148.3c-0.7,0-1.2,0.6-1.2,1.2 s0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C564.1,148.9,563.5,148.3,562.8,148.3L562.8,148.3z M471,53.9c-0.7,0-1.2,0.6-1.2,1.2 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C472.2,54.5,471.7,53.9,471,53.9z M628.7,440.1c-0.7,0-1.2,0.6-1.2,1.2 s0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C629.9,440.7,629.4,440.1,628.7,440.1z M435,587.9c-0.7,0-1.2,0.6-1.2,1.2 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C436.2,588.4,435.7,587.9,435,587.9z M88.3,106.9c1.7,0,3.1,1.4,3.1,3.1 s-1.4,3.1-3.1,3.1s-3.1-1.4-3.1-3.1l0,0C85.2,108.3,86.6,106.9,88.3,106.9z M6.9,449.2c0,1.7,1.4,3.1,3.1,3.1s3.1-1.4,3.1-3.1 s-1.4-3.1-3.1-3.1S6.9,447.5,6.9,449.2L6.9,449.2z M130.2,66.6c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5l0,0 C131.3,64.1,130.2,65.2,130.2,66.6z M96.7,276.4c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5 C97.8,273.9,96.7,275,96.7,276.4L96.7,276.4z M33.3,426.7c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5 C34.5,424.2,33.3,425.3,33.3,426.7L33.3,426.7z M162.5,504.9c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5 S162.5,503.5,162.5,504.9L162.5,504.9z M92.3,481.1c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2c0-0.7-0.6-1.2-1.2-1.2l0,0 C92.8,479.8,92.3,480.4,92.3,481.1L92.3,481.1L92.3,481.1z M221.4,582.9c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2 c0-0.7-0.6-1.2-1.2-1.2l0,0C222,581.7,221.4,582.2,221.4,582.9z M77.4,149.5c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2 c0-0.7-0.6-1.2-1.2-1.2S77.4,148.8,77.4,149.5L77.4,149.5L77.4,149.5z M169.3,55.2c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2 c0-0.7-0.6-1.2-1.2-1.2C169.9,53.9,169.3,54.4,169.3,55.2C169.3,55.1,169.3,55.1,169.3,55.2L169.3,55.2z M11.6,441.3 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2c0-0.7-0.6-1.2-1.2-1.2l0,0C12.1,440.1,11.6,440.7,11.6,441.3z M205.3,589.1 c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2c0-0.7-0.6-1.2-1.2-1.2l0,0C205.8,587.9,205.3,588.4,205.3,589.1z"/>
@@ -606,7 +656,7 @@ svg#flower-frame {
 </section>
 
 <!-- ========================================================
-     SECTION 2: BOOK — (Optimizado para móvil, vertical flip)
+     SECTION 2: BOOK
 ======================================================== -->
 <section id="section-book" class="hidden-section">
   <h2 class="book-section-title">Mi Última Carta</h2>
@@ -617,11 +667,11 @@ svg#flower-frame {
 
   <div class="book-controls">
     <button class="book-btn" id="btn-prev" onclick="prevPage()" disabled>← Anterior</button>
-    <span class="global-page-indicator" id="global-page">Portada</span>
+    <span class="global-page-indicator" id="global-page" style="display:-none;">Pág.</span>
     <button class="book-btn" id="btn-next" onclick="nextPage()">Siguiente →</button>
   </div>
 
-  <button class="recuerdos-btn" id="recuerdosBtn" style="display:none;">
+  <button class="recuerdos-btn" id="recuerdosBtn" style="display:none;" onclick="document.getElementById('section-collage').scrollIntoView({behavior:'smooth'})">
     Ver Mis Recuerdos 📸
   </button>
 </section>
@@ -629,32 +679,28 @@ svg#flower-frame {
 <!-- ========================================================
      SECTION 3: COLLAGE — MEMORIES
 ======================================================== -->
-<section id="section-collage" class="hidden-section">
+<section id="section-collage">
   <h2 class="collage-title">Nuestros Recuerdos</h2>
   <p class="collage-subtitle">Momentos que guardaré siempre con cariño 🌸</p>
 
   <div class="polaroid-stack">
-    
     <!-- MEMORY 1 -->
     <div class="polaroid" style="transform: rotate(-2deg) translateY(0);">
       <img src="FOTO RECUERDO/RECUERDO CON EMI/EL LUGAR DONDE TE VI POR PRIMERA VEZ.jpg" alt="El lugar donde te vi" />
       <img src="STIKCET/TULIPANES.png" class="decor-sticker" style="bottom:-15px; right:-15px; width:70px; transform:rotate(-15deg);">
       <div class="polaroid-caption">Fue justo aquí donde mis ojos te encontraron por primera vez, y sin darme cuenta, mi corazón empezó a elegirte a ti. 🌟</div>
     </div>
-
     <!-- MEMORY 2 -->
     <div class="polaroid" style="transform: rotate(3deg) translateY(0);">
       <img src="FOTO RECUERDO/DETALLE/FUE MI PRIMER DETALLE MI PRIEMER REGALO MI PRIMERA CARTA ESTA MUY NERVIOSO.jpg" alt="Mi primer detalle" />
-      <div class="polaroid-caption">Jamás pensé escribir una carta para alguien, hasta que llegaste tú y me hiciste querer expresar con detalles todo lo bonito que provocas en mí. 📝</div>
+      <div class="polaroid-caption">Fue mi primera carta y mi primer detalle, estaba muy nervioso. Jamás pensé escribir una carta para alguien, hasta que llegaste tú y me hiciste querer expresar con detalles todo lo bonito que provocas en mí. 📝</div>
     </div>
-
     <!-- MEMORY 3 -->
     <div class="polaroid" style="transform: rotate(-4deg) translateY(0);">
       <img src="FOTO RECUERDO/RECUERDO CON EMI/FOTO EDIT DE MROAT QUE LE THICE CON TODO MI CORAZON.jpg" alt="Edit de Morat" />
       <img src="STIKCET/MORAT-1.png" class="decor-sticker" style="top:-20px; left:-10px; width:65px; transform:rotate(10deg);">
       <div class="polaroid-caption">Tomé como inspiración eso que tanto amas, porque quería convertir tus gustos en un detalle que te hiciera sentir especial. 🎵</div>
     </div>
-
     <!-- MEMORY 4 -->
     <div class="polaroid" style="transform: rotate(2deg) translateY(0);">
       <img src="FOTO RECUERDO/RECUERDO CON EMI/FOTO DE EMI PEQUEÑA.jpg" alt="Emi pequeña" />
@@ -664,7 +710,6 @@ svg#flower-frame {
         Me gustó mucho que me permitieras ver una parte tan tierna de ti, y la verdad fue un gesto que aprecié de corazón. 🥰
       </div>
     </div>
-
     <!-- MEMORY 5 -->
     <div class="polaroid" style="transform: rotate(-3deg) translateY(0);">
       <img src="FOTO RECUERDO/RECUERDO CON EMI/LAMENTO NO HABER TOAMNDO UAN FOTO DE REFERNECIA MEJOR PERO ESTE DIA FU UNO DE LSO MEJROES DIA DE MI VIDA.jpg" alt="El mejor día de mi vida" />
@@ -674,21 +719,18 @@ svg#flower-frame {
         Gracias por regalarme un día tan lindo y por hacer que ese momento significara tanto para mí. 💫
       </div>
     </div>
-
     <!-- MEMORY 6 -->
     <div class="polaroid" style="transform: rotate(4deg) translateY(0);">
       <video src="FOTO RECUERDO/RECUERDO CON EMI/LA VEZ QUE TE PRESTO 5 MINUTOS Y ME DISTE MAS DE 30 GRACIAS.mp4" muted loop playsinline autoplay></video>
       <img src="STIKCET/CHICASUPERPODEROSAS-1.png" class="decor-sticker" style="bottom:10px; left:-20px; width:70px; transform:rotate(-15deg);">
       <div class="polaroid-caption">Te pedí 5 minutos...<br>y me regalaste 30 🌸</div>
     </div>
-
     <!-- MEMORY 7 -->
     <div class="polaroid" style="transform: rotate(-2deg) translateY(0);">
       <img src="FOTO RECUERDO/LOKI/FOTO DE LA PRIMERA VEZ QUE VIA A LOKI.jpeg" alt="Primera vez con Loki" />
       <img src="STIKCET/scitker flores.png" class="decor-sticker" style="top:-15px; right:-15px; width:60px; transform:rotate(20deg);">
       <div class="polaroid-caption">La primera vez<br>que conocí a Loki 🐾</div>
     </div>
-
   </div>
 
   <button class="mensaje-final-btn" onclick="openModal()">Ver Mensaje Final 💌</button>
@@ -704,34 +746,60 @@ svg#flower-frame {
     <p>El hecho de que no hayas sentido lo mismo no significa que no haya valido la pena, porque cada momento, cada experiencia y cada recuerdo contigo fueron algo muy especial para mí.</p>
     <p>Yo decido quedarme con lo mejor de ti, con cada instante bonito, con cada sonrisa y cada platica que me regalaste.</p>
     <p>Te llevo en mi corazón de una manera bonita, con mucho cariño, con inmensa gratitud y con todo lo bueno que significaste en mi vida. Y pase lo que pase, eso nadie me lo quita.</p>
-    <span class="modal-firma">Con cariño, R.I.G ❤️</span>
+    <span class="modal-firma">Con cariño, Rey ❤️</span>
+    <button class="mensaje-final-btn" style="margin: 20px auto 0; font-size: 1.1rem; padding: 12px 25px;" onclick="window.location.href='flores-mensaje.html'">Ábreme 🌷</button>
   </div>
 </div>
 
-<!-- ========================================================
-     JS LOGIC
-======================================================== -->
 <script>
 /* 1. MÚSICA */
 const audio = document.getElementById('bgm');
 const btn = document.getElementById('soundBtn');
-audio.muted = false; audio.volume = 0.8;
-audio.play().catch(()=>{
-  const unlock = ()=>{
-    audio.play().catch(()=>{});
-    document.removeEventListener('click', unlock);
-  };
-  document.addEventListener('click', unlock);
-});
-btn.addEventListener('click', ()=>{
-  if(audio.paused) audio.play();
-  audio.muted = !audio.muted;
-  btn.textContent = audio.muted ? '🔇 Silenciado' : '🔊 Música On';
+
+audio.volume = 0.8;
+
+// Recuperar tiempo si existe
+const savedTime = localStorage.getItem('bgm_time');
+if(savedTime) audio.currentTime = parseFloat(savedTime);
+
+// Guardar el tiempo cada segundo
+setInterval(() => {
+  if(!audio.paused) {
+    localStorage.setItem('bgm_time', audio.currentTime);
+  }
+}, 1000);
+
+// Intentar reproducir inmediatamente
+const startAudio = () => {
+  audio.play().then(() => {
+    btn.textContent = '🔊 Música On';
+  }).catch(() => {
+    btn.textContent = '🔇 Toca para Música';
+  });
+};
+
+// Forzar en la primera interacción si falla el autoplay del navegador
+document.addEventListener('click', () => {
+  if(audio.paused) startAudio();
+}, { once: true });
+
+// Al cargar, intentar play
+window.addEventListener('load', startAudio);
+
+btn.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  if(audio.paused) {
+    audio.play();
+    btn.textContent = '🔊 Música On';
+    audio.muted = false;
+  } else {
+    audio.pause();
+    btn.textContent = '🔇 Música Off';
+  }
 });
 
 /* 2. ANIMACIÓN DE FLORES Y BOTÓN */
 gsap.registerPlugin(DrawSVGPlugin);
-// Los arrays de selectores del SVG
 var stemGroup1 = ["#Stem2_1_","#Stem3_1_","#Stem4_1_","#Stem5a_1_","#Stem5b_1_","#Stem6_1_","#Stem7a_1_","#Stem7b_1_","#Stem7c_1_","#Stem8_1_"];
 var stemGroup2 = ["#Stem17_1_","#Stem18_1_","#Stem19_1_","#Stem20a_1_","#Stem20b_1_","#Stem21_1_","#Stem22a_1_","#Stem22b_1_","#Stem22c_1_","#Stem23_1_"];
 var stemGroup3 = ["#Stem10_1_","#Stem11_1_","#Stem12a_1_","#Stem12b_1_"];
@@ -769,105 +837,33 @@ var tl = gsap.timeline()
   .fromTo(leafGroup1, { autoAlpha: 1, scale: 0, transformOrigin: gsap.utils.wrap(["80% 45%","20% 45%"]) }, { duration: 2, scale: 1 }, "flower1-=1")
   .fromTo(leafGroup2, { autoAlpha: 1, scale: 0, transformOrigin: gsap.utils.wrap(["80% 25%","60% 35%","70% 75%"]) }, { duration: 2, stagger: 0.5, scale: 1 }, "flower1")
   .fromTo(leafGroup3, { autoAlpha: 1, scale: 0, transformOrigin: gsap.utils.wrap(["20% 25%","40% 35%","30% 75%"]) }, { duration: 2, stagger: 0.5, scale: 1 }, "flower1")
-  .fromTo(dots, 4, {scale: 0, transformOrigin: "50% 50%"}, {scale: 1, ease: "expo.out"}, "flower3")
+  .fromTo(dots, {scale: 0, transformOrigin: "50% 50%"}, {duration: 4, scale: 1, ease: "expo.out"}, "flower3")
   .to("#introTitle", { opacity: 1, duration: 1.5, ease: "power2.out" }, "flower2")
   .to("#introSubtitle", { opacity: 1, duration: 1.5, ease: "power2.out" }, "flower2+=0.5")
   .to("#abrirBtn", { opacity: 1, pointerEvents: "auto", y: 0, duration: 1, ease: "power2.out" }, "flower3+=1");
 
-/* 3. LÓGICA DEL LIBRO MÓVIL Y DATOS */
+document.getElementById('abrirBtn').onclick = function() {
+    audio.play().catch(e => console.log('Audio error:', e));
+    document.getElementById('section-intro').classList.add('hidden-section');
+    document.getElementById('section-book').classList.remove('hidden-section');
+    document.body.classList.remove('locked');
+    window.scrollTo(0, 0);
+};
+
+/* 3. LÓGICA DEL LIBRO */
 const pagesData = [
-  { isCover: true, title: "Mi Última<br>Carta", subtitle: "Con todo mi corazón<br>para Emelis 🌷" },
-  { title: "Mi última carta (espero que no)", text: "<p>Esto posiblemente sea mi última carta. Mi último acto de amor, como muchos lo llamarían. Y me da vergüenza que sea digital. Yo quería que mi último acto de amor fuera un ramo de flores, las que más te gustan: tulipanes.</p>" },
-  { text: "<p>Soy ese hombre detallista, no por necesidad, sino por naturaleza. Siempre he dicho que en esta vida hay que amar lo más que se pueda. Y quería entregarte el ramo de tulipanes más hermoso...</p>" },
-  { text: "<p>...y miles de cartas que hablaran de lo valiosa que eres, para que las leyeras y recordaras siempre lo importante que eres y todo lo que puedes llegar a ser. Porque te mereces lo mejor.</p>" },
-  { text: "<p>Me da vergüenza porque, aunque esta carta la escribo con mi mano y pongo todo mi empeño en que sea bonita, créeme que preferiría mil veces la opción de las flores y el papel.</p>" },
-  { text: "<p>Porque sé que te gustan y sé que mereces lo mejor de lo mejor. Pero la vida quiso que estuvieras lejos.</p>" },
-  { text: "<p>Aunque eso no es una excusa para mí. Me gusta resolver, ser útil en la vida de la persona que quiero, y la distancia nunca lo será.</p>" },
-  { text: "<p>La verdad es más sencilla y humana: preferiría no hacerlo porque sé que te haría mucha ilusión, y tengo miedo de que solo me respondas por compromiso, aunque lo haga de corazón.</p>" },
-  { text: "<p>Esta no es una carta de reclamos ni para pedirte nada. Solo son cosas que mi corazón y mi mente necesitan decirte. También es una forma de desahogarme.</p>" },
-  { text: "<p>Creo que en otra vida fui poeta, cantante o compositor, no lo sé. Pero escribir y expresarme me ayuda, y creo que es mi mayor hobby.</p>" },
-  { text: "<p>Antes de que sigas leyendo, quiero que sepas algo: no te escribo para recuperarte, ni para que me respondas. Quizás solo para sentirme mejor conmigo mismo.</p>" },
-  { text: "<p>Te escribo porque, aunque no me lo pediste, me he tomado el tiempo de entender por qué actúas como actúas, y también porque es la mejor manera de poner en orden lo que siento.</p>" },
-  { title: "Mi historia", text: "<p>Quiero empezar hablando de mí, de mi historia contigo, desde mi mirada. Siempre te dije que hay una faceta mía que es importante que conozcas para que me entiendas.</p>" },
-  { text: "<p>Te juro que cuando la sepas, comprenderás mis comportamientos, mis actitudes raras. He querido decírtelo y sé que te lo mereces, pero preferiría hacerlo en persona. Ojalá podamos volvernos a ver algún día.</p>" },
-  { text: "<p>Todo comenzó cuando me demoré en voltearte a ver. Y lo primero que vi fue tu cara. Ese día, tu outfit era espectacular: ese sombrero de vallenato te quedaba genial, tu vestido negro me encantó. Te veías divina, Emelis.</p>" },
-  { text: "<p>Te vi y, si recuerdas, te dije: \"¿Qué hubo? ¿Eres de Medellín, ¿verdad?\" Luego te pregunté el barrio y recuerdo tu sonrisa. No sé si ya la estoy imaginando, pero sonreíste.</p>" },
-  { text: "<p>Yo llegaba recién de un bazar y le dije a mi primo: \"Esta nena está muy linda\". Me da mucha risa porque, cuando entramos a la casa, no te presté atención; ni siquiera te volví a mirar, pero me moría de ganas de hablarte.</p>" },
-  { text: "<p>Solo que pensé que eras algo de mi primo Wilmer. Pasaron dos o tres días y vimos al chico que te llevó en moto.</p>" },
-  { text: "<p>Fuimos a comer con él y, en eso, dijo que la amiga de Wilmer había comentado que un chico de gafas le pareció lindo. Como ese día había varios con gafas, todos pensaron en todos, menos en mí.</p>" },
-  { text: "<p>Porque, en realidad, al principio no me llamaste la atención superficialmente, aunque sí me gusta cada parte de tu cuerpo: tu boca, tu cintura, tu pelo, tu cara.</p>" },
-  { text: "<p>Sobre todo tus cejas. Me pareces muy hermosa. Creo que te recordaré toda la vida, Emelis. Al principio me gustó eso, cada parte de tu cuerpo.</p>" },
-  { text: "<p>Pero no sabíamos con quién era el comentario. Dije: \"¿Cómo vamos a saber?\" Tuve que insistirle a mi primo para que me dijera, y al final confesó:</p>" },
-  { text: "<p>\"La verdad, esa muchacha gustó de ti\". Y yo no podía creerlo. Le pedí el contacto una y otra vez, hasta que un día llegó con su mejor amigo (creo que es muy amigo tuyo también, el de nombre como de perro, el blanquito).</p>" },
-  { text: "<p>Les invité varias frías y, al final, mi primo dijo: \"Bueno, tocará darle el número\". Ese día no tenía mi celular, así que te escribí desde el celular de emel.</p>" },
-  { text: "<p>Pasaron los días, y cuando comenzamos a hablar de verdad, fue algo muy lindo. En mi mente había dudas: \"¿Será que esta muchacha es mala? ¿Será bandida?\" (aunque, siendo honesto, aún no lo sé).</p>" },
-  { text: "<p>Pero a los pocos días ya me quería casar contigo. Mi corazón te eligió, y ¿qué culpa tiene? No le pidas que entienda de preferencias ni de prioridades.</p>" },
-  { text: "<p>Échale la culpa a mi corazón, no a mí. Pronto empecé a pensar: \"¿Cómo la traigo a mi casa? ¿Qué dirán mis papás? Ella es menor\".</p>" },
-  { text: "<p>Y créeme, yo iba contra todos: contra la corriente, contra mi familia. Mi corazón me decía: \"Si de verdad la quieres, párate firme y pelea hasta el final\". Y eso nunca iba a ser un problema para mí.</p>" },
-  { text: "<p>Les conté a mis primos, Emel y Lucas. Ellos me aconsejaban: \"No le metas corazón, no la conoces, no sabes con quién anda\". Consejos que no me sirvieron de nada.</p>" },
-  { text: "<p>También me dijeron que no debía haberme expresado así tan pronto. Y tenían razón. Ahí supe que la había cagado y que necesitaba arreglarlo.</p>" },
-  { text: "<p>Me dije: \"No quiero quedar mal con ella porque me gustó su confianza. Voy a escribirle una carta con lo que siento\". Y así lo hice.</p>" },
-  { text: "<p>Te juro que nunca pensé que me responderías. Lo hice de corazón, como todo lo que te he demostrado. No es mentira: es la verdad. Por eso no le doy tanta vuelta al asunto: no perdí nada y no me arrepiento de nada.</p>" },
-  { text: "<p>Ese día del paseo, mi primo Wilmer le contó a Emel, Emel a mi familia, y yo recibí tu mensaje. Me encantó, pero también me llevé una buena dosis de realidad:</p>" },
-  { text: "<p>comentarios de: \"Esa muchacha no te quiere, no te valora, no le interesas\". Y yo solo podía responder: \"Peleen con mi corazón, no conmigo\".</p>" },
-  { text: "<p>Mientras otro comentario me felicitó por el detalle, aunque sabían que quizás no sería correspondido. Y a mí me valió: lo hice sin esperar nada.</p>" },
-  { text: "<p>El corazón es terco, y tú lo sabes bien. Seguí ahí, a veces sintiéndome menos, preguntándome qué hacía mal. Pensaba que quizás no te gustaba, que tendrías a alguien más, alguien más joven.</p>" },
-  { text: "<p>Las inseguridades, siempre. Pero me decía: \"No me voy a rendir. Quiero que sea ella, aunque tenga que hacer lo imposible \". Mis primos me tenían la vida triste, pero no porque no me apoyaran, sino porque saben lo que valgo.</p>" },
-  { text: "<p>Ellos me decían: \"No le escribas más\". Y yo, o, mejor dicho, mi corazón débil y terco, los ignoraba. Seguí ahí, como sea, pero seguía. Era una pelea diaria con ellos.</p>" },
-  { text: "<p>Me decía habla con otras chicas y yo decía: \"No, a mí me cautivó Emelis. Yo sé que ella esconde algo, su verdadera forma. Está dolida y yo quiero sanar su herida. Quiero apoyarla, aunque no le guste.</p>" },
-  { text: "<p>Quiero quitarle la máscara, aunque pierda toda mi dignidad. Ella me mostró algo oculto, algo vulnerable. Necesita un apoyo y no quiero fallarle.</p>" },
-  { text: "<p>Quiero ser yo quien le devuelva la confianza en querer a alguien quiero se yo la que la vulva a hacer la persona que fue\". El día que te vi por primera vez no fui yo. No soy así.</p>" },
-  { text: "<p>Pero tú tienes algo que hace latir mi corazón. El día que fui a ver a mi hijo, el impulso me consumió.</p>" },
-  { text: "<p>Los días que nos volvimos a ver en la ventana fueron muy lindos para mí, aunque fueran pequeños tiempo y momento fue algo lindo para mí te veía y solo pensaba en lo hermosa que eres pensaba muchas cosas te deseaba más que nada del buen sentido de la palabra.</p>" },
-  { text: "<p>Me sentía en la nube mi corazón comenzaba a latir rápido. Me quedé con ganas de ir a tocarte la guitarra, llevarte rosa, chocolates para ti, siempre suponía que no era tu mejor opción, y prefería no hacerlo.</p>" },
-  { text: "<p>Cuando me pediste que no te hablara más, me sentí muy mal. Ese día o un día ante había comprado una caja de helado para compartir creo que te había dicho tengo algo guardado en la nevera.</p>" },
-  { text: "<p>No buscaba nada más que pasar un buen rato, hablar, escucharte Solo eso no te iba exigir ni a pedir nada. Luego me diste la oportunidad de invitaste a vernos, al mirador, a comer fresas con crema a acompañarte.</p>" },
-  { text: "<p>Me gustó sin importancia de tus intenciones, Pero algo me dio rabia me molesto porque me Moria de ganar de besarte de agárrate de la cintura de abrazarte de darte cariño y ese día llegue muy decepcionado conmigo mismo...</p>" },
-  { text: "<p>...por eso también te había dicho que estaba decepcionando, pero no de ti si no de mí y no era que no quería es te quiero demasiado eso es lo que pasa la verdad y cuando uno quiere a veces le entra un miedo y si me falto iniciativas, pero al pensar de todo la pasé muy bien.</p>" },
-  { text: "<p>Ojalá algún día te vuelva a ver cara a cara y te explique por qué fuiste tan especial para mí. Al día siguiente, la salida con tu familia está entre las tres mejores cosas que me han pasado fue algo muy especial para mí.</p>" },
-  { text: "<p>Fue muy lindo conocer a tu familia a tu hermano a tu hermana a tu mama a tu amiga litera fue algo muy lindo para mi y siempre te voy a agradecer por bríndame esa oportunidad de reírme con tu familia.</p>" },
-  { text: "<p>Créeme que ese día fue algo muy lindo porque ese día me sentía un poquito mal por tanta cosas que he pensado y está ahí y divertirme y reírme un rato fue algo muy lindo la verdad.</p>" },
-  { text: "<p>Lo peor de todo es que mi comportamiento fue muy serio pero es que tenía pena si supieras que a mí también me gustar reír divertirme pasar buen rato pero la pena no me dejaba ni habla.</p>" },
-  { text: "<p>Y disculpa mi drama que te genere en el chat voy a hacer honesto todo mi drama no fue por eso fue porque me muero de celos por ti emelis y que culpa sé que acá nadie tiene la culpa porque tú nunca me pediste nada pero dile eso a mi corazón.</p>" },
-  { text: "<p>Todo el drama que te arme no fue simplemente drama fue celos y no es que sea celoso solo es que tati tú me encantas muchos y sabes que siempre voy a querer lo mejor para ti pero ese día que llegaste de Cartagena me molesto mucho saber que posiblemente estaba haciendo que cosas.</p>" },
-  { text: "<p>Y lo peor me molesta no lo que podría haber hecho sino que me mientas y lo peor de caso sabes que tiene razón en todos no te puedo reclamar nada pero entiende que también me sentí un poquito usado y no te culpo y nunca lo hare porque te entiendo.</p>" },
-  { text: "<p>Solo quería que lo supiera me gustar ser muy sincero y directo con la personas por eso mi comportamiento en el chat y no los justifico y no te digo esto para que me hable ni nada solo que me muero de celos por ti sin tener razones alguna y es difícil.</p>" },
-  { text: "<p>Ponte en mi puesto por un momento y compradera más que nadie tú mejor que nadie sabes lo que es pasar por lo que yo estoy pasando por ti. Emelis, me moría por tomarte de la mano, tocarte, abrazarte, poner mi mano sobre tu pierna, pero de buena formar, dedicarte más atención.</p>" },
-  { text: "<p>Pero sentía mucha pena en ese momento y mas estado por primera vez con tu familia otro punto es que no es que sea frío; es que me gusta hacer las cosas de corazón. Si ese día fallé en demostrarte quién soy, créeme que no soy así.</p>" },
-  { text: "<p>Me gusta divertirme y que se note mi presencia no entiendo cuando me dijiste que no te gusta la formar como soy como me expreso no se si referencia a como soy contigo realmente no lo sé si lo dice por el chat me hago la idea que fue por la formar que me expreso por el chat y quiero decirte que realmente yo no soy así.</p>" },
-  { text: "<p>Soy muy serio y cálido pero créeme que pensé que te gustaba o si te refiere a como me comporte con tu familia o contigo y si es eso la verdad me molesto bastante porque por naturaleza soy esa persona que le gusta siempre está pendiente de que necesitan de cómo te siente de ayudarte ser una persona caballerosa.</p>" },
-  { text: "<p>Y normalmente soy así por naturaleza no porque quiera demostrar esa cualidad. Me dio pena no haber puesto dinero para la comida, pero sabía que no me aceptarías.</p>" },
-  { title: "Esperanza y Lecciones", text: "<p>Ese día le comenté a mi familia sobre ti y me apoyaron con el tema por eso también me sentí aún más con el corazón en la mano. Ya me imaginaba pasando la Navidad contigo, pensando en qué regalarte de navidad y de tu cumple.</p>" },
-  { text: "<p>Y lo peor es que aún tengo esperanza. Hasta que no salga de tu boca un "no me busques, no me gustas, nunca me gustaste, solo me hacías sentir bien", no me rendiré del todo. Porque te entiendo: estás herida y no estás lista.</p>" },
-  { text: "<p>Creo que te comprendí tanto que ya nada me afecta. Solo me duele haber perdido la oportunidad de ayudarte a comprenderte, a sanar, a dejar el pasado. Pero no quisiste. Yo me voy tranquilo, sabiendo que hice todo lo posible.</p>" },
-  { text: "<p>Desde la primera vez te dije: "Puedes amarme como a un rompecabezas". Pero nunca supiste cómo armarme. Yo quería ser la persona más completa en tu vida: quería ser tu zona asegurar y también quería ser la parte diversidad de tu vida.</p>" },
-  { text: "<p>Te di dos versiones en una sola, y no supiste tomar ninguna. Quizás tenías la mano ocupada con otra cosa. Espero haber sido algo para ti, o al menos útil. Espero que te hayas dado cuenta de que aún hay personas buenas en este mundo.</p>" },
-  { text: "<p>No esperes menos de nadie. No dejes que el pasado marque tu futuro. Si algún día quieres volver, aquí estaré. No sé por cuánto tiempo, pero si quieres empezar de cero, con las cosas claras, con objetivos claros, no pierdas tu energía en el pasado.</p>" },
-  { text: "<p>El pasado no se puede cambiar. Lo que cambia es lo que haces hoy. Haz las paces con tu historia. No arruines algo bueno por pensar de más. Todos venimos con cicatrices, pero también con ganas de empezar de nuevo.</p>" },
-  { text: "<p>Intenta volver a querer, pero elige bien. No te digo que busques algo formal, porque hoy en día es difícil. Solo ten claro qué quieres con la persona. No te enredes en ese bucle amoroso. Perdónate. No debemos cambiar nuestro pasado, aunque duela.</p>" },
-  { text: "<p>Pero no te aferres a los malos amores, a los traumas, a las deudas con tu propia persona. Aférrate a ser mejor cada día. Toma lo bueno de cada momento malo. Nunca te voy a odiar, aunque me hayas menospreciado o roto el corazón.</p>" },
-  { text: "<p>Siempre te voy a querer porque te llegué a entender. No me rindo contigo, pero dejar ir también es un acto de amor. Tienes que madurar por tu cuenta. Me va a doler no estar ahí, no abrazarte, no consentirte.</p>" },
-  { text: "<p>Y sé que puedes volver a caer en el mismo bucle. Pero intenta no vivir en él. La gente es una mierda, pero eso no significa que tú también lo seas. Entiendo que es difícil superar a quien le diste todo: tu vida, tu cuerpo, tus imperfecciones.</p>" },
-  { text: "<p>Pero no te conviertas en esa persona que te hizo daño. No se construye un imperio con alguien que sigue mirando al pasado. Suelta y construye tu propio camino. No tengas miedo de empezar de cero.</p>" },
-  { text: "<p>Como dice tu música favorita, quizás te guste tu nueva historia. Vive en paz, sin hacer daño a nadie. Enfócate en tus metas. Cuando a alguien le importas, se nota. Y cuando no, también. A mí me cuesta aprenderlo, y tú entiendes eso mejor que nadie.</p>" },
-  { text: "<p>Bonito fue compartir un rato. Verte sonreír me alegraba los días malos. Fue mala suerte, o quizás no convenía. Pero valió la pena. Aun así, sigo buscando algo en ti que no sé si encontraré.</p>" },
-  { text: "<p>Solo no te conviertas en lo que no eres porque alguien te falló. Reconoce lo que te mereces. Si te mereces que te pongan los cuernos o que te traten mal, pregúntate por qué te gusta eso.</p>" },
-  { text: "<p>Reconoce lo que quieres y trata a los demás como merecen. Pero no te vuelvas algo que no eres por miedo a que te fallen otra vez.</p>" },
-  { text: "<p>Al final, creo que me va a doler más a mí que a ti, porque tú tienes con qué distraerte. Yo viviré pensando si tomaste mi consejo, si significó algo para ti. Solo te tenía fe. Es feo estar triste por alguien que no lo está por ti y entiendo que tu pasaste por cada esta de la facetas que te menciono.</p>" },
-  { text: "<p>Pero entiendo que no debería estarlo. Yo estoy bien, sé lo que quiero. Algunas personas solo llegan a enseñarte algo. Todo es pasajero. Arregla tu desmadre. Y cuando estés libre del pasado y del miedo, trae tu mano desocupada y le damos con todo.</p>" },
-  { text: "<p>Yo sabía que la iba a pasar mal, que me mentirías, que quizás todo era falso. Lo sabía, tati. No te sientas mal por eso fue mi decisión yo solo quería volver a traer la mejor versión de ti o mucho mejor sacar una mejor versión de ti.</p>" },
-  { text: "<p>Me obsesión con tu historia con tu pasado con tu cuento con la niña que fue feliz en su momento con la niña que vivió miles de aventura con la niña que se caño y se hizo un desmadre y preguntarle si se arrepiente de hacerlo sé que no se igualmente eso pasa en todo los termino tati.</p>" },
-  { text: "<p>Aprender que la vida sigue y que no debemos cambiar nuestra vida o pensamiento por culpa de nuestro problema o situaciones o por nuestra heridas del pasado el objetivo esta en ser mejor persona que ayer en sacar la mejor versión de ti. Yo tomé mis decisiones.</p>" },
-  { text: "<p>Pero quiero que sepas que no puedes entrar en la vida de alguien que te quiere y luego irte como si nada. No lo digo por rencor, sino porque te entiendo. Solo necesitabas sentir amor incondicional y yo te lo di, sabiéndolo.</p>" },
-  { text: "<p>Eres un libro complicado y me tomé el tiempo de leerte. Pero qué lástima que no te gustara que se yo nunca me lo dijiste, pero respeto tu decisión. ¿Qué va a doler? Pues a mí, no. Pero quizás a ti sí. Expresar lo que siento me hace fuerte.</p>" },
-  { text: "<p>Pero tú, cuando lleguen los días de lágrimas, ¿Cuánta persona estará ahí para ti? Cuando duelan tus emociones, ¿quién estará? Espero que encuentres a alguien en ese momento un familiar un novio un vacilón que se yo tati por mas fuerte que sea debe dejar el orgullo atrás.</p>" },
-  { text: "<p>Siempre necesitamos el apoyo condicional de un amigo una amiga que se yo de alguien no podemos ir contra el mundo solo. No me pongo triste porque soy un buen hombre, no soy interesado.</p>" },
-  { text: "<p>Lo único que me molesta es que siempre me dicen es "Eso te pasa por ser buena persona". ¿Desde cuándo ser buena persona es malo? Me gusta ser buena persona para dejar huella. Y espero haber dejado una en tu vida.</p>" },
-  { text: "<p>Lamento haber malinterpretado nuestra amistad, pero si me hubieras dicho lo que realmente querías, te lo habría dado. Si querías algo de un momento, te habría dado el mejor momento. Creo que la lección más difícil es aceptar lo que ya no está.</p>" },
-  { title: "El último acto de amor", text: "<p>El mayor acto de amor es dejar ir a quien quieres. Y no lo digo por mí, sino por tu pasado. Como último acto de amor, te confieso que siempre me quedaré con las ganas de tener algo contigo o volver a empezar desde cero como dice tu música.</p>" },
-  { text: "<p>Y si vivo ilusionado porque nunca me dijiste que me fuera y mi celebro por más razones que me de tu indiferencia conmigo mi corazón dice que aun puedo que no me rinda y cada vez que hablamos cada vez te comprendo y te entiendo más.</p>" },
-  { text: "<p>Y si me puedo tomarme el atrevimiento de decir que no tenemos que empezar de cero esa frase creo que gracias a ti se e va a quedar grabada para siempre. Porque yo sí quería que fueras tú y de pronto si me va a doler el típico mensaje lo siento eres mucho para o lo siento no estoy segura ahora.</p>" },
-  { text: "<p>Pero más si quiera ese mensaje llegara y si me va doler pero creo que aparte de eso matare por completo mi ilusión y podre dejarte ir por completo.</p>" }
+  { isCover: true, coverImage: "FOTO PORTADA DEL LIBRO).png" },
+  { title: "Mi última carta (espero que no)", text: "<p><span class=\"first-letter\">E</span>sto posiblemente sea mi última carta. Mi último acto de amor, como muchos lo llamarían. Y me da vergüenza que sea digital. Yo quería que mi último acto de amor fuera un ramo de flores, las que más te gustan: tulipanes.</p><p>Soy ese hombre detallista, no por necesidad, sino por naturaleza. <span class=\"highlight\">Siempre he dicho que en esta vida hay que amar lo más que se pueda.</span> Y quería entregarte el ramo de tulipanes más hermoso y miles de cartas que hablaran de lo valiosa que eres, para que las leyeras y recordaras siempre lo importante que eres y todo lo que puedes llegar a ser. Porque te mereces lo mejor.</p><p>Me da vergüenza porque, aunque esta carta la escribo con mi mano y pongo todo mi empeño en que sea bonita, créeme que preferiría mil veces la opción de las flores y el papel. Porque sé que te gustan y sé que mereces lo mejor de lo mejor.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Pero la vida quiso que estuvieras lejos. Aunque eso no es una excusa para mí. Me gusta resolver, ser útil en la vida de la persona que quiero, y la distancia nunca lo será. La verdad es más sencilla y humana: preferiría no hacerlo porque sé que te haría mucha ilusión, y tengo miedo de que solo me respondas por compromiso, aunque lo haga de corazón.</p><p>Esta no es una carta de reclamos ni para pedirte nada. Solo son cosas que mi corazón y mi mente necesitan decirte. También es una forma de desahogarme. Creo que en otra vida fui poeta, cantante o compositor, no lo sé. Pero escribir y expresarme me ayuda, y creo que es mi mayor hobby.</p><p>Antes de que sigas leyendo, quiero que sepas algo: <span class=\"highlight\">no te escribo para recuperarte, ni para que me respondas</span>. Quizás solo para sentirme mejor conmigo mismo. Te escribo porque, aunque no me lo pediste, me he tomado el tiempo de entender por qué actúas como actúas, y también porque es la mejor manera de poner en orden lo que siento.</p>" },
+  { title: "Mi historia", text: "<p><span class=\"first-letter\">Q</span>uiero empezar hablando de mí, de mi historia contigo, desde mi mirada. Siempre te dije que hay una faceta mía que es importante que conozcas para que me entiendas. Te juro que cuando la sepas, comprenderás mis comportamientos, mis actitudes raras.</p><p>He querido decírtelo y sé que te lo mereces, pero preferiría hacerlo en persona. Ojalá podamos volvernos a ver algún día.</p><p>Todo comenzó cuando me demoré en voltearte a ver. Y lo primero que vi fue tu cara. Ese día, tu outfit era espectacular: ese sombrero de vallenato te quedaba genial, tu vestido negro me encantó. Te veías divina, Emelis.</p><p>Te vi y, si recuerdas, te dije: \"¿Qué hubo? ¿Eres de Medellín, ¿verdad?\" Luego te pregunté el barrio y recuerdo tu sonrisa. No sé si ya la estoy imaginando, pero sonreíste.</p><p>Yo llegaba recién de un bazar y le dije a mi primo: \"Esta nena está muy linda\". Me da mucha risa porque, cuando entramos a la casa, no te presté atención; ni siquiera te volví a mirar, pero me moría de ganas de hablarte. Solo que pensé que eras algo de mi primo Wilmer.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Pasaron dos o tres días y vimos al chico que te llevó en moto. Fuimos a comer con él y, en eso, dijo que la amiga de Wilmer había comentado que un chico de gafas le pareció lindo. Como ese día había varios con gafas, todos pensaron en todos, menos en mí.</p><p>Porque, en realidad, al principio no me llamaste la atención superficialmente, aunque <span class=\"highlight\">sí me gusta cada parte de tu cuerpo</span>: tu boca, tu cintura, tu pelo, tu cara. Sobre todo tus cejas. Me pareces muy hermosa. Creo que te recordaré toda la vida, Emelis.</p><p>Al principio me gustó eso, cada parte de tu cuerpo. Pero no sabíamos con quién era el comentario. Dije: \"¿Cómo vamos a saber?\" Tuve que insistirle a mi primo para que me dijera, y al final confesó: \"La verdad, esa muchacha gustó de ti\".</p>" },
+  { text: "<p><span class=\"first-letter\">Y</span> yo no podía creerlo. Le pedí el contacto una y otra vez, hasta que un día llegó con su mejor amigo (creo que es muy amigo tuyo también, el de nombre como de perro, el blanquito). Les invité varias frías y, al final, mi primo dijo: \"Bueno, tocará darle el número\". Ese día no tenía mi celular, así que te escribí desde el celular de emel.</p><p>Pasaron los días, y cuando comenzamos a hablar de verdad, fue algo muy lindo. En mi mente había dudas: \"¿Será que esta muchacha es mala? ¿Será bandida?\" (aunque, siendo honesto, aún no lo sé). Pero a los pocos días ya me quería casar contigo.</p><p><span class=\"highlight\">Mi corazón te eligió, y ¿qué culpa tiene?</span> No le pidas que entienda de preferencias ni de prioridades. Échale la culpa a mi corazón, no a mí.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Pronto empecé a pensar: \"¿Cómo la traigo a mi casa? ¿Qué dirán mis papás? Ella es menor\". Y créeme, yo iba contra todos: contra la corriente, contra mi familia. Mi corazón me decía: \"Si de verdad la quieres, párate firme y pelea hasta el final\". Y eso nunca iba a ser un problema para mí.</p><p>Les conté a mis primos, Emel y Lucas. Ellos me aconsejaban: \"No le metas corazón, no la conoces, no sabes con quién anda\". Consejos que no me sirvieron de nada. También me dijeron que no debía haberme expresado así tan pronto. Y tenían razón. Ahí supe que la había cagado y que necesitaba arreglarlo.</p><p>Me dije: \"No quiero quedar mal con ella porque me gustó su confianza. Voy a escribirle una carta con lo que siento\". Y así lo hice.</p><p>Te juro que nunca pensé que me responderías. <span class=\"highlight\">Lo hice de corazón</span>, como todo lo que te he demostrado. No es mentira: es la verdad. Por eso no le doy tanta vuelta al asunto: no perdí nada y no me arrepiento de nada.</p>" },
+  { text: "<p><span class=\"first-letter\">E</span>se día del paseo, mi primo Wilmer le contó a Emel, Emel a mi familia, y yo recibí tu mensaje. Me encantó, pero también me llevé una buena dosis de realidad: comentarios de: \"Esa muchacha no te quiere, no te valora, no le interesas\". Y yo solo podía responder: \"Peleen con mi corazón, no conmigo\". Mientras otro comentario me felicitó por el detalle, aunque sabían que quizás no sería correspondido. Y a mí me valió: lo hice sin esperar nada.</p><p>El corazón es terco, y tú lo sabes bien. Seguí ahí, a veces sintiéndome menos, preguntándome qué hacía mal. Pensaba que quizás no te gustaba, que tendrías a alguien más, alguien más joven. Las inseguridades, siempre. Pero me decía: <span class=\"highlight\">\"No me voy a rendir. Quiero que sea ella, aunque tenga que hacer lo imposible \".</span></p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Mis primos me tenían la vida triste, pero no porque no me apoyaran, sino porque saben lo que valgo. Ellos me decían: \"No le escribas más\". Y yo, o, mejor dicho, mi corazón débil y terco, los ignoraba.</p><p>Seguí ahí, como sea, pero seguía. Era una pelea diaria con ellos. Me decía habla con otras chicas y yo decía: \"No, a mí me cautivó Emelis.</p><p>Yo sé que ella esconde algo, su verdadera forma. Está dolida y yo quiero sanar su herida. Quiero apoyarla, aunque no le guste. Quiero quitarle la máscara, aunque pierda toda mi dignidad.</p><p>Ella me mostró algo oculto, algo vulnerable. Necesita un apoyo y no quiero fallarle. Quiero ser yo quien le devuelva la confianza en querer a alguien quiero se yo la que la vulva a hacer la persona que fue\".</p>" },
+  { text: "<p><span class=\"first-letter\">E</span>l día que te vi por primera vez no fui yo. No soy así. Pero tú tienes algo que hace latir mi corazón. El día que fui a ver a mi hijo, el impulso me consumió.</p><p>Los días que nos volvimos a ver en la ventana fueron muy lindos para mí, aunque fueran pequeños tiempo y momento fue algo lindo para mí te veía y solo pensaba en lo hermosa que eres pensaba muchas cosas te deseaba más que nada del buen sentido de la palabra me sentía en la nube mi corazón comenzaba a latir rápido.</p><p>Me quedé con ganas de ir a tocarte la guitarra, llevarte rosa, chocolates para ti, siempre suponía que no era tu mejor opción, y prefería no hacerlo.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Cuando me pediste que no te hablara más, me sentí muy mal. Ese día o un día ante había comprado una caja de helado para compartir creo que te había dicho tengo algo guardado en la nevera.</p><p>No buscaba nada más que pasar un buen rato, hablar, escucharte Solo eso no te iba exigir ni a pedir nada.</p><p>Luego me diste la oportunidad de invitaste a vernos, al mirador, a comer fresas con crema a acompañarte. Me gustó sin importancia de tus intenciones, Pero algo me dio rabia me molesto porque me Moria de ganar de besarte de agárrate de la cintura de abrazarte de darte cariño y ese día llegue muy decepcionado conmigo mismo por eso también te había dicho que estaba decepcionando, pero no de ti si no de mí y no era que no quería es te quiero demasiado eso es lo que pasa la verdad y cuando uno quiere a veces le entra un miedo y si me falto iniciativas, pero al pensar de todo la pasé muy bien. <span class=\"highlight\">Ojalá algún día te vuelva a ver cara a cara y te explique por qué fuiste tan especial para mí.</span></p>" },
+  { text: "<p><span class=\"first-letter\">A</span>l día siguiente, la salida con tu familia está entre las tres mejores cosas que me han pasado fue algo muy especial para mí fue muy lindo conocer a tu familia a tu hermano a tu hermana a tu mama a tu amiga litera fue algo muy lindo para mi y siempre te voy a agradecer por bríndame esa oportunidad de reírme con tu familia créeme que ese día fue algo muy lindo porque ese día me sentía un poquito mal por tanta cosas que he pensado y está ahí y divertirme y reírme un rato fue algo muy lindo la verdad lo peor de todo es que mi comportamiento fue muy serio pero es que tenía pena si supieras que a mí también me gustar reír divertirme pasar buen rato pero la pena no me dejaba ni habla y disculpa mi drama que te genere en el chat.</p><p>Voy a hacer honesto todo mi drama no fue por eso fue porque me muero de celos por ti emelis y que culpa sé que acá nadie tiene la culpa porque tú nunca me pediste nada pero dile eso a mi corazón todo el drama que te arme no fue simplemente drama fue celos y no es que sea celoso solo es que <span class=\"highlight\">tati tú me encantas muchos y sabes que siempre voy a querer lo mejor para ti.</span></p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Pero ese día que llegaste de Cartagena me molesto mucho saber que posiblemente estaba haciendo que cosas y lo peor me molesta no lo que podría haber hecho sino que me mientas y lo peor de caso sabes que tiene razón en todos no te puedo reclamar nada pero entiende que también me sentí un poquito usado y no te culpo y nunca lo hare porque te entiendo.</p><p>Solo quería que lo supiera me gustar ser muy sincero y directo con la personas por eso mi comportamiento en el chat y no los justifico y no te digo esto para que me hable ni nada solo que me muero de celos por ti sin tener razones alguna y es difícil ponte en mi puesto por un momento y compradera más que nadie tú mejor que nadie sabes lo que es pasar por lo que yo estoy pasando por ti.</p>" },
+  { text: "<p><span class=\"first-letter\">E</span>melis, me moría por tomarte de la mano, tocarte, abrazarte, poner mi mano sobre tu pierna, pero de buena formar, dedicarte más atención. Pero sentía mucha pena en ese momento y mas estado por primera vez con tu familia otro punto es que no es que sea frío; es que me gusta hacer las cosas de corazón, Si ese día fallé en demostrarte quién soy, créeme que no soy así. Me gusta divertirme y que se note mi presencia</p><p>No entiendo cuando me dijiste que no te gusta la formar como soy como me expreso no se si referencia a como soy contigo realmente no lo sé si lo dice por el chat me hago la idea que fue por la formar que me expreso por el chat y quiero decirte que realmente yo no soy así soy muy serio y cálido pero créeme que pensé que te gustaba o si te refiere a como me comporte con tu familia o contigo y si es eso la verdad me molesto bastante porque por naturaleza soy esa persona que le gusta siempre está pendiente de que necesitan de cómo te siente de ayudarte ser una persona caballerosa y normalmente soy así por naturaleza no porque quiera demostrar esa cualidad.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Me dio pena no haber puesto dinero para la comida, pero sabía que no me aceptarías. Ese día le comenté a mi familia sobre ti y me apoyaron con el tema por eso también me sentí aún más con el corazón en la mano.</p><p><span class=\"highlight\">Ya me imaginaba pasando la Navidad contigo</span>, pensando en qué regalarte de navidad y de tu cumple. Y lo peor es que aún tengo esperanza. Hasta que no salga de tu boca un \"no me busques, no me gustas, nunca me gustaste, solo me hacías sentir bien\", no me rendiré del todo. Porque te entiendo: estás herida y no estás lista.</p>" },
+  { text: "<p><span class=\"first-letter\">C</span>reo que te comprendí tanto que ya nada me afecta. Solo me duele haber perdido la oportunidad de ayudarte a comprenderte, a sanar, a dejar el pasado. Pero no quisiste.</p><p>Yo me voy tranquilo, sabiendo que hice todo lo posible. Desde la primera vez te dije: <span class=\"highlight\">\"Puedes amarme como a un rompecabezas\".</span> Pero nunca supiste cómo armarme. Yo quería ser la persona más completa en tu vida: quería ser tu zona asegurar y también quería ser la parte diversidad de tu vida Te di dos versiones en una sola, y no supiste tomar ninguna. Quizás tenías la mano ocupada con otra cosa.</p><p>Espero haber sido algo para ti, o al menos útil. Espero que te hayas dado cuenta de que aún hay personas buenas en este mundo.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>No esperes menos de nadie. No dejes que el pasado marque tu futuro. Si algún día quieres volver, aquí estaré. No sé por cuánto tiempo, pero si quieres empezar de cero, con las cosas claras, con objetivos claros, no pierdas tu energía en el pasado. El pasado no se puede cambiar. Lo que cambia es lo que haces hoy. Haz las paces con tu historia. No arruines algo bueno por pensar de más. Todos venimos con cicatrices, pero también con ganas de empezar de nuevo.</p><p>Intenta volver a querer, pero elige bien. No te digo que busques algo formal, porque hoy en día es difícil. Solo ten claro qué quieres con la persona. No te enredes en ese bucle amoroso. Perdónate. No debemos cambiar nuestro pasado, aunque duela. Pero no te aferres a los malos amores, a los traumas, a las deudas con tu propia persona. Aférrate a ser mejor cada día. Toma lo bueno de cada momento malo.</p>" },
+  { text: "<p><span class=\"first-letter\">N</span>unca te voy a odiar, aunque me hayas menospreciado o roto el corazón. Siempre te voy a querer porque te llegué a entender. No me rindo contigo, pero <span class=\"highlight\">dejar ir también es un acto de amor.</span> Tienes que madurar por tu cuenta. Me va a doler no estar ahí, no abrazarte, no consentirte. Y sé que puedes volver a caer en el mismo bucle. Pero intenta no vivir en él. La gente es una mierda, pero eso no significa que tú también lo seas.</p><p>Entiendo que es difícil superar a quien le diste todo: tu vida, tu cuerpo, tus imperfecciones. Pero no te conviertas en esa persona que te hizo daño. No se construye un imperio con alguien que sigue mirando al pasado. Suelta y construye tu propio camino. No tengas miedo de empezar de cero. Como dice tu música favorita, quizás te guste tu nueva historia.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Vive en paz, sin hacer daño a nadie. Enfócate en tus metas. Cuando a alguien le importas, se nota. Y cuando no, también. A mí me cuesta aprenderlo, y tú entiendes eso mejor que nadie.</p><p>Bonito fue compartir un rato. Verte sonreír me alegraba los días malos. Fue mala suerte, o quizás no convenía. Pero valió la pena. Aun así, sigo buscando algo en ti que no sé si encontraré. Solo no te conviertas en lo que no eres porque alguien te falló. Reconoce lo que te mereces. Si te mereces que te pongan los cuernos o que te traten mal, pregúntate por qué te gusta eso. Reconoce lo que quieres y trata a los demás como merecen. Pero no te vuelvas algo que no eres por miedo a que te fallen otra vez.</p>" },
+  { text: "<p><span class=\"first-letter\">A</span>l final, creo que me va a doler más a mí que a ti, porque tú tienes con qué distraerte. Yo viviré pensando si tomaste mi consejo, si significó algo para ti. Solo te tenía fe. Es feo estar triste por alguien que no lo está por ti y entiendo que tu pasaste por cada esta de la facetas que te menciono . Pero entiendo que no debería estarlo.</p><p>Yo estoy bien, sé lo que quiero. Algunas personas solo llegan a enseñarte algo. Todo es pasajero. Arregla tu desmadre. Y cuando estés libre del pasado y del miedo, trae tu mano desocupada y le damos con todo.</p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Yo sabía que la iba a pasar mal, que me mentirías, que quizás todo era falso. Lo sabía, tati. No te sientas mal por eso fue mi decisión yo solo quería volver a traer la mejor versión de ti o mucho mejor sacar una mejor versión de ti me obsesión con tu historia con tu pasado con tu cuento con la niña que fue feliz en su momento con la niña que vivió miles de aventura con la niña que se caño y se hizo un desmadre y preguntarle si se arrepiente de hacerlo sé que no se igualmente eso pasa en todo los termino tati</p><p>Aprender que la vida sigue y que no debemos cambiar nuestra vida o pensamiento por culpa de nuestro problema o situaciones o por nuestra heridas del pasado el objetivo esta en ser mejor persona que ayer en sacar la mejor versión de ti. Yo tomé mis decisiones. Pero quiero que sepas que no puedes entrar en la vida de alguien que te quiere y luego irte como si nada. No lo digo por rencor, sino porque te entiendo. <span class=\"highlight\">Solo necesitabas sentir amor incondicional y yo te lo di, sabiéndolo.</span> Eres un libro complicado y me tomé el tiempo de leerte. Pero qué lástima que no te gustara que se yo nunca me lo dijiste, pero respeto tu decisión</p>" },
+  { title: "El último acto de <br>amor", text: "<p><span class=\"first-letter\">¿</span>Qué va a doler? Pues a mí, no. Pero quizás a ti sí. Expresar lo que siento me hace fuerte. Pero tú, cuando lleguen los días de lágrimas, ¿Cuánta persona estará ahí para ti? Cuando duelan tus emociones, ¿quién estará? Espero que encuentres a alguien en ese momento un familiar un novio un vacilón que se yo tati por mas fuerte que sea debe dejar el orgullo atrás siempre necesitamos el apoyo condicional de un amigo una amiga que se yo de alguien no podemos ir contra el mundo solo.</p><p>No me pongo triste porque soy un buen hombre, no soy interesado. Lo único que me molesta es que siempre me dicen es \"Eso te pasa por ser buena persona\". ¿Desde cuándo ser buena persona es malo? Me gusta ser buena persona para dejar huella. <span class=\"highlight\">Y espero haber dejado una en tu vida.</span></p><div class=\"floral-divider\">❧ ❀ ☙</div><p>Lamento haber malinterpretado nuestra amistad, pero si me hubieras dicho lo que realmente querías, te lo habría dado. Si querías algo de un momento, te habría dado el mejor momento. Creo que la lección más difícil es aceptar lo que ya no está. El mayor acto de amor es dejar ir a quien quieres. Y no lo digo por mí, sino por tu pasado.</p><p>Como último acto de amor, te confieso que siempre me quedaré con las ganas de tener algo contigo o volver a empezar desde cero como dice tu música y si vivo ilusionado porque nunca me dijiste que me fuera y mi celebro por más razones que me de tu indiferencia conmigo mi corazón dice que aun puedo que no me rinda y cada vez que hablamos cada vez te comprendo y te entiendo más y si me puedo tomarme el atrevimiento de decir que no tenemos que empezar de cero esa frase creo que gracias a ti se e va a quedar grabada para siempre.</p><p>Porque yo sí quería que fueras tú y de pronto si me va a doler el típico mensaje lo siento eres mucho para o lo siento no estoy segura ahora pero más si quiera ese mensaje llegara y si me va doler pero creo que aparte de eso matare por completo mi ilusión y podre dejarte ir por completo.</p>" }
 ];
 
 const totalPages = pagesData.length;
@@ -880,18 +876,18 @@ for(let i = 0; i < totalPages; i++) {
   
   if(p.isCover) {
     htmlBook += `
-    <div class="book-page page-cover" data-page="${i}" style="z-index:${zIndex};">
-      <div class="cover-title">${p.title}</div>
-      <div class="cover-subtitle">${p.subtitle}</div>
+    <div class="book-page page-cover" data-page="${i}" style="z-index:${zIndex};background-image:url('${p.coverImage}');background-size:cover;background-position:center;background-repeat:no-repeat;">
+      <button class="leer-btn" onclick="nextPage()">Leer Carta 💌</button>
     </div>`;
   } else {
     htmlBook += `
     <div class="book-page" data-page="${i}" style="z-index:${zIndex};">
+      ${i > 0 && i % 2 !== 0 ? '<div class="bookmark"></div>' : ''}
       <div class="page-content">
-        ${p.title ? `<h3 class="page-title">${p.title}</h3>` : ''}
+        ${p.title ? `<h3 class="page-title" style="margin-top:-10px;">${p.title}</h3>` : ''}
         ${p.text}
       </div>
-      <div class="page-number">${i} / ${totalPages - 1}</div>
+      <div class="page-number" style="margin-top:auto;">${i} / ${totalPages - 1}</div>
     </div>`;
   }
 }
@@ -902,11 +898,10 @@ const pageSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/25
 const pagesNode = document.querySelectorAll('.book-page');
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
-const pageIndicator = document.getElementById('global-page');
 const recuerdosBtn = document.getElementById('recuerdosBtn');
 
 const pages = Array.from(pagesNode); 
-let currentPageIndex = 0;
+let currentPageIndex = 0; 
 
 function updateBook() {
   pages.forEach(page => {
@@ -916,6 +911,9 @@ function updateBook() {
     } else {
       page.classList.remove('flipped');
     }
+    // reset scroll of the page when navigating away
+    const content = page.querySelector('.page-content');
+    if(content) content.scrollTop = 0;
   });
 
   btnPrev.disabled = (currentPageIndex === 0);
@@ -927,43 +925,28 @@ function updateBook() {
     btnNext.disabled = false;
     recuerdosBtn.style.display = 'none';
   }
-
-  if(currentPageIndex === 0) pageIndicator.textContent = "Portada";
-  else pageIndicator.textContent = `Pág. ${currentPageIndex}`;
 }
 
 function nextPage() {
+  audio.play().catch(()=>{});
   if(currentPageIndex < totalPages - 1) {
     currentPageIndex++;
     updateBook();
     try { pageSound.currentTime = 0; pageSound.play(); } catch(e){}
   }
 }
+
 function prevPage() {
+  audio.play().catch(()=>{});
   if(currentPageIndex > 0) {
     currentPageIndex--;
     updateBook();
     try { pageSound.currentTime = 0; pageSound.play(); } catch(e){}
   }
 }
+
+// Inicialización
 updateBook();
-
-document.getElementById('abrirBtn').onclick = function() {
-    let bgm = document.getElementById('bgm');
-    bgm.play().catch(e => console.log('Audio error:', e));
-
-    document.getElementById('section-intro').classList.add('hidden-section');
-    document.getElementById('section-book').classList.remove('hidden-section');
-    document.body.classList.remove('locked');
-    window.scrollTo(0, 0);
-};
-
-document.getElementById('recuerdosBtn').onclick = function() {
-    document.getElementById('section-book').classList.add('hidden-section');
-    document.getElementById('section-collage').classList.remove('hidden-section');
-    window.scrollTo(0, 0);
-};
-
 
 /* 4. MODAL FINAL */
 function openModal() {
