@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Mi Última Carta — Emelis</title>
+
+  <!-- Fuentes más legibles y Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Playfair para Títulos, Lora para lectura cómoda, Caveat para detalles a mano -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet" />
+
+  <!-- GSAP + DrawSVG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://assets.codepen.io/16327/DrawSVGPlugin3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+/* ===================================================
+   RESET & BASE VARIABLES
+=================================================== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: #1c1b22; /* Un fondo gris/azul oscuro elegante */
+  font-family: 'Lora', serif; /* Fuente de lectura súper clara */
+  overflow-x: hidden;
+  color: #fff;
+}
+
+/* ===================================================
+   MUSIC BUTTON
+=================================================== */
+#soundBtn {
+  position: fixed; 
+  right: 16px; 
+  top: 16px;
+  padding: 8px 16px;
+  border-radius: 50px; 
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(28, 27, 34, 0.8);
+  color: #fff;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  cursor: pointer;
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  z-index: 9999;
+  transition: background 0.3s;
+}
+#soundBtn:hover { background: rgba(255,255,255,0.1); }
+
+/* ===================================================
+   SECTION 1 — INTRO FLOWER FRAME
+=================================================== */
+#section-intro {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: #131b21;
+}
+
+svg#flower-frame {
+  height: 85vh;
+  width: 100%;
+  max-width: 600px;
+}
+
+.st0{fill:#ffffff;}
+.st1{fill:none;stroke:#65d629;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.st2{fill:#028137;}
+.st3{fill:none;stroke:#028137;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.st4{fill:none;stroke:#028137;stroke-linecap:round;stroke-linejoin:round;}
+.st5{fill:#efc033;}
+.st6{fill:#028137;}
+.st7{fill:none;stroke:#028137;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+.st8{fill:yellow;}
+.st9{fill:#f3ce7f;}
+.st10{fill:#f6ab32;}
+.st11{fill:#61bfba;}
+.st12{fill:#fdd9c6;}
+.st13{fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;}
+.st14{display:none;fill:#ffffff;}
+
+.intro-content {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  width: 90%;
+}
+
+.intro-title {
+  color: #ffd700;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  font-style: italic;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  margin-bottom: 0.5rem;
+  opacity: 0;
+}
+
+.intro-subtitle {
+  color: #fff;
+  font-family: 'Lora', serif;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-weight: 400;
+  opacity: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.abrir-btn {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #c14d4d, #8f2d2a);
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: 0 8px 20px rgba(143, 45, 42, 0.4);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.abrir-btn:hover {
+  transform: translateY(17px);
+  box-shadow: 0 12px 25px rgba(143, 45, 42, 0.6);
+}
+
+/* Hidden helpers for SVG animation */
+#Footer_group_1_, [id^="PinkFlowerGroup"], [id^="BaseGroup"] path, [id^="LeafGroup"] path, path[id^="Stroke"], g[id^="BudGroup"] g[id^="BudGroup"] g[id^="Bud"], #Bud8_1_, #Bud10_1_, #Bud23_1_, #Bud26_1_, [id^="Dots"], [id^="Flourish"] { visibility: hidden; }
+
+/* ===================================================
+   SECTION 2 — THE BOOK (Optimizado para legibilidad móvil)
+=================================================== */
+#section-book {
+  min-height: 100vh;
+  background: #1c1b22;
+  padding: 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Luces de fondo sutiles */
+#section-book::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw; height: 80vw;
+  background: radial-gradient(circle, rgba(143,45,42,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.book-section-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  color: #e0c897;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.book-wrapper {
+  position: relative;
+  width: 90vw;
+  max-width: 450px;
+  height: 75vh;
+  max-height: 600px;
+  margin: 0 auto;
+  perspective: 2500px;
+}
+
+/* El estilo de cada página */
+.book-page {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: #fdfbf7; /* Color crema suave legible */
+  border-radius: 4px 16px 16px 4px;
+  box-shadow: inset 6px 0 15px rgba(0,0,0,0.06), 4px 8px 25px rgba(0,0,0,0.2);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 35px 25px 25px 35px;
+  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+}
+
+/* Lomo del libro simulado */
+.book-page::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 15px;
+  background: linear-gradient(to right, rgba(0,0,0,0.15), transparent);
+  border-radius: 4px 0 0 4px;
+}
+
+.book-page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* Portada del libro */
+.page-cover {
+  background: linear-gradient(135deg, #461715, #2e0e0c);
+  color: #fdfbf7;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.page-cover::before { background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.1)); }
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-style: italic;
+  font-weight: 700;
+  color: #e0c897;
+  margin-bottom: 1rem;
+}
+.cover-subtitle {
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: #fdfbf7;
+  opacity: 0.8;
+}
+
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  color: #2c241b;
+  padding-right: 5px; /* Para el scroll si hay */
+}
+
+/* Scrollbar estilizada */
+.page-content::-webkit-scrollbar { width: 4px; }
+.page-content::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #461715;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(70,23,21,0.1);
+  padding-bottom: 10px;
+}
+
+/* TEXTO SUPER LEGIBLE */
+.page-content p {
+  font-family: 'Lora', serif;
+  font-size: 1.05rem; /* Tamaño perfecto móvil */
+  line-height: 1.65;
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.page-number {
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  color: #888;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Controles del libro debajo */
+.book-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+  max-width: 450px;
+  margin-top: 1.5rem;
+  z-index: 10;
+}
+
+.book-btn {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  min-width: 110px;
+}
+.book-btn:disabled { opacity: 0.3; cursor: default; }
+.book-btn:not(:disabled):hover { background: rgba(255,255,255,0.2); }
+
+.global-page-indicator {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: #e0c897;
+}
+
+/* Botón final del libro */
+.recuerdos-btn {
+  display: block;
+  margin: 1.5rem auto 0;
+  background: #e0c897;
+  color: #2c241b;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(224, 200, 151, 0.4);
+  transition: transform 0.2s;
+}
+.recuerdos-btn:hover { transform: translateY(-3px); }
+
+/* ===================================================
+   SECTION 3 — COLLAGE POLAROIDS
+=================================================== */
+#section-collage {
+  min-height: 100vh;
+  background-color: #fdfbf7;
+  padding: 4rem 1rem 6rem;
+  background-image: url("https://www.transparenttextures.com/patterns/notebook.png");
+}
+
+.collage-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
+  color: #461715;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.collage-subtitle {
+  font-family: 'Lora', serif;
+  text-align: center;
+  color: #665;
+  margin-bottom: 3rem;
+  font-size: 1rem;
+}
+
+.polaroid-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 45px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.polaroid {
+  background: #fff;
+  padding: 15px 15px 30px 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 340px;
+  border-radius: 4px;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+/* Efecto al pasar por encima en dispositivos táctiles/mouse */
+.polaroid:active { transform: scale(0.98); }
+
+.polaroid img, .polaroid video {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid #eee;
+  background: #f0f0f0;
+}
+
+.polaroid-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 1.35rem; /* Ajustado para que los textos largos quepan bellamente */
+  color: #2c241b;
+  text-align: center;
+  margin-top: 15px;
+  line-height: 1.3;
+}
+.polaroid-caption strong {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Stickers sobre el collage */
+.decor-sticker {
+  position: absolute;
+  width: 60px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.9;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+}
+
+.mensaje-final-btn {
+  display: block;
+  margin: 5rem auto 2rem;
+  background: linear-gradient(135deg, #1c1b22, #3d3b4a);
+  color: #e0c897;
+  border: none;
+  padding: 16px 35px;
+  border-radius: 50px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.mensaje-final-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+/* ===================================================
+   MODAL MENSAJE FINAL
+=================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(28, 27, 34, 0.9);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  padding: 20px;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: #fdfbf7;
+  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+  padding: 40px 30px;
+  border-radius: 12px;
+  width: 100%; max-width: 450px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transform: translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-overlay.open .modal-content {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 15px; right: 15px;
+  background: rgba(70,23,21,0.1);
+  color: #461715;
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: rgba(70,23,21,0.2); }
+
+.modal-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #461715;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.modal-content p {
+  font-family: 'Lora', serif;
+  color: #2c241b;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+.modal-firma {
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  color: #8f2d2a;
+  margin-top: 25px;
+  display: block;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Audio -->
+  <audio id="bgm"
+    src="MUSICA DE FONDO/Jósean Log - Chachachá (Lyric Video) - Jósean Log (128k).map3.mp3"
+    type="audio/mpeg" autoplay loop playsinline></audio>
+  <button id="soundBtn">🔇 Silenciar</button>
+
+<!-- ========================================================
+     SECTION 1: INTRO
+======================================================== -->
+<section id="section-intro">
+  <!-- Flower Frame SVG (Simplificado el path para visibilidad, mismo del original) -->
+  <svg id="flower-frame" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 641.5 637.3">
+    <g id="Footer_group_1_">
+      <path id="Dots_1_" class="st0" d="M556.2,110c0,1.7-1.4,3.1-3.1,3.1c-1.7,0-3.1-1.4-3.1-3.1s1.4-3.1,3.1-3.1l0,0 C554.9,106.9,556.2,108.3,556.2,110z M631.5,446.1c-1.7,0-3.1,1.4-3.1,3.1s1.4,3.1,3.1,3.1c1.7,0,3.1-1.4,3.1-3.1l0,0 C634.6,447.5,633.2,446.1,631.5,446.1L631.5,446.1z M508.8,64.1c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5 S510.2,64.1,508.8,64.1L508.8,64.1L508.8,64.1z M542.3,273.9c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5l0,0 C544.8,275.1,543.7,273.9,542.3,273.9C542.4,273.9,542.4,273.9,542.3,273.9L542.3,273.9z M605.7,424.2c-1.4,0-2.5,1.1-2.5,2.5 s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5l0,0C608.2,425.3,607.1,424.2,605.7,424.2L605.7,424.2L605.7,424.2z M476.5,502.4 c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5S477.9,502.4,476.5,502.4L476.5,502.4z M548,479.8c-0.7,0-1.2,0.6-1.2,1.2 s0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C549.2,480.4,548.7,479.8,548,479.8z M418.8,581.7c-0.7,0-1.2,0.6-1.2,1.2 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C420.1,582.2,419.5,581.7,418.8,581.7z M562.8,148.3c-0.7,0-1.2,0.6-1.2,1.2 s0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C564.1,148.9,563.5,148.3,562.8,148.3L562.8,148.3z M471,53.9c-0.7,0-1.2,0.6-1.2,1.2 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C472.2,54.5,471.7,53.9,471,53.9z M628.7,440.1c-0.7,0-1.2,0.6-1.2,1.2 s0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C629.9,440.7,629.4,440.1,628.7,440.1z M435,587.9c-0.7,0-1.2,0.6-1.2,1.2 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2l0,0C436.2,588.4,435.7,587.9,435,587.9z M88.3,106.9c1.7,0,3.1,1.4,3.1,3.1 s-1.4,3.1-3.1,3.1s-3.1-1.4-3.1-3.1l0,0C85.2,108.3,86.6,106.9,88.3,106.9z M6.9,449.2c0,1.7,1.4,3.1,3.1,3.1s3.1-1.4,3.1-3.1 s-1.4-3.1-3.1-3.1S6.9,447.5,6.9,449.2L6.9,449.2z M130.2,66.6c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5l0,0 C131.3,64.1,130.2,65.2,130.2,66.6z M96.7,276.4c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5 C97.8,273.9,96.7,275,96.7,276.4L96.7,276.4z M33.3,426.7c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5 C34.5,424.2,33.3,425.3,33.3,426.7L33.3,426.7z M162.5,504.9c0,1.4,1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5 S162.5,503.5,162.5,504.9L162.5,504.9z M92.3,481.1c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2c0-0.7-0.6-1.2-1.2-1.2l0,0 C92.8,479.8,92.3,480.4,92.3,481.1L92.3,481.1L92.3,481.1z M221.4,582.9c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2 c0-0.7-0.6-1.2-1.2-1.2l0,0C222,581.7,221.4,582.2,221.4,582.9z M77.4,149.5c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2 c0-0.7-0.6-1.2-1.2-1.2S77.4,148.8,77.4,149.5L77.4,149.5L77.4,149.5z M169.3,55.2c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2 c0-0.7-0.6-1.2-1.2-1.2C169.9,53.9,169.3,54.4,169.3,55.2C169.3,55.1,169.3,55.1,169.3,55.2L169.3,55.2z M11.6,441.3 c0,0.7,0.6,1.2,1.2,1.2c0.7,0,1.2-0.6,1.2-1.2c0-0.7-0.6-1.2-1.2-1.2l0,0C12.1,440.1,11.6,440.7,11.6,441.3z M205.3,589.1 c0,0.7,0.6,1.2,1.2,1.2s1.2-0.6,1.2-1.2c0-0.7-0.6-1.2-1.2-1.2l0,0C205.8,587.9,205.3,588.4,205.3,589.1z"/>
+      <g id="RightGroup_1_">
+        <g id="RightTopGroup_1_">
+          <g id="StrokesGroup30_1_">
+            <path id="Stroke30f_1_" class="st1" d="M520.3,168.7c2.1-22.9-20.4-45.6-27.7-61.8c-7.9-17.4-17.2-51.1-2.6-60.7c4.3-2.8,9.9-2.5,12.3,0.9s1.2,8-3.1,7.4"/>
+            <path id="Stroke30e_1_" class="st1" d="M522,155.2c0,0-17.3-23.5-29-37c-12.8-14.7-21.7-22.4-32.2-27.4c-4.8-2.3-9.6-3.1-12.9-2.7c-9.1,1.2-9.4,7-9.4,7"/>
+            <g id="Stroke30d_1_"><path id="Stroke30d_3_1_" class="st1" d="M571.8,230.3c0-1.9,0-3.7,0.1-5.5c0.4-24,3-39.1,9.2-52.9c2.6-5.7,6.5-10.7,11.3-14.6c1.6-1.3,3.2-2.5,5-3.5"/><path id="Stroke30d_2_1_" class="st1" d="M572.2,252.9c0.8-32.5-4-36.2-10.1-50.8c-9.5-22.4-15.6-59.6,5.7-69.7c6.2-3,12.1-0.7,13.8,4.6c3.2,9.5-12.8,10.4-9.2,1.4"/><path id="Stroke30d_1_1_" class="st1" d="M574.4,282.6c0,0-3-40.8-2.9-65.8c0.1-27.3,2.6-43.6,9.3-58.4c2.6-5.7,6.5-10.7,11.3-14.6c1.6-1.3,3.2-2.5,5-3.5"/></g>
+            <g id="Stroke30c_1_"><path id="Stroke30c_2_1_" class="st1" d="M570.3,271.1c0,0,0.3-11.4-10.7-32c-3.4-6.4-11-16.4-17.8-19.6c-1.8-0.9-4-1-5.1,0.2c-1.9,1.9-0.9,4.6,0.7,4.7c0.7,0.1,2.3-0.2,2.2-1.6"/><path id="Stroke30c_1_1_" class="st1" d="M570.7,267.7c0,0-10.1-37.2-23.4-54.6c-8.3-10.9-15.3-18.4-25-23c-2.3-1.1-13.3-6.3-16.3-1.2c-1.2,2,0,4.5,2.6,4"/></g>
+            <path id="Stroke30b_1_" class="st1" d="M576.1,346c-7.6-34.7,12.5-79.9,38-81.9c9-0.7,15.5,4.9,15.4,11c-0.2,8-7.4,10.6-11,5.2"/>
+            <path id="Stroke30a_1_" class="st1" d="M574.4,306.4c-0.3-1.4-0.7-2.8-1-4.1c-4.2-16.5-8.4-26.5-14.9-35.1c-3.2-4-7.1-7.4-11.4-10.1c-6.7-3.6-12-0.6-12-0.6"/>
+          </g>
+          <g id="LeafGroup29_1_">
+            <g id="LeafGroup29c_1_"><path id="Leaf29c_1_" class="st2" d="M459.3,0c0,0-5.8,10.8-6.7,13.4c-1.6,5.3-2.2,10.9-2,16.4c0.6,7.1,2.6,14,6,20.2l1.4,2.6c0,0,2.9-3.7,4.9-6.1c1.6-2,4.5-5.8,4.7-13.6c0.2-8.2-0.4-12.1-4.4-22.4C460,2.2,459.3,0,459.3,0z"/><path id="Stem29c_1_" class="st3" d="M467.6,79.1c-6.3-11.2-6.8-14.1-8.5-21.4c-1.7-8.2-2.6-16.6-2.6-25c0-4.7,0.5-9.4,1.6-13.9"/></g>
+            <g id="LeafGroup29b_1_"><path id="Leaf29b_1_" class="st2" d="M458.5,77.2c0,0-0.8,0.7-1.4,1c-3.3,1.8-7,2.5-10.7,2.2c-3.4-0.3-6.7-1.5-9.6-3.3c-2-1.3-6.4-4.5-6.6-4.7c0.2-0.1,7.5-2.1,10.9-2.8c5.8-1.2,10.6,0.9,14.8,4.7C456.9,75.1,457.8,76.1,458.5,77.2z"/><path id="Stem29b_1_" class="st4" d="M473.7,88.2c-7.5-8-10.9-9.4-15.5-11c-7.3-2.5-12.4-1.3-12.4-1.3"/></g>
+            <g id="LeafGroup29a_1_"><path id="Leaf29a_1_" class="st2" d="M383,14.3c0,0,26.1,1.3,36.5,7.6c14.9,9,19.7,26.8,19.7,26.8s-13.1,2.3-30.8-7.9C394.7,32.7,383,14.3,383,14.3z"/><path id="Stem29a_1_" class="st3" d="M487,110.6c0,0-4.7-8.2-7.2-12.6c-11.9-21.5-28.1-38.2-40.4-49c-10.2-8.9-18.7-15.3-25.3-16.3"/></g>
+          </g>
+          <g id="LeafGroup28_1_">
+            <g id="LeafGroup28b_1_"><path id="Leaf28b_1_" class="st2" d="M568.8,187.6c0,0,5.8,5.7,6.8,6.8c1.8,2.2,3.1,4.8,4,7.5c0.5,1.8,0.7,3.7,0.7,5.5c0,1.5-0.2,3.1-0.6,4.6l-0.3,1.4c0,0-2.6-1.7-4.2-2.6c-2.3-1.1-4.2-3-5.3-5.4c-2.1-4.2-1.8-6.3-1.3-11.6C568.7,191.7,568.8,189.7,568.8,187.6z"/><path id="Stem28b_1_" class="st4" d="M579.3,246.7c3.7-15.2,2.4-23.8,1.6-27.8c-1.6-8-6.5-17.3-6.5-17.3"/></g>
+            <g id="LeafGroup28a_1_"><path id="Leaf28a_1_" class="st2" d="M629.2,171.6c0,0-11.3,5.4-14.9,7.4c-5,2.9-8.7,7.1,11.5,10.6c-3.9,5.5-6.7,11.7-8.1,18.2l-0.6,2.7c0,0,4.9-1.2,7.9-1.8c2.4-0.4,6.4-0.8,11.7-5.9c6.3-6.2,7.6-10.1,11.1-20C626,179.1,627.5,175.3,629.2,171.6z"/><path id="Stem28a_1_" class="st3" d="M576,298c0,0-0.8-9.5-0.8-14.3c0.1-36,8-53.5,13.5-63.9c6.1-11.6,13-22.6,23.5-28.7"/></g>
+          </g>
+          <g id="LeafGroup27_1_"><path id="Leaf27_1_" class="st2" d="M634.2,230.1c0,0-9.2,14.3-16,17.6c-9.7,4.7-23.3,1.4-23.3,1.4c3.5-7,9.1-12.7,16-16.4C619.8,228.3,634.2,230.1,634.2,230.1z"/><path id="Stem27_1_" class="st3" d="M575,280.3c2.3-7.7,3.7-10,8.5-18.1c10.2-16.9,30.5-24,30.5-24"/></g>
+          <g id="BudGroup26_1_"><path id="Stem26_1_" class="st3" d="M575.7,285.1c-5.4-16.8-11.8-28-18.3-36c-9.4-11.6-26.7-19.6-26.7-19.6"/><g id="Bud26_1_"><path id="Bud26Bud_1_" class="st5" d="M509.4,233.3c-1.5,0-3-0.2-4.5-0.6c-1.3-0.4-2.4-0.8-1.8-2.5c0.4-1.3,2.2-2.1,4.1-2.7c1.6-0.5,3.3-0.8,5-0.8c1.5,0,4.4,0.2,4.4,0.2s-2.2-0.5-3.6-0.9c-1.9-0.7-3.8-1.6-5.5-2.7c-1-0.6-2-1.3-2.8-2.2c-0.7-0.8-1-2-0.6-3c0.6-0.9,1.6-1.5,2.7-1.7c1.2-0.3,2.5-0.3,3.8-0.1c2.1,0.3,4.1,0.9,6,1.8l2.3,1c-0.7-0.4-1.4-0.8-2-1.2c-1.9-1.4-3.4-3.3-4.3-5.5c-1.1-2.7-0.9-3.1-0.5-3.5c0.4-0.4,1.4-0.6,3.8,1c2.4,1.5,4.5,3.5,6,5.9c1.8,2.5,7.6,9.5,7,12.7c-0.4,2.2-3.1,2.5-3.1,2.5s-6.7,1.3-8.7,1.7C514.6,233.1,512,233.4,509.4,233.3z"/><path id="Bud26Leaf_1_" class="st6" d="M532,230c0.1-0.5-0.2-1-0.6-1.3c-2-1.1-0.8-3-2.3-5.3c-0.7-1-1.4-1.9-2.3-2.7c-2.2-2-2.3-1.5-2.3-1.5s0.1,1.8,0.2,2.4s1.7,4.1,1.7,4.1s-2.7-0.7-3.7-1s-2.6-0.5-3,0.3s0.5,1.4,1.5,2s3.9,1.9,3.9,1.9s-3.6,0.9-4.2,1.4c-0.5,0.5-0.8,1.1-1,1.8c0,0,0.3,0,2.7,0.1c1.3,0.1,2.6-0.1,3.9-0.4c1.6-0.4,2.3-1.6,3.9-1.4c0.1,0,0.2,0.1,0.3,0.1C531.9,231,532,230,532,230z"/></g></g>
+          <g id="FlowerGroup25_1_">
+            <path id="Stem25_1_" class="st7" d="M574.8,331.3c0,0,5.5-42.9-5.6-84.1c-9-33.3-24.6-53.7-32.7-62.6"/>
+            <g id="WholeFlower25_1_">
+              <g id="PinkFlowerGroup25_1_"><path id="BackPetals25_1_" class="st8" d="M527.6,154.7c0-0.3,1.5-14.3,0.5-22.6c-0.3-4.5-1.1-8.9-2.5-13.2c-1.3-4.5-3.1-8.8-5.5-12.8c-3.5-9-12-9.7-17.4-7.2c-2.3,1.1-5,2.4-6.2,4.8c-1.1,2-1.6,4.3-1.4,6.6c0.2,1.3,0.5,2.6,1.1,3.8l-1.9-2c-3-3.5-6.8-4.3-11.2-3c-1.4,0.3-2.6,0.9-3.8,1.6c-1.9,1.1-3.3,2.8-4,4.9c-0.9,2.9-0.4,10.1-0.4,10.1s-5.4-1.7-7.5-1.2c-3.3,0.8-6.2,2.3-7.3,6c-1,2.8-1.2,5.9-0.6,8.8c0.6,2.5,2,4.7,4,6.2c5.5,4.5,11.4,8.6,17.6,12.1c7.1,4.1,14.9,6.9,23,8.2c3.2,0.6,19,1.9,21-1.1S527.6,154.7,527.6,154.7z"/><path id="Pollen25_1_" class="st9" d="M500,134.3l-15.5-17.4c-2-1.6-9.2-5.2-10.6-5.8c-2-1-4.1-1.9-6-2.8c-1.9,1.4-3.1,1.5-4.4,0.4c-1-0.6-1.3-1.9-0.8-2.9c0.4-0.8,1.2-1.3,2.1-1.5c2.3-0.1,3.1,0.6,3.6,2.6c3.5,1.6,13.5,6.2,13.5,6.2l-3.4-3.1c-4.6-3.7-9.2-7.4-13.8-11.1c-2.2,1.5-2.9,1.6-4.1,0.5c-1-1-1.3-2.6-0.8-3.9c0.8-1.1,2.1-1.6,3.5-1.3c1.5,0.5,1.8,1.2,1.6,3.8c5.9,2.9,19.7,14.8,21.3,16.4v-0.1v0.1l-2.8-6.1l-5.2-10.1c-1.9,0.1-3.6-0.2-4-2.5c-0.3-1.4,0.4-2.9,1.7-3.6c1.3-0.6,2.8-0.4,3.8,0.7c1.3,1.4,0.8,3,0,4.7l5.4,10.1c0.7,1.8,1.5,3.5,2.2,5.3s1.1,3.8,2.1,5.3c2.7,3.9,10.4,14,10.5,14.1L500,134.3z"/><path id="FrontPetals25_1_" class="st5" d="M515.8,160.8c-4.9-1.3-9.9-2.5-14.8-3.8c-2.4-0.7-4.8-1.5-7.2-2.4c-7.1-3-13.6-7.3-19.2-12.6c-1-0.8-1.8-1.6-2.6-2.5c-2-2.8-2.7-9.7,0.2-12.9c0.7-0.8,1.5-1.4,2.4-1.9c1.6-0.8,4-0.4,5.9-0.2c3.1,0.4,5.6,2.3,8,4.1c1.9,1.4,7.6,7,8.3,7.9c2.2,2.6,4.3,5.2,6.5,7.8c4,4.5,8.1,8.9,12.1,13.3c-0.6-0.3-3.1-1.6-3.3-1.7c-1.4-0.9-21.7-13.2-24-13.3c0.8,1.8,4.4,4.1,4.7,4.4C492.8,146.8,515.8,160.7,515.8,160.8z M529.8,147.6c0.7-5.9,1.5-11.8,1.9-17.8c0.3-3.9,0.3-7.8-0.2-11.7c-1-7.2-2.5-14.4-3.9-21.5c-0.2-0.6-0.4-1.3-0.7-1.9l-0.6,0.7c-2.4,2.7-4.4,5.8-5.8,9.1c-0.7,1.6-1.8,4.1-2.1,4.8s-3.5,9.3-1.1,17.3c1.8,5,2.8,10.2,4.2,15.4c0.9,3.3,1.8,6.7,2.7,10.1c0,0.2,0.1,0.4,0.3,0.5c-0.1-11.5,0.9-23-2.5-34.3c0.9,0.8,1.6,1.8,1.9,3c0.7,2.6,1.3,5.2,1.8,7.8c0.9,8.3,1.2,16.7,0.7,25c-0.1,1-0.3,2-0.5,3l-1,4.1c-0.2-1.8-1-5.6-1.2-6.4c-2-6.8-3.9-13.7-5.8-20.5c-0.8-3-3-9-3-9c-1.7-4-3-8.1-5.1-11.9c-1.6-2.9-3.8-5.6-7.7-5.5c-2,0-3.9,0.7-5.6,1.8c-0.9,0.7-1.7,1.6-2.3,2.6c-1.5,2.8-2.2,6-2,9.1c0.6,4,1.8,7.8,3.6,11.4c0.8,1.5,6.1,7.7,8.8,10.8c4.2,4.7,13.7,14.8,14,15c-0.5-2-1.1-3.9-1.8-5.9c-2.1-4.5-4.4-8.9-6.7-13.3c-1.9-3.7-6.1-11.8-6.1-12.6c1.1,1,2.2,2.1,3,3.3c2.4,4.1,4.7,8.2,7.1,12.2c4,6.8,6.4,14.2,8.7,21.7c0,0-9.6-2-11.2-2.5c-5.3-1.4-10.7-2.7-15.9-4.4c-5.8-2-11.2-5-16.1-8.7c-1.2-0.9-2.5-1.6-4-1.9c-1.6-0.4-2.8-0.6-4.5-0.8c-2.8-0.5-5.6-0.7-8.4-0.6c-3.1,0.1-5.3,1.4-8.1,2.8c1.3,0.5,12.5,6.3,17.4,8.6c3.4,1.7,6.8,3.2,10.4,4.6c4.4,1.4,8.8,2.6,13.3,3.4c3,0.6,13.2,2.2,16.1,1.8c-0.5-0.2-5.7-1.5-6.1-1.6c-4.1-1.1-8.4-1.9-12.5-3.2c-4.7-1.5-9.4-3-13.3-6.3c-0.4-0.3-1.2-1.2-1.2-1.2s1.7,0.6,2.4,0.9c2.9,1.3,5.9,2.5,9,3.4c7.9,2.2,15.9,4.1,23.8,6.1c0.9,0.1,4.5,1.7,5.6,1.7c0.9,0.1,1.9,0,2.8-0.2c0.7-0.1,1.3-0.4,1.9-0.7c0.4-0.2,0.7-0.6,0.8-1C527.7,159,529.2,153.4,529.8,147.6L529.8,147.6z"/></g>
+              <g id="BaseGroup25_1_"><path id="Back25_1_" class="st10" d="M529.8,154.1c-0.8-0.4-1.6,0.4-2.1,1.2c-1.7,2.3-3.7,4.5-5.9,6.4c-2.1,1.5-4.4,2.8-6.8,3.9c-0.5,0.1-0.9,0.3-1.3,0.6c-0.3,0.3,0.1,1.2,0.1,1.2s1,1.6,1.3,2.2c3.1,4.9,5.8,6.9,9.9,10.3c2.4,2,5.6,3.6,8.2,5.3c0.8,0.5,1.8,0.8,2.5,1.3c0.4,0.3,0.8,0.7,1.1,1.2c0.3,0.7,1.4,0.3,2.1-0.1c0.8-0.5,1.2-1.5,0.8-2.3c-0.2-0.5-0.2-1-0.2-1.5c1-4.8-0.1-9.2-1.8-13.6s-3.4-8.3-5.2-12.4C531.8,156.2,531.2,154.8,529.8,154.1z"/><path id="Lines25_1_" class="st11" d="M527.9,163.9c1.5,2.4,6.8,11.9,7.8,14.1c0,0,0.8,2.6,0.5,3.2c-0.1,0.2-0.3,0-0.3-0.1c-3.3-6.1-9.6-18.1-9.7-18.3s0.2-0.4,0.3-0.3C527.1,162.9,527.5,163.4,527.9,163.9z M518.3,168.1c-0.2,3.7,12.6,15,17,15.2C528.9,179.1,523.2,174,518.3,168.1z M537.6,182c1.6-4.2-4-20.9-7.5-22.2C533.7,166.8,536.3,174.3,537.6,182z M523.7,167c1.5,2.4,7.7,11.4,9.2,13.3c0,0,2,1.9,2.6,1.9c0.2,0,0.2-0.2,0-0.3c-4-5.6-12-16.6-12.1-16.8s-0.4,0-0.4,0.2C523.2,165.9,523.4,166.5,523.7,167L523.7,167z"/></g>
+            </g>
+          </g>
+        </g>
+        <g id="RightBottomGroup_1_">
+          <g id="StrokesGroup24_1_">
+            <g id="Stroke24g_1_"><path id="Stroke24g_2_1_" class="st1" d="M520.7,503.1c5.1-11.7,10.3-24.3,14.1-34.6c11.4-30.7,15.5-50.1,14.4-69.6c-0.5-7.5-2.8-14.7-6.5-21.2c-1.2-2.1-2.6-4.2-4.1-6.1"/><path id="Stroke24g_1_1_" class="st1" d="M528.8,483.5c0.8-2.1,1.5-4.2,2.3-6.2c9.7-27.2,12.6-45.2,12.1-63.4c-0.2-7.9-1.1-12.7-5.8-18.4"/></g>
+            <path id="Stroke24f_1_" class="st1" d="M518.4,507.2c0,0,6.6,1.2,21-1.4c7.7-1.4,17.6-4.3,30.1-11.3c38.2-21.4,56-58.7,57.5-78.8c0.9-11.8-0.2-16.3-3.2-20.5c-2.6-3.6-10.3-6.3-14.6-3.2c-4.6,3.4-3,10.9-0.4,13.2c1.8,1.5,6,2.3,8.2,1.2c2.1-1.2,2.8-3.9,1.6-5.9c-0.1-0.1-0.2-0.3-0.3-0.4c-1.1-1.6-4.7-2.2-4.4,0.4"/>
+            <g id="Stroke24e_1_"><path id="Stroke24e_2_1_" class="st1" d="M545.1,528.4c2.1-0.7,4.2-1.3,6.2-2c27.1-8.8,43.4-16.9,56.9-28.7c5.5-4.9,9.9-11.1,12.7-17.9c1-2.2,1.7-4.5,2.3-6.9"/><path id="Stroke24e_1_1_" class="st1" d="M484.7,543.5c0,0,47.4-10.7,75.7-19.4c30.9-9.5,48.6-18,63.2-30.7c5.5-4.9,9.9-11.1,12.7-17.9c1-2.2,1.7-4.5,2.3-6.9"/></g>
+            <path id="Stroke24d_1_" class="st1" d="M484.4,560.7c66.6-4,71,1.1,94-2c20.5-2.8,27.4-12.6,25.7-21.5c-1-5-4.3-7.8-10.1-7.7c-3,0.1-6.9,1.7-6.3,7.8c0.5,5,7,3.8,8,1.5c0.3-0.8,0.2-4.1-2.8-3"/>
+            <path id="Stroke24c_1_" class="st1" d="M417.6,567.4c40.5-12.4,71.9,6.2,74.8,28.8c1,8-3.7,14-9.1,14.2c-7.1,0.2-9.8-6.1-5.1-9.5"/>
+            <g id="Stroke24b_1_"><path id="Stroke24b_2_1_" class="st1" d="M425.3,555.8c13.2-3.6,23.1-7.6,32-13.6c5.1-3.6,9.4-8.2,12.4-13.7c1-1.8,1.9-3.6,2.6-5.5"/><path id="Stroke24b_1_1_" class="st1" d="M390.7,574.3c10.1-13.6,35.3-17.3,46.9-23.4c14.2-7.5,25.9-16.6,26.6-32.2c0.2-3.8-0.9-6-3.7-6.6s-4.6,2.3-3.7,3.8"/></g>
+            <path id="Stroke24a_1_" class="st1" d="M334.2,614.2c3.7-1,7.7-5.2,11.3-7.7c12-8.3,26.2-7,28.8,0.9c1,2.7,0.4,8.6-6.6,7.2"/>
+          </g>
+          <g id="BudGroup23_1_"><path id="Stem23_1_" class="st3" d="M521,506c16.8-5.3,28.1-11.5,36.2-18c11.7-9.3,19.8-26.6,19.8-26.6"/><g id="Bud23_1_"><path id="Bud23Bud_1_" class="st5" d="M572.7,441.5c0.1-1.5,0.3-3,0.7-4.5c0.4-1.3,0.8-2.4,2.5-1.8c1.3,0.4,2.1,2.2,2.7,4.2c0.5,1.6,0.7,3.3,0.7,5c0,1.5-0.3,4.4-0.3,4.4s0.6-2.2,1-3.6c0.7-1.9,1.6-3.8,2.8-5.5c0.6-1,1.3-1.9,2.2-2.8c0.8-0.7,2-0.9,3-0.5c0.9,0.6,1.5,1.6,1.7,2.7c0.3,1.2,0.3,2.5,0.1,3.8c-0.3,2.1-0.9,4.1-1.8,6c-0.2,0.5-1.1,2.3-1.1,2.3c0.4-0.7,0.8-1.4,1.3-2c1.4-1.9,3.4-3.4,5.6-4.3c2.8-1,3.1-0.9,3.5-0.5s0.6,1.4-1.1,3.8c-1.6,2.4-3.6,4.4-6,6c-2.5,1.7-9.6,7.4-12.8,6.8c-2.2-0.4-2.5-3.1-2.5-3.1s-1.2-6.7-1.6-8.7C572.8,446.8,572.6,444.1,572.7,441.5z"/><path id="Bud23Leaf_1_" class="st6" d="M575.8,464.2c0.5,0.1,1-0.1,1.3-0.6c1.2-2,3-0.8,5.3-2.3c1-0.7,1.9-1.4,2.7-2.3c2-2.1,1.5-2.3,1.5-2.3s-1.8,0.1-2.4,0.2s-4.1,1.6-4.1,1.6s0.8-2.7,1-3.6s0.5-2.6-0.2-3s-1.4,0.5-2,1.5s-1.9,3.9-1.9,3.9s-0.8-3.6-1.4-4.2c-0.5-0.5-1.1-0.8-1.8-1c0,0,0,0.3-0.1,2.6c-0.1,1.3,0,2.6,0.3,3.9c0.4,1.6,1.6,2.3,1.3,3.9c0,0.1-0.1,0.2-0.1,0.3C574.8,464,575.8,464.2,575.8,464.2z"/></g></g>
+          <g id="FlowerGroup16_1_"><path id="Stem16_1_" class="st7" d="M321,635.3c0,0,15.8-38,57.9-55.4c24.3-10,68.6-18.7,88.1-25.9c39.4-14.7,59.8-58.5,64.8-66.9c20.5-34.7,33.6-75.5,33.6-75.5"/><g id="WholeFlower16_1_"><g id="PinkFlowerGroup16_1_"><path id="BackPetals16_1_" class="st8" d="M587.8,379.1c0.2-0.2,14.2-10,20.9-17.5c3.9-3.8,7.2-8.1,10-12.7c3-4.7,5.4-9.8,7.2-15.1c5.4-10.3-0.7-18.6-7.3-21.5c-2.8-1.3-6.2-2.6-9.2-1.8c-2.7,0.6-5.2,2-7.1,4c-1,1.2-1.9,2.5-2.6,4l0.3-3.3c0.8-5.5-1.5-9.6-6.2-12.6c-1.3-1-2.9-1.7-4.5-2.1c-2.5-0.8-5.2-0.7-7.6,0.2c-3.3,1.5-9.4,7.6-9.4,7.6s-2.8-6.2-4.8-7.7c-3.3-2.4-7-3.8-11.2-1.9c-3.4,1.4-6.3,3.6-8.5,6.4c-1.8,2.5-2.7,5.5-2.5,8.5c0.3,8.6,1.3,17.2,3.1,25.6c1.5,6.8,3.2,14.5,10.9,27.4c2,3.4,13.4,18.8,17.7,18.1S587.8,379.1,587.8,379.1z"/><path id="FrontPetals16_1_" class="st5" d="M571.9,372.8c-2.7-5.5-5.4-11-7.9-16.6c-1.3-2.8-2.4-5.6-3.3-8.5c-2.8-8.9-3.8-18.2-3.2-27.5c0-1.5,0.1-2.9,0.3-4.4c1.1-4,6.8-10,12.1-9.8c1.2,0,2.5,0.3,3.6,0.7c2,0.9,3.5,3.3,4.8,5.3c2.1,3.2,2.2,6.9,2.4,10.6c0.1,2.8-0.6,12.4-0.8,13.8c-0.7,4-1.5,8-2.1,12c-1,7.1-2,14.3-2.9,21.5C576.9,397,571.9,372.8,571.9,372.8z"/></g><g id="BaseGroup16_1_"><path id="Back16_1_" class="st10" d="M588.2,379.6c-0.7-0.9-1.8-1.3-2.8-1c-1,0.2-6.2,1.3-10.7,0.4c-3.2-0.6-8.6-3.5-9.1-3.7c-0.5-0.3-1-0.6-1.6-0.8c-0.5-0.1-0.8,0.6-0.8,1.1c0,0.9-0.1,1.8-0.2,2.6c-0.4,6-0.9,12-1,18c0,3.9,0.3,7.7,0.9,11.5c0.3,1.8,1,3.5,0.2,5.3l0,0c-0.4,0.8,0.8,1.6,1.4,1.8s1,0.4,1.9-0.5c0.8-0.8,1.6-1.5,2.6-2c5.2-3,8.4-7.6,11-12.7c2.5-4.9,4.8-9.9,7.2-15C588,383.2,588.8,381.6,588.2,379.6z"/><path id="Lines16_1_" class="st11" d="M577.7,385.9c-0.9,3.4-5.4,15.9-6.6,18.7c0,0-1.8,2.9-2.5,3.1c-0.3,0.1-0.3-0.2-0.2-0.4c3-8,8.8-23.6,8.9-23.8s0.5-0.2,0.5,0.1C578,384.4,577.9,385.2,577.7,385.9z"/></g></g></g>
+        </g>
+      </g>
+      <g id="LeftGroup_1_">
+        <g id="LeftTopGroup_1_">
+          <g id="StrokesGroup15_1_"><path id="Stroke15f_1_" class="st1" d="M121.3,168.7c-2.1-22.9,20.3-45.6,27.7-61.8c8-17.4,17.2-51.1,2.6-60.7c-4.3-2.8-10-2.4-12.3,0.9s-1.2,8.1,3.1,7.4"/><path id="Stroke15e_1_" class="st1" d="M119.6,155.2c0,0,17.3-23.5,29-37c12.8-14.7,21.7-22.4,32.2-27.4c4.8-2.3,9.6-3.1,12.9-2.7c9.1,1.2,9.4,7,9.4,7"/><g id="Stroke15d_1_"><path id="Stroke15d_3_1_" class="st1" d="M69.7,230.3c0-1.9,0-3.7-0.1-5.5c-0.4-24-3-39.1-9.2-52.9c-2.6-5.7-6.5-10.7-11.3-14.6c-1.6-1.3-3.2-2.5-5-3.5"/><path id="Stroke15d_2_1_" class="st1" d="M69.3,252.9c-0.8-32.5,4-36.2,10.1-50.8c9.4-22.4,15.6-59.6-5.7-69.7c-6.2-3-12.1-0.7-13.8,4.6c-3.2,9.5,12.8,10.4,9.2,1.4"/><path id="Stroke15d_1_1_" class="st1" d="M67.1,282.6c0,0,3-40.8,2.9-65.8c-0.1-27.3-2.6-43.6-9.3-58.4c-2.6-5.7-6.5-10.7-11.3-14.6c-1.6-1.3-3.2-2.5-5-3.5"/></g><g id="Stroke15c_1_"><path id="Stroke15c_2_1_" class="st1" d="M71.2,271.1c0,0-0.3-11.4,10.7-32c3.4-6.4,11-16.4,17.8-19.6c1.8-0.9,4-1,5.1,0.2c1.9,1.9,0.9,4.6-0.7,4.7c-0.7,0.1-2.3-0.2-2.2-1.6"/><path id="Stroke15c_1_1_" class="st1" d="M70.8,267.7c0,0,10.1-37.2,23.4-54.6c8.3-10.9,15.3-18.4,25-23c2.3-1.1,13.3-6.3,16.3-1.2c1.2,2,0,4.5-2.6,4"/></g><path id="Stroke15b_1_" class="st1" d="M65.4,346c7.6-34.7-12.5-79.9-38-81.9c-9-0.7-15.5,4.9-15.4,11c0.2,8,7.4,10.6,11,5.2"/><path id="Stroke15a_1_" class="st1" d="M67.1,306.4c0.3-1.4,0.7-2.8,1-4.1c4.2-16.5,8.4-26.5,14.9-35.1c3.2-4,7.1-7.4,11.4-10.1c6.7-3.6,12-0.6,12-0.6"/></g>
+          <g id="LeafGroup13_1_"><g id="LeafGroup13c_1_"><path id="Leaf13c_1_" class="st2" d="M182.2,0c0,0,5.8,10.8,6.7,13.4c1.6,5.3,2.2,10.9,2,16.4c-0.6,7.1-2.6,14-6,20.2l-1.4,2.6c0,0-2.9-3.7-4.9-6.1c-1.6-2-4.5-5.8-4.7-13.6c-0.2-8.2,0.4-12.1,4.4-22.4C181.4,2.2,182.2,0,182.2,0z"/><path id="Stem13c_1_" class="st3" d="M173.9,79.1c6.3-11.2,6.8-14.1,8.4-21.4c1.7-8.2,2.6-16.6,2.6-25c0-4.7-0.5-9.4-1.6-13.9"/></g><g id="LeafGroup13b_1_"><path id="Leaf13b_1_" class="st2" d="M183,77.2c0,0,0.8,0.7,1.4,1c3.2,1.8,6.9,2.5,10.6,2.2c3.4-0.3,6.7-1.5,9.6-3.3c2.1-1.3,6.4-4.5,6.6-4.7c-0.2-0.1-7.4-2.1-10.9-2.8c-5.8-1.2-10.6,0.9-14.8,4.7C184.6,75.1,183.8,76.1,183,77.2z"/><path id="Stem13b_1_" class="st4" d="M167.8,88.2c7.5-8,10.9-9.4,15.5-11c7.3-2.5,12.4-1.3,12.4-1.3"/></g><g id="LeafGroup13a_1_"><path id="Leaf13a_1_" class="st2" d="M258.5,14.3c0,0-26.1,1.3-36.5,7.6c-14.9,9-19.7,26.8-19.7,26.8s13.1,2.3,30.8-7.9C246.8,32.7,258.5,14.3,258.5,14.3z"/><path id="Stem13a_1_" class="st3" d="M154.5,110.6c0,0,4.7-8.2,7.2-12.6c11.9-21.5,28.1-38.2,40.4-49c10.2-8.9,18.7-15.3,25.3-16.3"/></g></g>
+          <g id="LeafGroup12_1_"><g id="LeafGroup12b_1_"><path id="Leaf12b_1_" class="st2" d="M72.7,187.6c0,0-5.8,5.7-6.8,6.8c-1.8,2.2-3.1,4.8-4,7.5c-0.5,1.8-0.7,3.7-0.7,5.5c0,1.5,0.2,3.1,0.6,4.6l0.3,1.4c0,0,2.6-1.7,4.2-2.6c2.3-1.1,4.2-3,5.3-5.4c2.1-4.2,1.8-6.3,1.3-11.6C72.8,191.7,72.7,189.7,72.7,187.6z"/><path id="Stem12b_1_" class="st4" d="M62.2,246.7c-3.7-15.2-2.4-23.8-1.6-27.8c1.6-8,6.5-17.3,6.5-17.3"/></g><g id="LeafGroup12a_1_"><path id="Leaf12a_1_" class="st2" d="M12.3,171.6c0,0,11.4,5.4,14.9,7.4c5,2.9,8.7,7.1,11.5,10.6c2.1,3,3.9,6.1,5.3,9.5c1.2,2.8,2.1,5.8,2.7,8.8l0.6,2.7c0,0-4.9-1.2-7.9-1.8c-2.4-0.4-6.4-0.8-11.7-5.9C21,202.7,19.7,198.8,16.2,189C15.5,179.1,14,175.3,12.3,171.6z"/><path id="Stem12a_1_" class="st3" d="M65.6,298c0,0,0.8-9.5,0.8-14.3c-0.1-36-8-53.5-13.5-63.9c-6.1-11.6-13-22.6-23.5-28.7"/></g></g>
+          <g id="LeafGroup11_1_"><path id="Leaf11_1_" class="st2" d="M7.3,230.1c0,0,9.2,14.3,16,17.6c9.7,4.7,23.3,1.4,23.3,1.4c-3.5-7-9.1-12.7-16-16.4C21.7,228.3,7.3,230.1,7.3,230.1z"/><path id="Stem11_1_" class="st3" d="M66.5,280.3c-2.3-7.7-3.7-10-8.5-18.1c-10.2-16.9-30.5-24-30.5-24"/></g>
+          <g id="BudGroup10_1_"><path id="Stem10_1_" class="st3" d="M65.8,285.1c5.4-16.8,11.8-28,18.3-36c9.4-11.6,26.7-19.6,26.7-19.6"/><g id="Bud10_1_"><path id="Bud10Bud_1_" class="st5" d="M132.1,233.3c1.5,0,3-0.2,4.5-0.6c1.3-0.4,2.4-0.8,1.8-2.5c-0.4-1.3-2.2-2.1-4.1-2.7c-1.6-0.5-3.3-0.8-5-0.8c-1.5,0-4.4,0.2-4.4,0.2s2.2-0.5,3.6-0.9c1.9-0.7,3.8-1.6,5.5-2.7c1-0.6,2-1.3,2.8-2.2c0.7-0.8,1-2,0.6-3c-0.6-0.9-1.6-1.5-2.7-1.7c-1.2-0.3-2.5-0.3-3.8-0.1c-2.1,0.3-4.1,0.9-6,1.8l-2.3,1c0.7-0.4,1.4-0.8,2-1.2c1.9-1.4,3.4-3.3,4.3-5.5c1.1-2.7,0.9-3.1,0.5-3.5s-1.4-0.6-3.8,1c-2.4,1.5-4.5,3.5-6.1,5.9c-1.8,2.5-7.6,9.5-7,12.7c0.4,2.2,3.1,2.5,3.1,2.5s6.7,1.3,8.7,1.7C126.9,233.1,129.5,233.4,132.1,233.3z"/><path id="Bud10Leaf_1_" class="st6" d="M109.5,230c-0.1-0.5,0.2-1,0.6-1.3c2-1.1,0.8-3,2.3-5.3c0.7-1,1.4-1.9,2.3-2.7c2.2-2,2.3-1.5,2.3-1.5s-0.1,1.8-0.2,2.4s-1.7,4.1-1.7,4.1s2.7-0.7,3.7-1s2.6-0.5,3,0.3s-0.5,1.4-1.5,2s-3.9,1.9-3.9,1.9s3.6,0.9,4.2,1.4c0.5,0.5,0.8,1.1,1,1.8c0,0-0.3,0-2.7,0.1c-1.3,0.1-2.6-0.1-3.9-0.4c-1.6-0.4-2.3-1.6-3.9-1.4c-0.1,0-0.2,0.1-0.3,0.1C109.6,231,109.5,230,109.5,230z"/></g></g>
+          <g id="FlowerGroup9_1_"><path id="Stem9_1_" class="st7" d="M66.7,331.3c0,0-5.5-42.9,5.6-84.1c9-33.3,24.6-53.7,32.7-62.6"/><g id="WholeFlower9_1_"><g id="PinkFlowerGroup9_1_"><path id="BackPetals9_1_" class="st8" d="M113.9,154.7c0-0.3-1.5-14.3-0.5-22.6c0.3-4.5,1.1-8.9,2.5-13.2c1.3-4.5,3.1-8.8,5.5-12.8c3.5-9,12-9.7,17.4-7.2c2.3,1.1,5,2.4,6.2,4.8c1.1,2,1.6,4.3,1.4,6.6c-0.2,1.3-0.5,2.6-1.1,3.8l1.9-2c3-3.5,6.8-4.3,11.2-3c1.4,0.3,2.6,0.9,3.8,1.6c1.9,1.1,3.3,2.8,4,4.9c0.9,2.9,0.4,10.1,0.4,10.1s5.4-1.7,7.5-1.2c3.3,0.8,6.2,2.3,7.3,6c1,2.8,1.2,5.9,0.6,8.8c-0.6,2.5-2,4.7-4,6.2c-5.5,4.5-11.4,8.6-17.6,12.1c-7.1,4.1-14.9,6.9-23,8.2c-3.2,0.6-19.1,1.9-21-1.1S113.9,154.7,113.9,154.7z"/><path id="FrontPetals9_1_" class="st5" d="M148.7,146.8c0.3-0.3,4-2.6,4.7-4.4c-2.4,0.2-22.6,12.5-24,13.3c-0.2,0.2-2.7,1.5-3.3,1.7c4-4.4,8.1-8.8,12.1-13.3c2.2-2.5,4.3-5.2,6.5-7.8c0.8-0.9,6.5-6.4,8.3-7.9c2.4-1.8,4.9-3.8,8-4.1c2-0.2,4.3-0.6,5.9,0.2c0.9,0.5,1.7,1.1,2.4,1.9c2.9,3.2,2.2,10,0.2,12.9c-0.8,0.9-1.6,1.8-2.6,2.5c-5.6,5.4-12.1,9.6-19.2,12.6c-2.3,1-4.7,1.8-7.2,2.4c-4.9,1.3-9.9,2.5-14.8,3.8C125.7,160.7,148.7,146.8,148.7,146.8z"/></g><g id="BaseGroup9_1_"><path id="Back9_1_" class="st10" d="M111.8,154.1c0.8-0.4,1.6,0.4,2.1,1.2c1.7,2.3,3.7,4.5,5.9,6.4c2.1,1.5,4.4,2.8,6.8,3.9c0.5,0.1,0.9,0.3,1.3,0.6c0.3,0.3-0.1,1.2-0.1,1.2s-0.9,1.6-1.3,2.2c-3.1,4.9-5.8,6.9-9.9,10.3c-2.4,2-5.6,3.6-8.2,5.3c-0.8,0.5-1.8,0.8-2.5,1.3c-0.4,0.3-0.8,0.7-1.1,1.2c-0.3,0.7-1.4,0.3-2.1-0.1c-0.8-0.5-1.2-1.5-0.8-2.3c0.2-0.5,0.2-1,0.2-1.5c-1-4.8,0.1-9.2,1.8-13.6s3.4-8.3,5.2-12.4C109.7,156.2,110.3,154.8,111.8,154.1z"/><path id="Lines9_1_" class="st11" d="M114.9,162.5c0.2-0.1,0.4,0.1,0.3,0.3s-6.4,12.2-9.7,18.3c0,0.1-0.2,0.3-0.3,0.1c-0.3-0.6,0.5-3.2,0.5-3.2c1-2.2,6.3-11.7,7.8-14.1C114,163.4,114.4,162.9,114.9,162.5z"/></g></g></g>
+        </g>
+        <g id="LeftBottomGroup_1_">
+          <g id="StrokesGroup14_1_"><g id="Stroke14g_1_"><path id="Stroke14g_2_1_" class="st1" d="M120.8,503.1c-5.1-11.7-10.3-24.3-14.1-34.6c-11.4-30.7-15.5-50.1-14.4-69.6c0.5-7.5,2.8-14.7,6.5-21.2c1.2-2.1,2.6-4.2,4.1-6.1"/><path id="Stroke14g_1_1_" class="st1" d="M112.7,483.5c-0.8-2.1-1.6-4.2-2.3-6.2c-9.7-27.2-12.6-45.2-12.1-63.4c0.2-7.9,1.1-12.7,5.8-18.4"/></g><path id="Stroke14f_1_" class="st1" d="M123.1,507.2c0,0-6.6,1.2-20.9-1.4c-7.7-1.4-17.6-4.3-30.1-11.3c-38.2-21.4-56-58.7-57.5-78.8c-0.9-11.8,0.2-16.3,3.2-20.5c2.6-3.6,10.3-6.3,14.6-3.2c4.6,3.4,3,10.9,0.4,13.2c-1.8,1.5-6,2.3-8.1,1.2c-2.1-1.2-2.8-3.8-1.6-5.9c0.1-0.2,0.2-0.3,0.3-0.5c1.1-1.6,4.7-2.2,4.4,0.4"/><path id="Stroke14d_1_" class="st1" d="M157.1,560.7c-66.6-4-71,1.1-94-2c-20.5-2.8-27.4-12.6-25.7-21.5c1-5,4.3-7.8,10.1-7.7c3,0.1,6.9,1.7,6.3,7.8c-0.5,5-7,3.8-8,1.5c-0.3-0.8-0.2-4.1,2.8-3"/><path id="Stroke14c_1_" class="st1" d="M223.9,567.4c-40.5-12.4-71.9,6.2-74.8,28.8c-1,8,3.7,14,9.1,14.2c7.1,0.2,9.8-6.1,5.1-9.5"/><path id="Stroke14a_1_" class="st1" d="M307.3,614.2c-3.7-1-7.7-5.2-11.3-7.7c-12-8.3-26.2-7-28.8,0.9c-1,2.7-0.4,8.6,6.6,7.2"/></g>
+          <g id="FlowerGroup1_1_"><path id="Stem1_1_" class="st7" d="M320.5,635.2c0,0-15.8-38.1-57.9-55.4c-24.3-10-68.6-18.6-88.1-25.9c-39.4-14.7-59.8-58.5-64.8-66.9c-20.5-34.6-33.6-75.5-33.6-75.5"/><g id="WholeFlower1_1_"><g id="PinkFlowerGroup1_1_"><path id="BackPetals1_1_" class="st8" d="M53.7,379.1c-0.2-0.2-14.2-10-20.9-17.5c-3.9-3.8-7.2-8.1-10-12.7c-3-4.7-5.4-9.8-7.2-15.1c-5.4-10.3,0.7-18.6,7.3-21.5c2.8-1.3,6.2-2.6,9.2-1.8c2.7,0.6,5.2,2,7.1,4c1,1.2,1.9,2.5,2.6,4l-0.3-3.3c-0.8-5.5,1.5-9.6,6.2-12.6c1.3-1,2.9-1.7,4.5-2.1c2.5-0.8,5.2-0.7,7.6,0.2c3.3,1.5,9.4,7.6,9.4,7.6s2.8-6.2,4.8-7.7c3.3-2.4,7-3.8,11.2-1.9c3.4,1.4,6.3,3.6,8.5,6.4c1.8,2.5,2.7,5.5,2.5,8.5c-0.3,8.6-1.3,17.2-3.1,25.6c-1.5,6.8-3.2,14.5-10.9,27.4c-2,3.4-13.4,18.8-17.7,18.1S53.7,379.1,53.7,379.1z"/><path id="FrontPetals1_1_" class="st5" d="M74.5,340.7c0-0.5,0.7-5.7-0.4-7.7c-1.7,2.3-6,30.6-6.3,32.5c0,0.4-0.8,3.7-1,4.5c-1-7.2-1.9-14.3-2.9-21.5c-0.6-4-1.4-8-2.1-12c-0.2-1.4-0.9-11-0.8-13.8c0.2-3.7,0.3-7.4,2.4-10.6c1.3-2,2.8-4.4,4.8-5.3c1.2-0.5,2.4-0.7,3.6-0.7c5.2-0.2,11,5.8,12.1,9.8c0.3,1.4,0.4,2.9,0.3,4.4c0.6,9.3-0.5,18.6-3.2,27.5c-0.9,2.9-2,5.8-3.3,8.5c-2.6,5.6-5.3,11.1-7.9,16.6C69.5,372.8,74.5,340.7,74.5,340.7z"/></g><g id="BaseGroup1_1_"><path id="Back1_1_" class="st10" d="M53.3,379.6c0.7-0.9,1.8-1.3,2.8-1c1,0.2,6.2,1.3,10.7,0.4c3.2-0.6,8.6-3.5,9.1-3.7c0.5-0.3,1-0.6,1.6-0.8c0.5-0.1,0.8,0.6,0.8,1.1c0,0.9,0.1,1.8,0.2,2.6c0.4,6,0.9,12,1,18c0,3.9-0.3,7.7-0.9,11.5c-0.3,1.8-1,3.5-0.2,5.3l0,0c0.4,0.8-0.8,1.6-1.4,1.8s-1,0.4-1.9-0.5c-0.8-0.8-1.6-1.5-2.6-2c-5.2-3-8.4-7.6-11-12.7c-2.5-4.9-4.8-9.9-7.2-15C53.5,383.2,52.7,381.6,53.3,379.6z"/><path id="Lines1_1_" class="st11" d="M63.6,383.6c0.1-0.3,0.5-0.3,0.5-0.1s5.9,15.8,8.9,23.8c0.1,0.1,0.1,0.5-0.2,0.4c-0.7-0.2-2.5-3.1-2.5-3.1c-1.2-2.8-5.6-15.4-6.6-18.7C63.6,385.2,63.5,384.4,63.6,383.6z"/></g></g></g>
+        </g>
+      </g>
+      <path id="Flourish_1_" class="st13" d="M307.3,415.4c0,0-3.4,4.2-2.5,12c0.5,3.9,2.3,11,12.7,16.3c11.6,6,28.6,6.2,40.1,3.4c6.4-1.6,10.7-5.3,9.4-9.4c-0.8-2.4-4.1-3.7-8.8-3.6c-5.5,0.1-17,2.8-36.7,10.9c-5.3,2.2-16.6,6.1-16.6,6.1c0.4-0.1-14.2,5.5-18.4,6.4c-7.8,1.7-12.1-1.1-12.3-6.1c-0.2-4.5,4.6-6.7,9-7c6.1-0.4,12.9,2.6,12.9,2.6l40.6,17.3c0,0,16.6,4.6,20,5.2c4,0.7,9,0.5,11.2-2.5c3.1-4.1,0.7-8.5-3.3-10c-7.9-2.9-18,2.4-27.6,7.6c-4.1,2.2-22.7,10.1-28.9,12.9s-9.8,3.7-14,3c-4.6-0.7-7.3-3.5-7-7.1c0.3-3.1,4.6-5.1,7.2-5.5c5.7-0.8,13.7,0.8,20.1,2.4c5.1,1.3,10,3.4,14.6,6.1c5,2.9,9.1,5,12,8.8s2.8,9.2-2.7,10.3c-1.7,0.4-4.4-0.1-5.1-2c-0.1-0.3-0.1-1.6,1.7-1.9"/>
+    </g>
+  </svg>
+
+  <div class="intro-content">
+    <h1 class="intro-title" id="introTitle">Hola Emelis 🌷</h1>
+    <p class="intro-subtitle" id="introSubtitle">Tengo un último regalo para ti...</p>
+    <button class="abrir-btn" id="abrirBtn" onclick="document.getElementById('section-book').scrollIntoView({behavior:'smooth'})">Abrir Carta 💌</button>
+  </div>
+</section>
+
+<!-- ========================================================
+     SECTION 2: BOOK — (Optimizado para móvil, vertical flip)
+======================================================== -->
+<section id="section-book">
+  <h2 class="book-section-title">Mi Última Carta</h2>
+
+  <div class="book-wrapper" id="bookWrapper">
+    
+    <!-- PAGE 11 (La última página, está al fondo de todo) -->
+    <div class="book-page" data-page="10">
+      <div class="page-content">
+        <h3 class="page-title">Y al final...</h3>
+        <p>Aun así, sigo buscando algo en ti.</p>
+        <p>Bonito fue compartir un rato. Verte sonreír me alegraba los días malos. Fue mala suerte, o quizás no convenía. Pero valió la pena.</p>
+        <p>No me pongo triste porque sé que soy un buen hombre. Lo único que me molesta es que siempre me dicen: "Eso te pasa por ser buena persona". ¿Desde cuándo ser buena persona es malo?</p>
+        <p>Me gusta ser buena persona para dejar huella. Y espero haber dejado una pequeña en tu vida. Con cariño y con el corazón en la mano.</p>
+      </div>
+      <div class="page-number">11 / 11</div>
+    </div>
+
+    <!-- PAGE 10 -->
+    <div class="book-page" data-page="9">
+      <div class="page-content">
+        <h3 class="page-title">Para sanar</h3>
+        <p>Intenta volver a querer, pero elige bien. No digo que busques algo formal porque hoy es difícil, solo ten claro qué quieres. Pero no te vuelvas algo que no eres por miedo a que te fallen otra vez.</p>
+        <p>Perdónate. Toma lo bueno de cada momento. Haz las paces con tu historia. No arruines algo bonito por pensar de más. Todos venimos con cicatrices.</p>
+        <p>Creo que la lección más difícil es aceptar lo que ya no está. Como último acto de amor, te confieso que siempre me quedaré con las ganas de haber tenido algo contigo. Yo sabía que la iba a pasar mal, que quizás era falso. Lo sabía. Solo quería volver a traer la mejor versión de ti.</p>
+      </div>
+      <div class="page-number">10 / 11</div>
+    </div>
+
+    <!-- PAGE 9 -->
+    <div class="book-page" data-page="8">
+      <div class="page-content">
+        <h3 class="page-title">Paz y Despedida</h3>
+        <p>Nunca te voy a odiar, aunque me hayas menospreciado o roto un poco el corazón. Siempre te voy a querer porque te llegué a entender. No me rindo contigo, pero dejar ir también es un acto de amor.</p>
+        <p>Suelta y construye tu propio camino. Vive en paz. Cuando a alguien le importas, se nota. A mí me cuesta aprenderlo, y tú entiendes eso mejor que nadie.</p>
+        <p>No dejes que el pasado marque tu futuro. Si algún día quieres volver o empezar de cero con las cosas claras, no pierdas tu energía en lo que ya dolió. Al final, me va a doler más a mí que a ti, y yo viviré pensando si tomaste algo de mi consejo.</p>
+      </div>
+      <div class="page-number">9 / 11</div>
+    </div>
+
+    <!-- PAGE 8 -->
+    <div class="book-page" data-page="7">
+      <div class="page-content">
+        <h3 class="page-title">Lo que vivimos</h3>
+        <p>Luego me diste la oportunidad de invitarte al mirador. Ese día llegué muy decepcionado conmigo mismo por mi falta de iniciativa, pero al final... la pasé muy bien.</p>
+        <p>Y la salida con tu familia está entre las cosas más lindas que me han pasado. Conocer a tu hermano, tu hermana, tu mamá, tu amiga. Siempre te lo voy a agradecer.</p>
+        <p>Ya me imaginaba pasando Navidad contigo. Aún tengo esperanza hasta que no salga de tu boca un "no me busques". Desde la primera vez te dije: "Puedes amarme como a un rompecabezas", pero nunca supiste cómo armarme. Quería ser tu zona segura y tu diversión.</p>
+      </div>
+      <div class="page-number">8 / 11</div>
+    </div>
+
+    <!-- PAGE 7 -->
+    <div class="book-page" data-page="6">
+      <div class="page-content">
+        <h3 class="page-title">Terquedad</h3>
+        <p>El corazón es terco, y tú lo sabes bien. Seguí ahí, a veces sintiéndome menos. Pensaba que no te gustaba, o que habría alguien más. Inseguridades, siempre. Pero me decía: "Quiero que sea ella".</p>
+        <p>Mis primos me decían que no te escribiera. Y yo los ignoraba. "Yo sé que ella esconde algo", les decía. "Está dolida y quiero sanar su herida".</p>
+        <p>Los días que nos vimos en la ventana fueron lindos para mí. Te veía y solo pensaba en lo hermosa que eres. Me quedaba con ganas de ir a tocarte la guitarra, llevarte rosas, chocolates. Cuando me pediste que no te hablara más, me sentí muy mal. Yo solo quería pasar un rato, escucharte. Sin exigirte nada.</p>
+      </div>
+      <div class="page-number">7 / 11</div>
+    </div>
+
+    <!-- PAGE 6 -->
+    <div class="book-page" data-page="5">
+      <div class="page-content">
+        <h3 class="page-title">El primer paso</h3>
+        <p>Pronto empecé a pensar: "¿Cómo la traigo a mi casa? ¿Qué dirán mis papás? Ella es menor". Y yo iba contra todos, contra mi familia. Mi corazón me decía: "Párate firme".</p>
+        <p>Les conté a mis primos y me aconsejaban: "No le metas corazón". Luego me dijeron que me había adelantado demasiado. Me dije que la había cagado y le escribiría una carta. Y así lo hice.</p>
+        <p>Nunca pensé que me responderías. Y cuando lo hiciste, llegaron los comentarios: "Ella no te quiere". Y yo solo respondía: "Peleen con mi corazón, no conmigo".</p>
+      </div>
+      <div class="page-number">6 / 11</div>
+    </div>
+
+    <!-- PAGE 5 -->
+    <div class="book-page" data-page="4">
+      <div class="page-content">
+        <h3 class="page-title">Al conocerte</h3>
+        <p>Ese día no tenía mi celular, así que te escribí desde el celular de Emel. Pasaron los días, y cuando comenzamos a hablar de verdad, fue algo lindo.</p>
+        <p>En mi mente había dudas. Pero a los pocos días ya me quería casar contigo. Mi corazón te eligió, y ¿qué culpa tiene? No le pidas que entienda de preferencias. Échale la culpa a él, no a mí.</p>
+        <p>Al principio no sabía que eras tú la que había preguntado por mí. Tu boca, tu cintura, tu cara... sobre todo tus cejas. Me pareces muy hermosa y te recordaré toda la vida.</p>
+      </div>
+      <div class="page-number">5 / 11</div>
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="book-page" data-page="3">
+      <div class="page-content">
+        <h3 class="page-title">Nuestra Historia</h3>
+        <p>Siempre te dije que hay una faceta mía que debías conocer para entenderme. Quería decírtelo en persona, pero ojalá podamos vernos algún día.</p>
+        <p>Todo comenzó cuando me demoré en voltearte a ver. Lo primero que vi fue tu cara. Tu outfit era espectacular, ese sombrero te quedaba genial, el vestido negro... Te veías divina.</p>
+        <p>Yo recién llegaba y pensé que eras alguien de mi primo. Pasaron los días y nos enteramos de que habías preguntado por "un chico de gafas". ¡Nadie pensó que era yo!</p>
+      </div>
+      <div class="page-number">4 / 11</div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="book-page" data-page="2">
+      <div class="page-content">
+        <h3 class="page-title">Por qué escribo</h3>
+        <p>La verdad es que preferiría no hacerlo digital porque tengo miedo de que solo me respondas por compromiso. Esta no es una carta de reclamos ni te pido nada. Solo son cosas que necesito decirte y mi forma de desahogarme.</p>
+        <p>Creo que en otra vida fui poeta o compositor, porque escribir me ayuda.</p>
+        <p>No te escribo para recuperarte. Quizás solo para sentirme mejor conmigo mismo. Me he tomado el tiempo de entender por qué actúas como actúas, y poner en orden lo que siento.</p>
+      </div>
+      <div class="page-number">3 / 11</div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="book-page" data-page="1">
+      <div class="page-content">
+        <h3 class="page-title">Mi último acto de amor</h3>
+        <p>Esto posiblemente sea mi última carta. Mi último acto de amor, como muchos lo llamarían. Y me da vergüenza que sea digital.</p>
+        <p>Quería que mi último acto de amor fuera un ramo de flores, tus favoritos: tulipanes. Soy detallista por naturaleza. Siempre he dicho que hay que amar lo más que se pueda, y quería entregarte el ramo más hermoso con cartas que hablaran de lo valiosa que eres.</p>
+        <p>Porque te mereces lo mejor. Aunque pongo todo mi empeño en que esta carta sea bonita, preferiría mil veces las flores reales empapadas de cariño, pero la vida quiso que estuvieras lejos.</p>
+      </div>
+      <div class="page-number">2 / 11</div>
+    </div>
+
+    <!-- PAGE 1 (PORTADA) -->
+    <div class="book-page page-cover" data-page="0">
+      <div class="cover-title">Mi Última<br>Carta</div>
+      <div class="cover-subtitle">Con todo mi corazón<br>para Emelis 🌷</div>
+    </div>
+
+  </div>
+
+  <div class="book-controls">
+    <button class="book-btn" id="btn-prev" onclick="prevPage()" disabled>← Anterior</button>
+    <span class="global-page-indicator" id="global-page">Portada</span>
+    <button class="book-btn" id="btn-next" onclick="nextPage()">Siguiente →</button>
+  </div>
+
+  <button class="recuerdos-btn" id="recuerdosBtn" style="display:none;" onclick="document.getElementById('section-collage').scrollIntoView({behavior:'smooth'})">
+    Ver Mis Recuerdos 📸
+  </button>
+</section>
+
+<!-- ========================================================
+     SECTION 3: COLLAGE — MEMORIES
+======================================================== -->
+<section id="section-collage">
+  <h2 class="collage-title">Nuestros Recuerdos</h2>
+  <p class="collage-subtitle">Momentos que guardaré siempre con cariño 🌸</p>
+
+  <div class="polaroid-stack">
+    
+    <!-- MEMORY 1 -->
+    <div class="polaroid" style="transform: rotate(-2deg) translateY(0);">
+      <img src="FOTO RECUERDO/RECUERDO CON EMI/EL LUGAR DONDE TE VI POR PRIMERA VEZ.jpg" alt="El lugar donde te vi" />
+      <img src="STIKCET/TULIPANES.png" class="decor-sticker" style="bottom:-15px; right:-15px; width:70px; transform:rotate(-15deg);">
+      <div class="polaroid-caption">Fue justo aquí donde mis ojos te encontraron por primera vez, y sin darme cuenta, mi corazón empezó a elegirte a ti. 🌟</div>
+    </div>
+
+    <!-- MEMORY 2 -->
+    <div class="polaroid" style="transform: rotate(3deg) translateY(0);">
+      <img src="FOTO RECUERDO/DETALLE/FUE MI PRIMER DETALLE MI PRIEMER REGALO MI PRIMERA CARTA ESTA MUY NERVIOSO.jpg" alt="Mi primer detalle" />
+      <div class="polaroid-caption">Jamás pensé escribir una carta para alguien, hasta que llegaste tú y me hiciste querer expresar con detalles todo lo bonito que provocas en mí. 📝</div>
+    </div>
+
+    <!-- MEMORY 3 -->
+    <div class="polaroid" style="transform: rotate(-4deg) translateY(0);">
+      <img src="FOTO RECUERDO/RECUERDO CON EMI/FOTO EDIT DE MROAT QUE LE THICE CON TODO MI CORAZON.jpg" alt="Edit de Morat" />
+      <img src="STIKCET/MORAT-1.png" class="decor-sticker" style="top:-20px; left:-10px; width:65px; transform:rotate(10deg);">
+      <div class="polaroid-caption">Tomé como inspiración eso que tanto amas, porque quería convertir tus gustos en un detalle que te hiciera sentir especial. 🎵</div>
+    </div>
+
+    <!-- MEMORY 4 -->
+    <div class="polaroid" style="transform: rotate(2deg) translateY(0);">
+      <img src="FOTO RECUERDO/RECUERDO CON EMI/FOTO DE EMI PEQUEÑA.jpg" alt="Emi pequeña" />
+      <div class="polaroid-caption">
+        <strong>Gracias por compartir conmigo una foto tan especial.</strong>
+        Puede parecer algo sencillo, pero para mí fue un detalle muy bonito, porque detrás de eso sentí tu confianza, y eso vale muchísimo.<br>
+        Me gustó mucho que me permitieras ver una parte tan tierna de ti, y la verdad fue un gesto que aprecié de corazón. 🥰
+      </div>
+    </div>
+
+    <!-- MEMORY 5 -->
+    <div class="polaroid" style="transform: rotate(-3deg) translateY(0);">
+      <img src="FOTO RECUERDO/RECUERDO CON EMI/LAMENTO NO HABER TOAMNDO UAN FOTO DE REFERNECIA MEJOR PERO ESTE DIA FU UNO DE LSO MEJROES DIA DE MI VIDA.jpg" alt="El mejor día de mi vida" />
+      <div class="polaroid-caption">
+        Aunque no pude tomar una mejor foto para guardar ese recuerdo, quiero que sepas que ese día fue uno de los más bonitos que he vivido.<br>
+        Compartir contigo y con tu familia fue algo muy especial para mí, un momento lleno de felicidad que voy a recordar con mucho cariño.<br>
+        Gracias por regalarme un día tan lindo y por hacer que ese momento significara tanto para mí. 💫
+      </div>
+    </div>
+
+    <!-- MEMORY 6 -->
+    <div class="polaroid" style="transform: rotate(4deg) translateY(0);">
+      <video src="FOTO RECUERDO/RECUERDO CON EMI/LA VEZ QUE TE PRESTO 5 MINUTOS Y ME DISTE MAS DE 30 GRACIAS.mp4" muted loop playsinline autoplay></video>
+      <img src="STIKCET/CHICASUPERPODEROSAS-1.png" class="decor-sticker" style="bottom:10px; left:-20px; width:70px; transform:rotate(-15deg);">
+      <div class="polaroid-caption">Te pedí 5 minutos...<br>y me regalaste 30 🌸</div>
+    </div>
+
+    <!-- MEMORY 7 -->
+    <div class="polaroid" style="transform: rotate(-2deg) translateY(0);">
+      <img src="FOTO RECUERDO/LOKI/FOTO DE LA PRIMERA VEZ QUE VIA A LOKI.jpeg" alt="Primera vez con Loki" />
+      <img src="STIKCET/scitker flores.png" class="decor-sticker" style="top:-15px; right:-15px; width:60px; transform:rotate(20deg);">
+      <div class="polaroid-caption">La primera vez<br>que conocí a Loki 🐾</div>
+    </div>
+
+  </div>
+
+  <button class="mensaje-final-btn" onclick="openModal()">Ver Mensaje Final 💌</button>
+</section>
+
+<!-- ========================================================
+     MODAL MENSAJE FINAL
+======================================================== -->
+<div class="modal-overlay" id="finalModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>¿Me arrepiento?<br>Jamás. 🌺</h3>
+    <p>El hecho de que no hayas sentido lo mismo no significa que no haya valido la pena, porque cada momento, cada experiencia y cada recuerdo contigo fueron algo muy especial para mí.</p>
+    <p>Yo decido quedarme con lo mejor de ti, con cada instante bonito, con cada sonrisa y cada platica que me regalaste.</p>
+    <p>Te llevo en mi corazón de una manera bonita, con mucho cariño, con inmensa gratitud y con todo lo bueno que significaste en mi vida. Y pase lo que pase, eso nadie me lo quita.</p>
+    <span class="modal-firma">Con cariño, R.I.G ❤️</span>
+  </div>
+</div>
+
+<!-- ========================================================
+     JS LOGIC
+======================================================== -->
+<script>
+/* 1. MÚSICA */
+const audio = document.getElementById('bgm');
+const btn = document.getElementById('soundBtn');
+audio.muted = false; audio.volume = 0.8;
+audio.play().catch(()=>{
+  const unlock = ()=>{
+    audio.play().catch(()=>{});
+    document.removeEventListener('click', unlock);
+  };
+  document.addEventListener('click', unlock);
+});
+btn.addEventListener('click', ()=>{
+  if(audio.paused) audio.play();
+  audio.muted = !audio.muted;
+  btn.textContent = audio.muted ? '🔇 Silenciado' : '🔊 Música On';
+});
+
+/* 2. ANIMACIÓN DE FLORES Y BOTÓN */
+gsap.registerPlugin(DrawSVGPlugin);
+// Los arrays de selectores del SVG
+var stemGroup1 = ["#Stem2_1_","#Stem3_1_","#Stem4_1_","#Stem5a_1_","#Stem5b_1_","#Stem6_1_","#Stem7a_1_","#Stem7b_1_","#Stem7c_1_","#Stem8_1_"];
+var stemGroup2 = ["#Stem17_1_","#Stem18_1_","#Stem19_1_","#Stem20a_1_","#Stem20b_1_","#Stem21_1_","#Stem22a_1_","#Stem22b_1_","#Stem22c_1_","#Stem23_1_"];
+var stemGroup3 = ["#Stem10_1_","#Stem11_1_","#Stem12a_1_","#Stem12b_1_"];
+var stemGroup4 = ["#Stem26_1_","#Stem27_1_","#Stem28a_1_","#Stem28b_1_"];
+var stemGroup5 = ["#Stem13a_1_","#Stem13b_1_","#Stem13c_1_"];
+var stemGroup6 = ["#Stem29a_1_","#Stem29b_1_","#Stem29c_1_"];
+var leafGroup1 = ["#Leaf2_1_","#Leaf17_1_"];
+var leafGroup2 = ["#Leaf4_1_","#Leaf5a_1_","#Leaf5b_1_"];
+var leafGroup3 = ["#Leaf19_1_","#Leaf20a_1_","#Leaf20b_1_"];
+var leafGroup4 = ["#Leaf11_1_","#Leaf12a_1_","#Leaf12b_1_"];
+var leafGroup5 = ["#Leaf27_1_","#Leaf28a_1_","#Leaf28b_1_"];
+var leafGroup6 = ["#Leaf13a_1_","#Leaf13b_1_","#Leaf13c_1_"];
+var leafGroup7 = ["#Leaf29a_1_","#Leaf29b_1_","#Leaf29c_1_"];
+var budGroup1 = ["#Bud3_1_","#Bud6_1_"];
+var budGroup2 = ["#Bud18_1_","#Bud21_1_"];
+var budGroup3 = ["#Bud7a_1_","#Bud7b_1_","#Bud7c_1_","#Bud8_1_"];
+var budGroup4 = ["#Bud22a_1_","#Bud22b_1_","#Bud22c_1_","#Bud23_1_"];
+var budGroup5 = ["#Bud10_1_","#Bud26_1_"];
+var dots = $("#Dots_1_");
+
+var tl = gsap.timeline()
+  .set("#Footer_group_1_", { autoAlpha: 1 })
+  .fromTo(["#Stem16_1_","#Stem1_1_"], { drawSVG: "0% 0%" }, { duration: 1.5, drawSVG: "0% 100%" }, "start")
+  .fromTo("#PinkFlowerGroup16_1_", { autoAlpha: 1, scale: 0, transformOrigin: "35% 110%" }, { duration: 2, scale: 1 }, "flower1-=0.55")
+  .fromTo("#PinkFlowerGroup1_1_", { autoAlpha: 1, scale: 0, transformOrigin: "65% 110%" }, { duration: 2, scale: 1 }, "flower1-=0.55")
+  .fromTo(["#Stem9_1_","#Stem25_1_"], { drawSVG: "0% 0%", autoAlpha: 1 }, { duration: 2, drawSVG: "0% 100%" }, "flower1+=0.5")
+  .fromTo("#PinkFlowerGroup9_1_", { autoAlpha: 1, scale: 0, transformOrigin: "5% 110%" }, { duration: 2, scale: 1 }, "flower2")
+  .fromTo("#PinkFlowerGroup25_1_", { autoAlpha: 1, scale: 0, transformOrigin: "95% 110%" }, { duration: 2, scale: 1 }, "flower2")
+  .fromTo(stemGroup1, { drawSVG: "0% 0%", autoAlpha: 1 }, { drawSVG: "0% 100%", duration: 2, stagger: 0.5 }, "start+=0.1")
+  .fromTo(stemGroup2, { drawSVG: "0% 0%", autoAlpha: 1 }, { drawSVG: "0% 100%", duration: 2, stagger: 0.5 }, "start+=0.1")
+  .fromTo(stemGroup3, { drawSVG: "0% 0%", autoAlpha: 1 }, { drawSVG: "0% 100%", duration: 2, stagger: 0.5 }, "flower2-=1.5")
+  .fromTo(stemGroup4, { drawSVG: "0% 0%", autoAlpha: 1 }, { drawSVG: "0% 100%", duration: 2, stagger: 0.5 }, "flower2-=1.5")
+  .fromTo(stemGroup5, { drawSVG: "0% 0%", autoAlpha: 1 }, { drawSVG: "0% 100%", duration: 2, stagger: 0.5 }, "flower3-=1")
+  .fromTo(stemGroup6, { drawSVG: "0% 0%", autoAlpha: 1 }, { drawSVG: "0% 100%", duration: 2, stagger: 0.5 }, "flower3-=1")
+  .fromTo(leafGroup1, { autoAlpha: 1, scale: 0, transformOrigin: gsap.utils.wrap(["80% 45%","20% 45%"]) }, { duration: 2, scale: 1 }, "flower1-=1")
+  .fromTo(leafGroup2, { autoAlpha: 1, scale: 0, transformOrigin: gsap.utils.wrap(["80% 25%","60% 35%","70% 75%"]) }, { duration: 2, stagger: 0.5, scale: 1 }, "flower1")
+  .fromTo(leafGroup3, { autoAlpha: 1, scale: 0, transformOrigin: gsap.utils.wrap(["20% 25%","40% 35%","30% 75%"]) }, { duration: 2, stagger: 0.5, scale: 1 }, "flower1")
+  .fromTo(dots, 4, {scale: 0, transformOrigin: "50% 50%"}, {scale: 1, ease: "expo.out"}, "flower3")
+  .to("#introTitle", { opacity: 1, duration: 1.5, ease: "power2.out" }, "flower2")
+  .to("#introSubtitle", { opacity: 1, duration: 1.5, ease: "power2.out" }, "flower2+=0.5")
+  .to("#abrirBtn", { opacity: 1, pointerEvents: "auto", y: 0, duration: 1, ease: "power2.out" }, "flower3+=1");
+
+/* 3. LÓGICA DEL LIBRO MÓVIL */
+const pagesNode = document.querySelectorAll('.book-page');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const pageIndicator = document.getElementById('global-page');
+const recuerdosBtn = document.getElementById('recuerdosBtn');
+
+// Orden real en DOM (inverso): index 0 la página 11, index 10 la página 1 (portada)
+// El array pagesNode viene así. El DOM fue construido de atrás hacia adelante para el z-index.
+const pages = Array.from(pagesNode); 
+const totalPages = pages.length; // 12 (0 a 11)
+let currentPageIndex = 0; // 0 significa Portada
+
+function updateBook() {
+  pages.forEach(page => {
+    let pgNum = parseInt(page.getAttribute('data-page'));
+    // Si la página es menor a currentPageIndex, la volteamos (ocultamos a la izquierda)
+    if(pgNum < currentPageIndex) {
+      page.classList.add('flipped');
+    } else {
+      page.classList.remove('flipped');
+    }
+  });
+
+  // Botones y estado
+  btnPrev.disabled = (currentPageIndex === 0);
+  
+  if (currentPageIndex === totalPages - 1) {
+    btnNext.disabled = true;
+    recuerdosBtn.style.display = 'block';
+  } else {
+    btnNext.disabled = false;
+    recuerdosBtn.style.display = 'none';
+  }
+
+  if(currentPageIndex === 0) pageIndicator.textContent = "Portada";
+  else pageIndicator.textContent = `Pág. ${currentPageIndex}`;
+}
+
+function nextPage() {
+  if(currentPageIndex < totalPages - 1) {
+    currentPageIndex++;
+    updateBook();
+  }
+}
+function prevPage() {
+  if(currentPageIndex > 0) {
+    currentPageIndex--;
+    updateBook();
+  }
+}
+updateBook();
+
+/* 4. MODAL FINAL */
+function openModal() {
+  document.getElementById('finalModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('finalModal').classList.remove('open');
+}
+// Cerrar modal tocando fuera
+document.getElementById('finalModal').addEventListener('click', (e) => {
+  if(e.target.id === 'finalModal') closeModal();
+});
+
+</script>
+</body>
+</html>

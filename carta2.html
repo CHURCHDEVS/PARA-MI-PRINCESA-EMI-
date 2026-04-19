@@ -1,896 +1,1303 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Para mi Tati 🌷</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Reenie+Beanie&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Para mi Tati 🌷</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Reenie+Beanie&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<style>
-*, *::before, *::after {
-  margin: 0; padding: 0; box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-:root {
-  --paper:   #fdf6e3;
-  --paper2:  #f9efd0;
-  --ink:     #2d1a0e;
-  --ink2:    #4a2c14;
-  --red-ink: #c0374f;
-  --blue-ink:#1a3a6b;
-  --warm2:   #b85c38;
-  --warm3:   #8b3a2a;
-  --gold:    #c9922e;
-  --rose:    #e8637a;
-}
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-html {
-  font-size: 16px; scroll-behavior: smooth;
-  background: #c2965c;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.025) 0, rgba(0,0,0,.025) 1px, transparent 1px, transparent 38px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.015) 0, rgba(0,0,0,.015) 1px, transparent 1px, transparent 38px);
-}
-body {
-  font-family: 'Kalam', cursive;
-  background: transparent;
-  color: var(--ink);
-  overflow-x: hidden;
-  min-height: 100vh;
-  padding: 24px 12px 70px;
-}
+    :root {
+      --paper: #fdf6e3;
+      --paper2: #f9efd0;
+      --ink: #2d1a0e;
+      --ink2: #4a2c14;
+      --red-ink: #c0374f;
+      --blue-ink: #1a3a6b;
+      --warm2: #b85c38;
+      --warm3: #8b3a2a;
+      --gold: #c9922e;
+      --rose: #e8637a;
+    }
 
-/* ── MUSIC PIN ── */
-#music-pin {
-  position: fixed; top: 12px; right: 12px; z-index: 9999;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
-}
-#music-btn {
-  width: 46px; height: 46px; border-radius: 50%;
-  background: linear-gradient(135deg, #c0374f, #8b3a2a);
-  border: 3px solid #fdf6e3;
-  box-shadow: 2px 3px 10px rgba(0,0,0,.35);
-  font-size: 18px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform .2s;
-}
-#music-btn:active { transform: scale(.9); }
-#music-btn.playing { animation: disk-spin 3s linear infinite; }
-@keyframes disk-spin { to { transform: rotate(360deg); } }
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background: #c2965c;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(0, 0, 0, .025) 0, rgba(0, 0, 0, .025) 1px, transparent 1px, transparent 38px),
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, .015) 0, rgba(0, 0, 0, .015) 1px, transparent 1px, transparent 38px);
+    }
 
-#music-panel {
-  background: var(--paper); border: 1px solid rgba(0,0,0,.15);
-  border-radius: 12px; padding: 12px 14px; width: 195px;
-  display: none; flex-direction: column; gap: 8px;
-  box-shadow: 3px 4px 14px rgba(0,0,0,.2);
-  font-family: 'Patrick Hand', sans-serif; font-size: 12px; color: var(--ink2);
-}
-#music-panel.show { display: flex; }
-.mp-title { font-weight: 700; font-size: 11px; color: var(--warm2); }
-.mp-range {
-  -webkit-appearance: none; width: 100%; height: 3px;
-  background: #d4c4a0; border-radius: 2px; outline: none;
-}
-.mp-range::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 12px; height: 12px;
-  border-radius: 50%; background: var(--warm2); cursor: pointer;
-}
-.mp-controls { display: flex; gap: 10px; align-items: center; justify-content: center; }
-.mp-cbtn { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--ink2); opacity: .8; }
+    body {
+      font-family: 'Kalam', cursive;
+      background: transparent;
+      color: var(--ink);
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding: 24px 12px 70px;
+    }
 
-/* ── PROGRESS TAPE ── */
-#progress-tape {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 9998; height: 5px;
-  background: repeating-linear-gradient(90deg, var(--rose) 0, var(--rose) 8px, var(--gold) 8px, var(--gold) 16px);
-  width: 0%; transition: width .1s linear; opacity: .85;
-}
+    /* ── MUSIC PIN ── */
+    #music-pin {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
 
-/* ── ENVELOPE / COVER ── */
-#envelope-intro {
-  max-width: 480px; margin: 0 auto 28px;
-  text-align: center; opacity: 0; transform: translateY(-20px);
-  border-radius: 16px; overflow: hidden;
-  position: relative;
-  box-shadow: 0 12px 40px rgba(0,0,0,.35), 0 0 0 3px rgba(253,246,227,.4);
-}
-/* Fondo con la foto Morat */
-#cover-bg {
-  width: 100%; display: block;
-  border-radius: 16px;
-  filter: brightness(.75) saturate(1.1);
-}
-/* Overlay oscuro sobre la foto */
-#cover-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,.08) 0%,
-    rgba(0,0,0,.22) 40%,
-    rgba(0,0,0,.62) 75%,
-    rgba(0,0,0,.8) 100%
-  );
-  border-radius: 16px;
-}
-/* Content sobre la foto */
-#cover-content {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-end;
-  padding: 24px 20px 32px;
-}
-.cover-guitar {
-  font-size: 64px;
-  filter: drop-shadow(0 4px 14px rgba(0,0,0,.5));
-  margin-bottom: 6px;
-  animation: guitar-float 3s ease-in-out infinite;
-}
-@keyframes guitar-float {
-  0%,100% { transform: translateY(0) rotate(-5deg); }
-  50%      { transform: translateY(-8px) rotate(5deg); }
-}
-.cover-tagline {
-  font-family: 'Caveat', cursive; font-size: 13px; font-weight: 600;
-  color: rgba(253,246,227,.7); letter-spacing: 5px;
-  text-transform: uppercase; margin-bottom: 10px;
-}
-.cover-title {
-  font-family: 'Reenie Beanie', cursive;
-  font-size: clamp(30px, 8vw, 42px);
-  color: #fdf6e3; line-height: 1.15;
-  text-shadow: 0 2px 10px rgba(0,0,0,.5);
-  margin-bottom: 4px;
-}
-.cover-title span { color: #e8637a; }
-.cover-from {
-  font-family: 'Patrick Hand', sans-serif; font-size: 14px;
-  color: rgba(253,246,227,.7); margin-bottom: 22px;
-  letter-spacing: 2px;
-}
+    #music-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c0374f, #8b3a2a);
+      border: 3px solid #fdf6e3;
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, .35);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .2s;
+    }
 
-#open-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 36px;
-  background: linear-gradient(135deg, #c0374f, #8b3a2a);
-  color: #fdf6e3; border: none; border-radius: 60px;
-  font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,.4), 0 0 0 3px rgba(253,246,227,.35);
-  transition: transform .2s, box-shadow .2s;
-  backdrop-filter: blur(4px);
-}
-#open-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 28px rgba(0,0,0,.5), 0 0 0 4px rgba(253,246,227,.5); }
-#open-btn:active { transform: scale(.97); }
+    #music-btn:active {
+      transform: scale(.9);
+    }
 
-/* ── LETTER WRAP ── */
-#letter-wrap {
-  max-width: 530px; margin: 0 auto;
-  display: none; flex-direction: column; gap: 0;
-}
+    #music-btn.playing {
+      animation: disk-spin 3s linear infinite;
+    }
 
-/* ── PAPER PAGE ── */
-.paper-page {
-  position: relative;
-  background: var(--paper);
-  border-radius: 3px 3px 6px 6px;
-  padding: 50px 28px 56px;
-  margin-bottom: 36px;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(100,140,200,.17) 31px, rgba(100,140,200,.17) 32px),
-    linear-gradient(90deg, transparent 42px, rgba(220,60,60,.22) 42px, rgba(220,60,60,.22) 44px, transparent 44px),
-    linear-gradient(160deg, #fdf8ea 0%, #f9f0d8 40%, #fdf6e3 70%, #f5ecc8 100%);
-  box-shadow: 0 2px 5px rgba(0,0,0,.09), 0 10px 28px rgba(0,0,0,.13), 0 1px 0 rgba(255,255,255,.8) inset;
-}
-.paper-page::before {
-  content: '';
-  position: absolute; top: -11px; left: 50%;
-  transform: translateX(-50%);
-  width: 65px; height: 22px;
-  background: rgba(240,200,100,.4);
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.18);
-  border: 1px solid rgba(200,160,60,.28);
-}
+    @keyframes disk-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-/* ── STICKER ── */
-.sticker {
-  position: absolute; z-index: 10; pointer-events: auto;
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,.22));
-  cursor: pointer;
-  transition: transform .22s cubic-bezier(.34,1.56,.64,1), filter .22s, z-index 0s;
-}
-.sticker img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.sticker:hover {
-  filter: drop-shadow(3px 7px 14px rgba(0,0,0,.32));
-  z-index: 30;
-}
+    #music-panel {
+      background: var(--paper);
+      border: 1px solid rgba(0, 0, 0, .15);
+      border-radius: 12px;
+      padding: 12px 14px;
+      width: 195px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 3px 4px 14px rgba(0, 0, 0, .2);
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 12px;
+      color: var(--ink2);
+    }
 
-/* ── TAPE STRIPS ── */
-.tape {
-  position: absolute; z-index: 5;
-  background: rgba(240,220,100,.38);
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.1);
-  border: 1px solid rgba(200,170,60,.22);
-}
+    #music-panel.show {
+      display: flex;
+    }
 
-/* ── TYPOGRAPHY ── */
-.letter-header {
-  font-family: 'Caveat', cursive; font-size: 12px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 4px;
-  color: var(--warm2); margin-bottom: 20px; text-align: center;
-  opacity: .75; padding-left: 44px;
-}
-.letter-big-title {
-  font-family: 'Reenie Beanie', cursive;
-  font-size: clamp(32px, 8.5vw, 50px);
-  line-height: 1.1; color: var(--warm3);
-  margin-bottom: 8px; padding-left: 46px; text-align: center;
-}
-.letter-big-title span { color: var(--red-ink); }
-.letter-date {
-  font-family: 'Patrick Hand', sans-serif; font-size: 12px;
-  color: var(--ink2); opacity: .55; text-align: right; margin-bottom: 28px; letter-spacing: 1px;
-}
-.letter-salute {
-  font-family: 'Caveat', cursive; font-size: clamp(20px,5.5vw,26px); font-weight: 700;
-  color: var(--red-ink); margin-bottom: 16px; padding-left: 46px;
-}
-.letter-body {
-  font-family: 'Kalam', cursive; font-size: clamp(15px,4.2vw,17.5px);
-  line-height: 2.02; color: var(--ink); padding-left: 46px;
-}
-.letter-body p { margin-bottom: 4px; }
-.letter-body p.gap { margin-bottom: 26px; }
-.uline { text-decoration: underline; text-decoration-color: var(--rose); text-underline-offset: 3px; }
-.red  { color: var(--red-ink); font-weight: 700; }
-.blue { color: var(--blue-ink); }
-.circ { display: inline; padding: 1px 7px; border-radius: 50px; border: 2px solid var(--rose); }
+    .mp-title {
+      font-weight: 700;
+      font-size: 11px;
+      color: var(--warm2);
+    }
 
-.ch-title {
-  font-family: 'Reenie Beanie', cursive; font-size: clamp(28px,7vw,38px);
-  color: var(--warm3); margin-bottom: 2px; padding-left: 46px; line-height: 1.2;
-}
-.ch-sub {
-  font-family: 'Patrick Hand', sans-serif; font-size: 12.5px;
-  color: var(--ink2); opacity: .6; font-style: italic;
-  display: block; margin-bottom: 16px; padding-left: 46px;
-}
-svg.doodle { width: calc(100% - 46px); margin-left: 46px; height: 22px; display: block; margin-bottom: 18px; overflow: visible; }
+    .mp-range {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 3px;
+      background: #d4c4a0;
+      border-radius: 2px;
+      outline: none;
+    }
 
-.tape-quote {
-  margin: 18px 0 18px 46px;
-  background: rgba(240,200,100,.16);
-  border-left: 3px solid var(--gold);
-  padding: 14px 16px;
-  border-radius: 0 8px 8px 0;
-  font-family: 'Caveat', cursive; font-size: clamp(16px,4vw,19px); font-weight: 600;
-  color: var(--ink2); line-height: 1.5;
-  position: relative;
-}
-.tape-quote::before {
-  content: '';
-  position: absolute; top: -8px; left: 16px;
-  width: 44px; height: 15px;
-  background: rgba(240,200,100,.38);
-  border-radius: 2px; transform: rotate(-1deg);
-  box-shadow: 0 1px 3px rgba(0,0,0,.12);
-}
-.tape-quote.rose { border-left-color: var(--rose); }
-.tape-quote.green { border-left-color: #5a7a5a; }
+    .mp-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--warm2);
+      cursor: pointer;
+    }
 
-.opts { margin: 16px 0 16px 46px; display: flex; flex-direction: column; gap: 12px; }
-.opt {
-  background: rgba(255,255,255,.52);
-  border: 1.5px dashed rgba(200,100,80,.38);
-  border-radius: 10px; padding: 12px 14px;
-  font-family: 'Patrick Hand', sans-serif; font-size: 14px; line-height: 1.6; color: var(--ink2);
-  position: relative;
-}
-.opt::before {
-  content: ''; position: absolute; left: 0; top: 0;
-  width: 3px; height: 100%; background: linear-gradient(to bottom, var(--rose), var(--gold));
-  border-radius: 3px 0 0 3px;
-}
-.opt-lbl {
-  font-family: 'Caveat', cursive; font-size: 12px; font-weight: 700;
-  color: var(--warm2); letter-spacing: 2px; display: block; margin-bottom: 4px;
-}
+    .mp-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+    }
 
-.margin-note {
-  position: absolute; left: 2px;
-  font-family: 'Caveat', cursive; font-size: 10.5px; font-weight: 600;
-  color: var(--rose); opacity: .75;
-  writing-mode: vertical-lr; transform: rotate(180deg); letter-spacing: 2px;
-}
+    .mp-cbtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--ink2);
+      opacity: .8;
+    }
 
-.doodle-hearts {
-  text-align: center; font-size: 20px; padding-left: 46px;
-  letter-spacing: 8px; opacity: .6; margin: 10px 0;
-}
-.page-num {
-  text-align: center; margin-top: 22px;
-  font-family: 'Patrick Hand', sans-serif; font-size: 11px;
-  color: var(--ink2); opacity: .38; letter-spacing: 2px;
-}
-.scroll-hint {
-  text-align: center; padding-left: 46px;
-  font-family: 'Caveat', cursive; font-size: 12px;
-  color: var(--ink2); opacity: .45; letter-spacing: 2px;
-  margin-top: -6px; margin-bottom: 6px;
-  animation: bounce 1.6s ease-in-out infinite;
-}
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
-.firma-wrap { margin-top: 32px; padding-left: 46px; text-align: right; }
-.firma-text {
-  font-family: 'Reenie Beanie', cursive; font-size: clamp(34px,8.5vw,46px);
-  color: var(--red-ink); line-height: 1.1;
-}
-.firma-sub { font-family: 'Patrick Hand', sans-serif; font-size: 12px; color: var(--ink2); opacity: .55; letter-spacing: 2px; margin-top: 4px; }
+    /* ── PROGRESS TAPE ── */
+    #progress-tape {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      height: 5px;
+      background: repeating-linear-gradient(90deg, var(--rose) 0, var(--rose) 8px, var(--gold) 8px, var(--gold) 16px);
+      width: 0%;
+      transition: width .1s linear;
+      opacity: .85;
+    }
 
-/* ── PHOTO POLAROID ── */
-.polaroid-wrap {
-  position: relative; margin: 28px auto 12px;
-  width: 88%; max-width: 300px;
-  background: #fff;
-  padding: 10px 10px 36px;
-  border-radius: 2px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.22), 0 2px 6px rgba(0,0,0,.12);
-  transform: rotate(-1.5deg);
-}
-.polaroid-wrap::before {
-  content: ''; position: absolute; top: -12px; left: 50%;
-  transform: translateX(-50%);
-  width: 70px; height: 20px;
-  background: rgba(240,200,80,.5);
-  border-radius: 2px; box-shadow: 0 1px 4px rgba(0,0,0,.18);
-}
-.polaroid-wrap img { width: 100%; display: block; border-radius: 1px; }
-.polaroid-caption {
-  font-family: 'Caveat', cursive; font-size: 16px; font-weight: 600;
-  color: var(--ink2); text-align: center; margin-top: 8px; line-height: 1.3;
-}
+    /* ── ENVELOPE / COVER ── */
+    #envelope-intro {
+      max-width: 480px;
+      margin: 0 auto 28px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-20px);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .35), 0 0 0 3px rgba(253, 246, 227, .4);
+    }
 
-/* Page hidden */
-.page-hidden { opacity: 0; transform: translateY(42px); }
+    /* Fondo con la foto Morat */
+    #cover-bg {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+      filter: brightness(.75) saturate(1.1);
+    }
 
-/* Responsive */
-@media (max-width: 390px) {
-  .paper-page { padding: 44px 16px 48px; }
-  .letter-body, .ch-title, .ch-sub, svg.doodle, .tape-quote,
-  .opts, .firma-wrap, .doodle-hearts, .letter-header,
-  .letter-salute, .letter-big-title, .scroll-hint { padding-left: 36px; }
-  svg.doodle { width: calc(100% - 36px); margin-left: 36px; }
-  .opts { margin-left: 36px; }
-  .tape-quote { margin-left: 36px; }
-  .polaroid-wrap { width: 94%; }
-}
+    /* Overlay oscuro sobre la foto */
+    #cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, .08) 0%,
+          rgba(0, 0, 0, .22) 40%,
+          rgba(0, 0, 0, .62) 75%,
+          rgba(0, 0, 0, .8) 100%);
+      border-radius: 16px;
+    }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: rgba(139,58,42,.3); border-radius: 3px; }
-</style>
+    /* Content sobre la foto */
+    #cover-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 24px 20px 32px;
+    }
+
+    .cover-guitar {
+      font-size: 64px;
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, .5));
+      margin-bottom: 6px;
+      animation: guitar-float 3s ease-in-out infinite;
+    }
+
+    @keyframes guitar-float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-5deg);
+      }
+
+      50% {
+        transform: translateY(-8px) rotate(5deg);
+      }
+    }
+
+    .cover-tagline {
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(253, 246, 227, .7);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover-title {
+      font-family: 'Reenie Beanie', cursive;
+      font-size: clamp(30px, 8vw, 42px);
+      color: #fdf6e3;
+      line-height: 1.15;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .5);
+      margin-bottom: 4px;
+    }
+
+    .cover-title span {
+      color: #e8637a;
+    }
+
+    .cover-from {
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 14px;
+      color: rgba(253, 246, 227, .7);
+      margin-bottom: 22px;
+      letter-spacing: 2px;
+    }
+
+    #open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #c0374f, #8b3a2a);
+      color: #fdf6e3;
+      border: none;
+      border-radius: 60px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .4), 0 0 0 3px rgba(253, 246, 227, .35);
+      transition: transform .2s, box-shadow .2s;
+      backdrop-filter: blur(4px);
+    }
+
+    #open-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .5), 0 0 0 4px rgba(253, 246, 227, .5);
+    }
+
+    #open-btn:active {
+      transform: scale(.97);
+    }
+
+    /* ── LETTER WRAP ── */
+    #letter-wrap {
+      max-width: 530px;
+      margin: 0 auto;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── PAPER PAGE ── */
+    .paper-page {
+      position: relative;
+      background: var(--paper);
+      border-radius: 3px 3px 6px 6px;
+      padding: 50px 28px 56px;
+      margin-bottom: 36px;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(100, 140, 200, .17) 31px, rgba(100, 140, 200, .17) 32px),
+        linear-gradient(90deg, transparent 42px, rgba(220, 60, 60, .22) 42px, rgba(220, 60, 60, .22) 44px, transparent 44px),
+        linear-gradient(160deg, #fdf8ea 0%, #f9f0d8 40%, #fdf6e3 70%, #f5ecc8 100%);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .09), 0 10px 28px rgba(0, 0, 0, .13), 0 1px 0 rgba(255, 255, 255, .8) inset;
+    }
+
+    .paper-page::before {
+      content: '';
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 65px;
+      height: 22px;
+      background: rgba(240, 200, 100, .4);
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+      border: 1px solid rgba(200, 160, 60, .28);
+    }
+
+    /* ── STICKER ── */
+    .sticker {
+      position: absolute;
+      z-index: 10;
+      pointer-events: auto;
+      filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .22));
+      cursor: pointer;
+      transition: transform .22s cubic-bezier(.34, 1.56, .64, 1), filter .22s, z-index 0s;
+    }
+
+    .sticker img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .sticker:hover {
+      filter: drop-shadow(3px 7px 14px rgba(0, 0, 0, .32));
+      z-index: 30;
+    }
+
+    /* ── TAPE STRIPS ── */
+    .tape {
+      position: absolute;
+      z-index: 5;
+      background: rgba(240, 220, 100, .38);
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+      border: 1px solid rgba(200, 170, 60, .22);
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .letter-header {
+      font-family: 'Caveat', cursive;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--warm2);
+      margin-bottom: 20px;
+      text-align: center;
+      opacity: .75;
+      padding-left: 44px;
+    }
+
+    .letter-big-title {
+      font-family: 'Reenie Beanie', cursive;
+      font-size: clamp(32px, 8.5vw, 50px);
+      line-height: 1.1;
+      color: var(--warm3);
+      margin-bottom: 8px;
+      padding-left: 46px;
+      text-align: center;
+    }
+
+    .letter-big-title span {
+      color: var(--red-ink);
+    }
+
+    .letter-date {
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 12px;
+      color: var(--ink2);
+      opacity: .55;
+      text-align: right;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+
+    .letter-salute {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(20px, 5.5vw, 26px);
+      font-weight: 700;
+      color: var(--red-ink);
+      margin-bottom: 16px;
+      padding-left: 46px;
+    }
+
+    .letter-body {
+      font-family: 'Kalam', cursive;
+      font-size: clamp(15px, 4.2vw, 17.5px);
+      line-height: 2.02;
+      color: var(--ink);
+      padding-left: 46px;
+    }
+
+    .letter-body p {
+      margin-bottom: 4px;
+    }
+
+    .letter-body p.gap {
+      margin-bottom: 26px;
+    }
+
+    .uline {
+      text-decoration: underline;
+      text-decoration-color: var(--rose);
+      text-underline-offset: 3px;
+    }
+
+    .red {
+      color: var(--red-ink);
+      font-weight: 700;
+    }
+
+    .blue {
+      color: var(--blue-ink);
+    }
+
+    .circ {
+      display: inline;
+      padding: 1px 7px;
+      border-radius: 50px;
+      border: 2px solid var(--rose);
+    }
+
+    .ch-title {
+      font-family: 'Reenie Beanie', cursive;
+      font-size: clamp(28px, 7vw, 38px);
+      color: var(--warm3);
+      margin-bottom: 2px;
+      padding-left: 46px;
+      line-height: 1.2;
+    }
+
+    .ch-sub {
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 12.5px;
+      color: var(--ink2);
+      opacity: .6;
+      font-style: italic;
+      display: block;
+      margin-bottom: 16px;
+      padding-left: 46px;
+    }
+
+    svg.doodle {
+      width: calc(100% - 46px);
+      margin-left: 46px;
+      height: 22px;
+      display: block;
+      margin-bottom: 18px;
+      overflow: visible;
+    }
+
+    .tape-quote {
+      margin: 18px 0 18px 46px;
+      background: rgba(240, 200, 100, .16);
+      border-left: 3px solid var(--gold);
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Caveat', cursive;
+      font-size: clamp(16px, 4vw, 19px);
+      font-weight: 600;
+      color: var(--ink2);
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .tape-quote::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 16px;
+      width: 44px;
+      height: 15px;
+      background: rgba(240, 200, 100, .38);
+      border-radius: 2px;
+      transform: rotate(-1deg);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+    }
+
+    .tape-quote.rose {
+      border-left-color: var(--rose);
+    }
+
+    .tape-quote.green {
+      border-left-color: #5a7a5a;
+    }
+
+    .opts {
+      margin: 16px 0 16px 46px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .opt {
+      background: rgba(255, 255, 255, .52);
+      border: 1.5px dashed rgba(200, 100, 80, .38);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink2);
+      position: relative;
+    }
+
+    .opt::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--rose), var(--gold));
+      border-radius: 3px 0 0 3px;
+    }
+
+    .opt-lbl {
+      font-family: 'Caveat', cursive;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--warm2);
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .margin-note {
+      position: absolute;
+      left: 2px;
+      font-family: 'Caveat', cursive;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--rose);
+      opacity: .75;
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+      letter-spacing: 2px;
+    }
+
+    .doodle-hearts {
+      text-align: center;
+      font-size: 20px;
+      padding-left: 46px;
+      letter-spacing: 8px;
+      opacity: .6;
+      margin: 10px 0;
+    }
+
+    .page-num {
+      text-align: center;
+      margin-top: 22px;
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 11px;
+      color: var(--ink2);
+      opacity: .38;
+      letter-spacing: 2px;
+    }
+
+    .scroll-hint {
+      text-align: center;
+      padding-left: 46px;
+      font-family: 'Caveat', cursive;
+      font-size: 12px;
+      color: var(--ink2);
+      opacity: .45;
+      letter-spacing: 2px;
+      margin-top: -6px;
+      margin-bottom: 6px;
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(6px)
+      }
+    }
+
+    .firma-wrap {
+      margin-top: 32px;
+      padding-left: 46px;
+      text-align: right;
+    }
+
+    .firma-text {
+      font-family: 'Reenie Beanie', cursive;
+      font-size: clamp(34px, 8.5vw, 46px);
+      color: var(--red-ink);
+      line-height: 1.1;
+    }
+
+    .firma-sub {
+      font-family: 'Patrick Hand', sans-serif;
+      font-size: 12px;
+      color: var(--ink2);
+      opacity: .55;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    /* ── PHOTO POLAROID ── */
+    .polaroid-wrap {
+      position: relative;
+      margin: 28px auto 12px;
+      width: 88%;
+      max-width: 300px;
+      background: #fff;
+      padding: 10px 10px 36px;
+      border-radius: 2px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .22), 0 2px 6px rgba(0, 0, 0, .12);
+      transform: rotate(-1.5deg);
+    }
+
+    .polaroid-wrap::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 20px;
+      background: rgba(240, 200, 80, .5);
+      border-radius: 2px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+    }
+
+    .polaroid-wrap img {
+      width: 100%;
+      display: block;
+      border-radius: 1px;
+    }
+
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink2);
+      text-align: center;
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
+    /* Page hidden */
+    .page-hidden {
+      opacity: 0;
+      transform: translateY(42px);
+    }
+
+    /* Responsive */
+    @media (max-width: 390px) {
+      .paper-page {
+        padding: 44px 16px 48px;
+      }
+
+      .letter-body,
+      .ch-title,
+      .ch-sub,
+      svg.doodle,
+      .tape-quote,
+      .opts,
+      .firma-wrap,
+      .doodle-hearts,
+      .letter-header,
+      .letter-salute,
+      .letter-big-title,
+      .scroll-hint {
+        padding-left: 36px;
+      }
+
+      svg.doodle {
+        width: calc(100% - 36px);
+        margin-left: 36px;
+      }
+
+      .opts {
+        margin-left: 36px;
+      }
+
+      .tape-quote {
+        margin-left: 36px;
+      }
+
+      .polaroid-wrap {
+        width: 94%;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(139, 58, 42, .3);
+      border-radius: 3px;
+    }
+  </style>
 </head>
+
 <body>
 
-<div id="progress-tape"></div>
+  <div id="progress-tape"></div>
 
-<!-- Music -->
-<div id="music-pin">
-  <button id="music-btn" onclick="toggleMusicPanel()" title="Música">🎵</button>
-  <div id="music-panel">
-    <div class="mp-title">🎸 Morat — Segundos Platos</div>
-    <input type="range" class="mp-range" id="seek-bar" min="0" max="100" value="0" oninput="seekMusic(this.value)">
-    <div class="mp-controls">
-      <button class="mp-cbtn" onclick="rewind()">⏪</button>
-      <button class="mp-cbtn" id="play-btn" onclick="toggleMusic()">▶</button>
-      <button class="mp-cbtn" onclick="forward()">⏩</button>
+  <!-- Music -->
+  <div id="music-pin">
+    <button id="music-btn" onclick="toggleMusicPanel()" title="Música">🎵</button>
+    <div id="music-panel">
+      <div class="mp-title">🎸 Morat — Segundos Platos</div>
+      <input type="range" class="mp-range" id="seek-bar" min="0" max="100" value="0" oninput="seekMusic(this.value)">
+      <div class="mp-controls">
+        <button class="mp-cbtn" onclick="rewind()">⏪</button>
+        <button class="mp-cbtn" id="play-btn" onclick="toggleMusic()">▶</button>
+        <button class="mp-cbtn" onclick="forward()">⏩</button>
+      </div>
+      <input type="range" class="mp-range" id="vol-bar" min="0" max="100" value="70" oninput="setVol(this.value)">
     </div>
-    <input type="range" class="mp-range" id="vol-bar" min="0" max="100" value="70" oninput="setVol(this.value)">
   </div>
-</div>
-<audio id="bg-audio" src="MUSICA DE FONDO/Segundos Platos.mp3" loop preload="auto"></audio>
+  <audio id="bg-audio" src="MUSICA DE FONDO/Segundos Platos.mp3" loop preload="auto"></audio>
 
-<!-- ═══════════════════════════════
+  <!-- ═══════════════════════════════
      COVER / INTRO
  ═══════════════════════════════ -->
-<div id="envelope-intro" onclick="openLetter()" style="cursor:pointer">
-  <!-- Foto Morat de fondo -->
-  <img id="cover-bg" src="STIKCET/PEGATINAS/cover-morat.png" alt="Morat cover">
+  <div id="envelope-intro" onclick="openLetter()" style="cursor:pointer">
+    <!-- Foto Morat de fondo -->
+    <img id="cover-bg" src="STIKCET/PEGATINAS/cover-morat.png" alt="Morat cover">
 
-  <!-- Overlay degradado -->
-  <div id="cover-overlay"></div>
+    <!-- Overlay degradado -->
+    <div id="cover-overlay"></div>
 
-  <!-- Contenido encima de la foto -->
-  <div id="cover-content">
-    <span class="cover-guitar">🎸</span>
-    <p class="cover-tagline">✦ una carta para ti · abril 2026 ✦</p>
-    <h1 class="cover-title">
-      No es una carta,<br>
-      <span>es un acto de amor</span><br>
-      y valentía.
-    </h1>
-    <p class="cover-from">Para: Emelis 🌷 · De: Reydel 💕</p>
-    <button id="open-btn" onclick="event.stopPropagation(); openLetter()">
-      Abrir carta 🎸
-    </button>
+    <!-- Contenido encima de la foto -->
+    <div id="cover-content">
+      <span class="cover-guitar">🎸</span>
+      <p class="cover-tagline">✦ una carta para ti · abril 2026 ✦</p>
+      <h1 class="cover-title">
+        No es una carta,<br>
+        <span>es un acto de amor</span><br>
+        y valentía.
+      </h1>
+      <p class="cover-from">Para: Emelis 🌷 · De: Reydel 💕</p>
+      <button id="open-btn" onclick="event.stopPropagation(); openLetter()">
+        Abrir carta 🎸
+      </button>
+    </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════
+  <!-- ═══════════════════════════════
      LETTER WRAP
  ═══════════════════════════════ -->
-<div id="letter-wrap">
+  <div id="letter-wrap">
 
-<!-- ══ PÁGINA 0 — PORTADA ══ -->
-<div class="paper-page page-hidden" id="p0" style="transform:rotate(-0.7deg)">
-  <!-- Tape strips -->
-  <div class="tape" style="top:-9px;left:30px;width:80px;height:18px;transform:rotate(-2deg)"></div>
-  <div class="tape" style="top:-9px;right:38px;width:58px;height:18px;transform:rotate(1.5deg)"></div>
+    <!-- ══ PÁGINA 0 — PORTADA ══ -->
+    <div class="paper-page page-hidden" id="p0" style="transform:rotate(-0.7deg)">
+      <!-- Tape strips -->
+      <div class="tape" style="top:-9px;left:30px;width:80px;height:18px;transform:rotate(-2deg)"></div>
+      <div class="tape" style="top:-9px;right:38px;width:58px;height:18px;transform:rotate(1.5deg)"></div>
 
-  <!-- STICKERS página 0 -->
-  <!-- Morat logo grande arriba derecha -->
-  <div class="sticker" style="top:-30px;right:-8px;width:95px;height:95px;transform:rotate(10deg)">
-    <img src="STIKCET/MORAT-1.png" alt="Morat">
-  </div>
+      <!-- STICKERS página 0 -->
+      <!-- Morat logo grande arriba derecha -->
+      <div class="sticker" style="top:-30px;right:-8px;width:95px;height:95px;transform:rotate(10deg)">
+        <img src="STIKCET/MORAT-1.png" alt="Morat">
+      </div>
 
-  <!-- Favorite Person arriba izquierda -->
-  <div class="sticker" style="top:-20px;left:-5px;width:100px;height:60px;transform:rotate(-8deg)">
-    <img src="STIKCET/PEGATINAS/6c07ed813cebe437ef7fd507547a2f1e.png" alt="Favorite Person">
-  </div>
+      <!-- Favorite Person arriba izquierda -->
+      <div class="sticker" style="top:-20px;left:-5px;width:100px;height:60px;transform:rotate(-8deg)">
+        <img src="STIKCET/PEGATINAS/6c07ed813cebe437ef7fd507547a2f1e.png" alt="Favorite Person">
+      </div>
 
-  <!-- Gatito con tulipanes abajo derecha -->
-  <div class="sticker" style="bottom:-32px;right:-12px;width:100px;height:100px;transform:rotate(12deg)">
-    <img src="STIKCET/PEGATINAS/descarga.png" alt="Gato tulipanes">
-  </div>
+      <!-- Gatito con tulipanes abajo derecha -->
+      <div class="sticker" style="bottom:-32px;right:-12px;width:100px;height:100px;transform:rotate(12deg)">
+        <img src="STIKCET/PEGATINAS/descarga.png" alt="Gato tulipanes">
+      </div>
 
-  <!-- Tulipanes abajo izquierda -->
-  <div class="sticker" style="bottom:-25px;left:5px;width:88px;height:88px;transform:rotate(-10deg)">
-    <img src="STIKCET/scitker flores.png" alt="Flores">
-  </div>
+      <!-- Tulipanes abajo izquierda -->
+      <div class="sticker" style="bottom:-25px;left:5px;width:88px;height:88px;transform:rotate(-10deg)">
+        <img src="STIKCET/scitker flores.png" alt="Flores">
+      </div>
 
-  <span class="margin-note" style="top:80px">de rey pa tati 🌷</span>
+      <span class="margin-note" style="top:80px">de rey pa tati 🌷</span>
 
-  <p class="letter-header">✦ una carta para ti · april 2026 ✦</p>
+      <p class="letter-header">✦ una carta para ti · april 2026 ✦</p>
 
-  <h1 class="letter-big-title">
-    No es una carta,<br>
-    <span>es un acto de amor</span><br>
-    y valentía. 🌷
-  </h1>
+      <h1 class="letter-big-title">
+        No es una carta,<br>
+        <span>es un acto de amor</span><br>
+        y valentía. 🌷
+      </h1>
 
-  <p class="letter-date">Abril, 2026 · Reydel ✍️</p>
+      <p class="letter-date">Abril, 2026 · Reydel ✍️</p>
 
-  <p class="letter-salute">Hola Emi 👋</p>
+      <p class="letter-salute">Hola Emi 👋</p>
 
-  <div class="letter-body">
-    <p>Sé que he tomado una decisión y quiero cambiar lo que contiene la carta, así que presta atención.</p>
-    <p class="gap">Voy a poner absolutamente todo lo que siento y todo lo que quiero decirte en esta ocasión. <span class="uline">Lee esto con el corazón abierto</span>, porque vas a entender algunas cosas que quiero que leas. ✨</p>
-  </div>
+      <div class="letter-body">
+        <p>Sé que he tomado una decisión y quiero cambiar lo que contiene la carta, así que presta atención.</p>
+        <p class="gap">Voy a poner absolutamente todo lo que siento y todo lo que quiero decirte en esta ocasión. <span
+            class="uline">Lee esto con el corazón abierto</span>, porque vas a entender algunas cosas que quiero que
+          leas. ✨</p>
+      </div>
 
-  <div class="doodle-hearts">🌷 💕 🌷 💕 🌷</div>
-  <div class="scroll-hint">sigue leyendo ↓</div>
-  <p class="page-num">① / ⑦</p>
-</div>
-
-<!-- ══ PÁGINA 1 — LO QUE SOY ══ -->
-<div class="paper-page page-hidden" id="p1" style="transform:rotate(0.6deg)">
-  <div class="tape" style="top:-9px;left:50%;transform:translateX(-50%) rotate(-1deg);width:88px;height:18px"></div>
-
-  <!-- Morat 2 -->
-  <div class="sticker" style="top:-25px;right:5px;width:88px;height:88px;transform:rotate(7deg)">
-    <img src="STIKCET/MORAT-2.png" alt="Morat 2">
-  </div>
-  <!-- Nunca al revés (Morat song) -->
-  <div class="sticker" style="top:-18px;left:-8px;width:90px;height:55px;transform:rotate(-9deg)">
-    <img src="STIKCET/PEGATINAS/985c95653926a5e0fbd06ecf5214f38a.png" alt="Nunca al revés">
-  </div>
-  <!-- Flowers bottom left -->
-  <div class="sticker" style="bottom:-28px;left:-10px;width:85px;height:85px;transform:rotate(-12deg)">
-    <img src="STIKCET/tulipanaes-1.png" alt="Tulipanes 1">
-  </div>
-  <!-- Chica Superpoderosa -->
-  <div class="sticker" style="bottom:-30px;right:-10px;width:92px;height:92px;transform:rotate(11deg)">
-    <img src="STIKCET/CHICASUPERPODEROSAS-1.png" alt="CSP 1">
-  </div>
-
-  <span class="margin-note" style="top:90px">2/7 · lo que siento</span>
-
-  <h2 class="ch-title">1. Lo que siento ahora</h2>
-  <span class="ch-sub">(y algo que quiero que sepas)</span>
-
-  <svg class="doodle" viewBox="0 0 300 22" fill="none">
-    <path d="M0 11 Q15 4 30 11 Q45 18 60 11 Q75 4 90 11 Q105 18 120 11 Q135 4 150 11 Q165 18 180 11 Q195 4 210 11 Q225 18 240 11 Q255 4 270 11 Q285 18 300 11" stroke="#e8637a" stroke-width="2" stroke-linecap="round"/>
-  </svg>
-
-  <div class="letter-body">
-    <p>Sé que te voy a extrañar mucho, pero también sé que vas a estar mejor y posiblemente con alguien mejor. Y aunque duela, me alegro por eso. Porque mi deseo más profundo siempre ha sido verte feliz, aunque no sea conmigo. Eso, de verdad, me hace sentir bien, Tati.</p>
-    <p class="gap">A pesar de todo, ¿odiarte? <span class="red">Jamás.</span> Yo siempre te voy a desear lo mejor. No me importa si no es a mi lado, porque yo te amé de verdad.</p>
-  </div>
-
-  <div class="tape-quote">
-    💬 "No importa si no es conmigo, yo quiero que seas feliz. Yo estoy con lo mío, viendo cómo puedo seguir. Yo quería que fueras tú, nadie más. Y hay ciertas cosas que te diré más adelante, porque eras tú nada más. Es algo que, cuando te lo diga, vas a entender." 🤍
-  </div>
-
-  <div class="letter-body">
-    <p>Cuando te toquen chicos que solo te quieran para un rato, que solo te vean por tu físico, que no aguanten tus cambios de actitud, tus berrinches, tus cambios de humor… te darás cuenta.</p>
-    <p>Y vas a decir: <span class="uline">"Mi niño era complicado e intenso, pero él me amó con toda su alma"</span>.</p>
-    <p>No sé si algún día entenderás cuánto significabas para mí, pero espero que al menos alguna vez recuerdes que alguien te quiso con todo el corazón.</p>
-  </div>
-
-  <div class="doodle-hearts">✨ 🌟 ✨ 🌟 ✨</div>
-  <p class="page-num">② / ⑦</p>
-</div>
-
-<!-- ══ PÁGINA 2 — LO QUE VI EN TI ══ -->
-<div class="paper-page page-hidden" id="p2" style="transform:rotate(-0.5deg)">
-  <div class="tape" style="top:-9px;right:55px;width:68px;height:18px;transform:rotate(2deg)"></div>
-  <div class="tape" style="top:-9px;left:38px;width:52px;height:18px;transform:rotate(-1.5deg)"></div>
-
-  <!-- Morat 4 top left -->
-  <div class="sticker" style="top:-28px;left:-6px;width:96px;height:96px;transform:rotate(-11deg)">
-    <img src="STIKCET/MORAT-4.png" alt="Morat 4">
-  </div>
-  <!-- Corazón partido (Morat) -->
-  <div class="sticker" style="top:-22px;right:-8px;width:90px;height:90px;transform:rotate(9deg)">
-    <img src="STIKCET/PEGATINAS/cf40987e238bf676c8e47882608a75a4.jpg" alt="Corazón partido">
-  </div>
-  <!-- Mono con flores bottom right -->
-  <div class="sticker" style="bottom:-30px;right:-12px;width:98px;height:98px;transform:rotate(13deg)">
-    <img src="STIKCET/PEGATINAS/a00eb2c2676585f20092429170fcf3b8.png" alt="Mono tulipanes">
-  </div>
-  <!-- CSP 2 bottom left -->
-  <div class="sticker" style="bottom:-26px;left:12px;width:88px;height:88px;transform:rotate(-8deg)">
-    <img src="STIKCET/CHICASUPERPODEROSAS-2.png" alt="CSP 2">
-  </div>
-
-  <span class="margin-note" style="top:90px">3/7 · un hombre</span>
-
-  <h2 class="ch-title">2. Un hombre que insiste</h2>
-  <span class="ch-sub">(no es un tonto)</span>
-
-  <svg class="doodle" viewBox="0 0 300 22" fill="none">
-    <path d="M0 15 C50 5 100 20 150 10 C200 2 250 18 300 8" stroke="#c0374f" stroke-width="2.5" stroke-linecap="round"/>
-  </svg>
-
-  <div class="letter-body">
-    <p>Siempre he dicho que un hombre que insiste, que hace todo lo posible, no es un hombre tonto o con falta de amor propio. Solo es un hombre enamorado que quiere amar y ser amado.</p>
-    <p class="gap">Un hombre que no solo te quiso por tu cuerpo —<span class="circ">aunque me moría por tenerte a mi lado</span>—.</p>
-  </div>
-
-  <div class="tape-quote rose">
-    💕 "Un hombre que pide exclusividad, que insiste, que protege las cosas, y que siempre te quiere ayudar a pesar de todo, no es un tonto. Es un hombre que realmente aprecia..." ❤️🩹
-  </div>
-
-  <div class="letter-body">
-    <p>...y que no te quiere solo por tu cuerpo. Quiero que entiendas eso muy claro, para que sepas elegir el tipo de persona a la cual quieras brindarle tu confianza de nuevo.</p>
-    <p class="gap"><span class="red">DIVIÉRTETE, PERO NO OLVIDES TUS SUEÑOS.</span> Diviértete, pásala rico, no pasa nada. Pero recuerda tu objetivo. Despeja la mente de vez en cuando, pero no descuides tus sueños. Ten prioridad en cosas que realmente aporten valor a tu vida. Los amigos, la fiesta, las personas… todo es pasajero.</p>
-  </div>
-
-  <div class="doodle-hearts">🌸 💗 🌸 💗 🌸</div>
-  <p class="page-num">③ / ⑦</p>
-</div>
-
-<!-- ══ PÁGINA 3 — SUEÑOS + SECRETO ══ -->
-<div class="paper-page page-hidden" id="p3" style="transform:rotate(0.8deg)">
-  <div class="tape" style="top:-9px;left:50%;width:100px;height:18px;transform:translateX(-50%) rotate(.5deg)"></div>
-
-  <!-- Morat 5 top right -->
-  <div class="sticker" style="top:-24px;right:4px;width:82px;height:82px;transform:rotate(6deg)">
-    <img src="STIKCET/MORAT-5png.png" alt="Morat 5">
-  </div>
-  <!-- Jarras de canciones Morat -->
-  <div class="sticker" style="top:-20px;left:-10px;width:95px;height:95px;transform:rotate(-12deg)">
-    <img src="STIKCET/PEGATINAS/d920a29c3deb51be7d3719283fdf1510.jpg" alt="Jarras Morat">
-  </div>
-  <!-- Morat 6 bottom right -->
-  <div class="sticker" style="bottom:-24px;right:-8px;width:88px;height:88px;transform:rotate(10deg)">
-    <img src="STIKCET/MORAT-6.png" alt="Morat 6">
-  </div>
-  <!-- sctiker+1 bottom left -->
-  <div class="sticker" style="bottom:-26px;left:8px;width:82px;height:82px;transform:rotate(-9deg)">
-    <img src="STIKCET/sctiker+1.png" alt="Sticker flores">
-  </div>
-  <!-- CSP 3 -->
-  <div class="sticker" style="top:40px;right:-18px;width:80px;height:80px;transform:rotate(16deg)">
-    <img src="STIKCET/CHICASUPERPODEROSAS-3.png" alt="CSP 3">
-  </div>
-
-  <span class="margin-note" style="top:90px">4/7 · me dolió</span>
-
-  <h2 class="ch-title">3. Yo ya cumplí mi misión</h2>
-  <span class="ch-sub">(te hice sentir especial)</span>
-
-  <svg class="doodle" viewBox="0 0 300 22" fill="none">
-    <path d="M10 11 L290 11" stroke="#c9922e" stroke-width="2" stroke-dasharray="6 4" stroke-linecap="round"/>
-  </svg>
-
-  <div class="letter-body">
-    <p>Solo dímelo, ¿ok? Dime: <span class="red">"No te quiero, no quiero estar contigo"</span>. Solo dilo, di: "No quiero". Di que no quieres estar conmigo, dímelo y te dejaré en paz.</p>
-    <p>Dime lo que quieres, dime lo que sientes. Por más cruel que suene, creo que me merezco la verdad de saber qué fui yo para ti. ¿Qué querías? ¿Qué quieres?</p>
-  </div>
-
-  <div class="tape-quote" style="border-left-color:#e8637a">
-    🔐 <span class="red">Mi misión:</span><br><br>
-    Yo ya cumplí mi misión… Te hice reír, te hice sentir especial, te cuidé a mi manera, y estuve siempre para ti. Ahora solo quiero que seas feliz, aunque no sea conmigo.<br><br>
-  </div>
-
-  <div class="letter-body">
-    <p>Sí, <span class="uline">me dolió que no fuimos ni somos nada.</span> Me dolió no saber nunca qué sentías por mí, aunque en su mayor parte siempre lo sospeché. Y siempre entendí que solo iba a ser tu persona segura, la que no te falla.</p>
-    <p>Me molesta mucho no saber lo que fui yo para ti. Me molesta no saber cuáles fueron tus intenciones reales. Y si mentir sería decir que fui tu opción más ideal, creo que prefiero la verdad, aunque sea fría y horrible.</p>
-  </div>
-
-  <div class="doodle-hearts">🎸 🌟 🎸 🌟 🎸</div>
-  <p class="page-num">④ / ⑦</p>
-</div>
-
-<!-- ══ PÁGINA 4 — LA VERDAD ══ -->
-<div class="paper-page page-hidden" id="p4" style="transform:rotate(-0.6deg)">
-  <div class="tape" style="top:-9px;left:26px;width:68px;height:18px;transform:rotate(-2deg)"></div>
-  <div class="tape" style="top:-9px;right:28px;width:78px;height:18px;transform:rotate(1.5deg)"></div>
-
-  <!-- "Estoy llamando porque…" top right -->
-  <div class="sticker" style="top:-28px;right:-5px;width:100px;height:100px;transform:rotate(6deg)">
-    <img src="STIKCET/PEGATINAS/aa9cf8348a5770294de23f49838df350.jpg" alt="Como estás">
-  </div>
-  <!-- Morat 7 top left -->
-  <div class="sticker" style="top:-26px;left:-8px;width:100px;height:100px;transform:rotate(-9deg)">
-    <img src="STIKCET/MORAT-7.png" alt="Morat 7">
-  </div>
-  <!-- "Yo te hubiera abrazado más fuerte" bottom right -->
-  <div class="sticker" style="bottom:-24px;right:-10px;width:110px;height:70px;transform:rotate(8deg)">
-    <img src="STIKCET/PEGATINAS/f1062bfdc8a9abac9673bc008cd90030.png" alt="Abrazo">
-  </div>
-  <!-- Tulipanes bottom left -->
-  <div class="sticker" style="bottom:-24px;left:10px;width:82px;height:82px;transform:rotate(-7deg)">
-    <img src="STIKCET/TULIPANES.png" alt="Tulipanes">
-  </div>
-
-  <span class="margin-note" style="top:90px">5/7 · no fuimos nada</span>
-
-  <h2 class="ch-title">4. No fuimos nada, pero...</h2>
-  <span class="ch-sub">(siempre fuimos algo)</span>
-
-  <svg class="doodle" viewBox="0 0 300 22" fill="none">
-    <path d="M0 11 Q30 3 60 11 Q90 20 120 11 Q150 3 180 11 Q210 20 240 11 Q270 3 300 11" stroke="#e8637a" stroke-width="2.5" stroke-linecap="round"/>
-  </svg>
-
-  <div class="letter-body">
-    <p>Me molesta no saber por qué te celo, si tú no eres nada mío. Si estás con alguien más, me pregunto: ¿fue cosa del destino ponerte en mi camino?</p>
-    <p>Para ti, de pronto, no fui nada. Pero tú para mí lo fuiste todo. Quien te quería como yo, va a estar difícil de conseguir. Por ti, iba contra la marea si era posible.</p>
-  </div>
-
-  <div class="opts">
-    <div class="opt" style="padding: 10px 14px; margin-bottom: 2px;">
-      No fuimos nada, pero cómo me encantaba verte.<br>
-      No fuimos nada, pero nos dijimos "te quiero".<br>
-      No fuimos nada, pero la pasamos tan bien al inicio.<br>
-      No fuimos nada, pero moría por tocar tus manos.<br>
-      No fuimos nada, pero aprendí a extrañar tus silencios.<br>
-      No fuimos nada, pero hice planes que nunca sucedieron.<br>
-      No fuimos nada, pero sigo imaginando lo que pudo haber sido.<br>
-      No fuimos nada, pero entendí que algunos amores llegan para enseñarte a soltar.<br>
-      <span class="red" style="font-weight:700">No fuimos nada, pero siempre serás mía.</span>
-    </div>
-  </div>
-
-  <div class="letter-body">
-    <p>Y sí, a veces los "casi algo" nos enseñan a volver a nosotros mismos, a amarnos más profundamente y a entender que no necesitamos a nadie más para sentirnos completos.</p>
-    <p class="gap">Nunca fuimos nada, pero siempre fuimos algo. Y ese algo fue suficiente para confundirme, romperme, emocionarme y hacerme sentir que tal vez, si el mundo hubiera girado diferente, sí habríamos sido.</p>
-  </div>
-
-  <div class="doodle-hearts">💔 🩹 💔 🩹 💔</div>
-  <p class="page-num">⑤ / ⑦</p>
-</div>
-
-<!-- ══ PÁGINA 5 — CIERRE + FOTO ══ -->
-<div class="paper-page page-hidden" id="p5" style="transform:rotate(0.4deg)">
-  <div class="tape" style="top:-9px;left:50%;transform:translateX(-50%) rotate(-0.5deg);width:95px;height:18px"></div>
-
-  <!-- EDIT sticker top right (hoja completa stickers Morat) -->
-  <div class="sticker" style="top:-30px;right:-10px;width:105px;height:105px;transform:rotate(8deg)">
-    <img src="STIKCET/PEGATINAS/EDIT.png" alt="Morat sheet">
-  </div>
-  <!-- Tulipanes reales top left -->
-  <div class="sticker" style="top:-24px;left:-8px;width:90px;height:90px;transform:rotate(-12deg)">
-    <img src="STIKCET/PEGATINAS/a30a1dc84da77c8604e49ad3562cea18.jpg" alt="Tulipanes reales">
-  </div>
-  <!-- "i Love You" corte periódico bottom left -->
-  <div class="sticker" style="bottom:-26px;left:10px;width:90px;height:90px;transform:rotate(-8deg)">
-    <img src="STIKCET/PEGATINAS/cc420c2ddd3c4b88d8e1ca306f79a3fb.jpg" alt="i Love You">
-  </div>
-  <!-- Morat 3 bottom right -->
-  <div class="sticker" style="bottom:-20px;right:12px;width:76px;height:76px;transform:rotate(6deg)">
-    <img src="STIKCET/MORAT-3.png" alt="Morat 3">
-  </div>
-
-  <span class="margin-note" style="top:90px">6/7 · la motivación</span>
-
-  <h2 class="ch-title">5. Conocerte fue un regalo</h2>
-  <span class="ch-sub">(y motivación para ti)</span>
-
-  <div class="tape-quote green">
-    🌿 <span class="red">Emi</span>, conocerte pudo ser cuestión de suerte o una simple coincidencia, pero prefiero interpretarlo como un regalo que me dio esta vida. Siempre te dije que me llevaría una buena perspectiva de ti.<br><br>
-    Que alguien te conozca en tu peor momento y no se asuste ni se aleje, sino que elija estar contigo, es una de las mejores demostraciones de amor. Intenta reconocer eso en cada persona.<br><br>
-    <span style="color:var(--warm3);font-weight:700">Siéntete privilegiada. A ti te lo di todo. Nunca dejes de ser buena persona, aunque te pasen cosas malas. 🌷</span>
-  </div>
-
-  <div class="letter-body">
-    <p>Ahora que llegues, solo preocúpate por hacer las cosas bien. La vida siempre te recompensa todo lo bueno que haces. Intenta aprender de tus errores.</p>
-    <p>Demuéstrale a tu familia de lo que estás hecha. Que eres capaz, valiente, que te puedes superar constantemente. No tengas miedo de los nuevos comienzos. Vienen nuevas personas, nuevos lugares... abraza las nuevas oportunidades.</p>
-    <p class="gap"><span class="circ red">Si quieres volar, renuncia a lo que te hunde.</span> Recuerda que el que no arriesga, se queda en el mismo lugar toda la vida. Eres un ser importante y único en este mundo.</p>
-  </div>
-
-  <div class="doodle-hearts" style="margin-top:18px">🌷 ❤️ 🌷 ❤️ 🌷</div>
-  <p class="page-num">⑥ / ⑦</p>
-</div>
-
-<!-- ══ PÁGINA 6 — MAS TEXTO ══ -->
-<div class="paper-page page-hidden" id="p6" style="transform:rotate(-0.3deg)">
-  <div class="tape" style="top:-9px;right:30px;transform:rotate(1.5deg);width:80px;height:18px"></div>
-  <div class="tape" style="top:-9px;left:25px;transform:rotate(-1.5deg);width:80px;height:18px"></div>
-
-  <span class="margin-note" style="top:90px">7/7 · el trabajo</span>
-
-  <h2 class="ch-title">6. Haz el trabajo</h2>
-  <span class="ch-sub">(y nunca es tarde)</span>
-
-  <div class="letter-body">
-    <p>Si te sirve de algo, nunca es muy tarde para ser quien tú quieras ser. No hay tiempo límite. Empieza cuando quieras. Puedes cambiar o seguir igual; la vida no tiene reglas.</p>
-    <p>Hazte un favor: no le hagas caso a la gente que te dice "no puedes", que "eso no es lo tuyo". Cree en ti. Solo necesitas creer en ti misma. Nadie va a entender tu proceso, y está bien.</p>
-    <p class="gap">Nadie se va a disculpar por las cosas que te hicieron. Pasa la gente. Solo no dejes que eso te afecte tanto e intenta sacarle provecho a todo.</p>
-    <p>A veces, cuando uno no sabe para dónde ir, no tiene que ir para ningún lado. Solo hay que quedarse quieto y aclarar lo que uno quiere.</p>
-    <p>Tú te sigues levantando todos los días a pesar de todo, con el corazón confundido... pero lo valioso de ti es que sigues intentando. Eres alguien admirable.</p>
-  </div>
-
-  <div class="tape-quote" style="border-left-color:var(--blue-ink)">
-    🔥 <span class="blue">Haz el trabajo.</span> Todos los días tienes que hacer algo que no quieres hacer. Desafíate a sentirte incómoda. Supera la apatía, la pereza y el miedo. Deja que los momentos difíciles te empujen hacia adelante.
-  </div>
-
-  <!-- ✨ LA FOTO ESPECIAL — El remate emocional ✨ -->
-  <div style="position:relative;margin:30px 0 16px;padding-left:46px">
-    <p style="font-family:'Caveat',cursive;font-size:13px;color:var(--ink2);opacity:.6;margin-bottom:10px;letter-spacing:2px;text-align:center">
-      · la niña que siempre estuvo ahí ·
-    </p>
-
-    <div class="polaroid-wrap" id="special-photo">
-      <img src="STIKCET/PEGATINAS/FOTO FOCUS DE EMELIS FONDO DE MORAT FOCUS FOCUS.png" alt="Emelis de niña con fondo Morat 🌷">
-      <p class="polaroid-caption">
-        Emi 🌷<br>
-        <span style="font-size:13px;opacity:.7">ella siempre fue su favorita de Morat 🎸</span>
-      </p>
+      <div class="doodle-hearts">🌷 💕 🌷 💕 🌷</div>
+      <div class="scroll-hint">sigue leyendo ↓</div>
+      <p class="page-num">① / ⑦</p>
     </div>
 
-    <!-- Stickers decorando la foto -->
-    <div class="sticker" style="position:absolute;top:-10px;right:10px;width:70px;height:42px;transform:rotate(10deg)">
-      <img src="STIKCET/PEGATINAS/6c07ed813cebe437ef7fd507547a2f1e.png" alt="Fav">
+    <!-- ══ PÁGINA 1 — LO QUE SOY ══ -->
+    <div class="paper-page page-hidden" id="p1" style="transform:rotate(0.6deg)">
+      <div class="tape" style="top:-9px;left:50%;transform:translateX(-50%) rotate(-1deg);width:88px;height:18px"></div>
+
+      <!-- Morat 2 -->
+      <div class="sticker" style="top:-25px;right:5px;width:88px;height:88px;transform:rotate(7deg)">
+        <img src="STIKCET/MORAT-2.png" alt="Morat 2">
+      </div>
+      <!-- Nunca al revés (Morat song) -->
+      <div class="sticker" style="top:-18px;left:-8px;width:90px;height:55px;transform:rotate(-9deg)">
+        <img src="STIKCET/PEGATINAS/985c95653926a5e0fbd06ecf5214f38a.png" alt="Nunca al revés">
+      </div>
+      <!-- Flowers bottom left -->
+      <div class="sticker" style="bottom:-28px;left:-10px;width:85px;height:85px;transform:rotate(-12deg)">
+        <img src="STIKCET/tulipanaes-1.png" alt="Tulipanes 1">
+      </div>
+      <!-- Chica Superpoderosa -->
+      <div class="sticker" style="bottom:-30px;right:-10px;width:92px;height:92px;transform:rotate(11deg)">
+        <img src="STIKCET/CHICASUPERPODEROSAS-1.png" alt="CSP 1">
+      </div>
+
+      <span class="margin-note" style="top:90px">2/7 · lo que siento</span>
+
+      <h2 class="ch-title">1. Lo que siento ahora</h2>
+      <span class="ch-sub">(y algo que quiero que sepas)</span>
+
+      <svg class="doodle" viewBox="0 0 300 22" fill="none">
+        <path
+          d="M0 11 Q15 4 30 11 Q45 18 60 11 Q75 4 90 11 Q105 18 120 11 Q135 4 150 11 Q165 18 180 11 Q195 4 210 11 Q225 18 240 11 Q255 4 270 11 Q285 18 300 11"
+          stroke="#e8637a" stroke-width="2" stroke-linecap="round" />
+      </svg>
+
+      <div class="letter-body">
+        <p>Sé que te voy a extrañar mucho, pero también sé que vas a estar mejor y posiblemente con alguien mejor. Y
+          aunque duela, me alegro por eso. Porque mi deseo más profundo siempre ha sido verte feliz, aunque no sea
+          conmigo. Eso, de verdad, me hace sentir bien, Tati.</p>
+        <p class="gap">A pesar de todo, ¿odiarte? <span class="red">Jamás.</span> Yo siempre te voy a desear lo mejor.
+          No me importa si no es a mi lado, porque yo te amé de verdad.</p>
+      </div>
+
+      <div class="tape-quote">
+        💬 "No importa si no es conmigo, yo quiero que seas feliz. Yo estoy con lo mío, viendo cómo puedo seguir. Yo
+        quería que fueras tú, nadie más. Y hay ciertas cosas que te diré más adelante, porque eras tú nada más. Es algo
+        que, cuando te lo diga, vas a entender." 🤍
+      </div>
+
+      <div class="letter-body">
+        <p>Cuando te toquen chicos que solo te quieran para un rato, que solo te vean por tu físico, que no aguanten tus
+          cambios de actitud, tus berrinches, tus cambios de humor… te darás cuenta.</p>
+        <p>Y vas a decir: <span class="uline">"Mi niño era complicado e intenso, pero él me amó con toda su
+            alma"</span>.</p>
+        <p>No sé si algún día entenderás cuánto significabas para mí, pero espero que al menos alguna vez recuerdes que
+          alguien te quiso con todo el corazón.</p>
+      </div>
+
+      <div class="doodle-hearts">✨ 🌟 ✨ 🌟 ✨</div>
+      <p class="page-num">② / ⑦</p>
     </div>
-    <div class="sticker" style="position:absolute;bottom:-10px;right:5px;width:75px;height:45px;transform:rotate(-6deg)">
-      <img src="STIKCET/PEGATINAS/985c95653926a5e0fbd06ecf5214f38a.png" alt="Nunca">
+
+    <!-- ══ PÁGINA 2 — LO QUE VI EN TI ══ -->
+    <div class="paper-page page-hidden" id="p2" style="transform:rotate(-0.5deg)">
+      <div class="tape" style="top:-9px;right:55px;width:68px;height:18px;transform:rotate(2deg)"></div>
+      <div class="tape" style="top:-9px;left:38px;width:52px;height:18px;transform:rotate(-1.5deg)"></div>
+
+      <!-- Morat 4 top left -->
+      <div class="sticker" style="top:-28px;left:-6px;width:96px;height:96px;transform:rotate(-11deg)">
+        <img src="STIKCET/MORAT-4.png" alt="Morat 4">
+      </div>
+      <!-- Corazón partido (Morat) -->
+      <div class="sticker" style="top:-22px;right:-8px;width:90px;height:90px;transform:rotate(9deg)">
+        <img src="STIKCET/PEGATINAS/cf40987e238bf676c8e47882608a75a4.jpg" alt="Corazón partido">
+      </div>
+      <!-- Mono con flores bottom right -->
+      <div class="sticker" style="bottom:-30px;right:-12px;width:98px;height:98px;transform:rotate(13deg)">
+        <img src="STIKCET/PEGATINAS/a00eb2c2676585f20092429170fcf3b8.png" alt="Mono tulipanes">
+      </div>
+      <!-- CSP 2 bottom left -->
+      <div class="sticker" style="bottom:-26px;left:12px;width:88px;height:88px;transform:rotate(-8deg)">
+        <img src="STIKCET/CHICASUPERPODEROSAS-2.png" alt="CSP 2">
+      </div>
+
+      <span class="margin-note" style="top:90px">3/7 · un hombre</span>
+
+      <h2 class="ch-title">2. Un hombre que insiste</h2>
+      <span class="ch-sub">(no es un tonto)</span>
+
+      <svg class="doodle" viewBox="0 0 300 22" fill="none">
+        <path d="M0 15 C50 5 100 20 150 10 C200 2 250 18 300 8" stroke="#c0374f" stroke-width="2.5"
+          stroke-linecap="round" />
+      </svg>
+
+      <div class="letter-body">
+        <p>Siempre he dicho que un hombre que insiste, que hace todo lo posible, no es un hombre tonto o con falta de
+          amor propio. Solo es un hombre enamorado que quiere amar y ser amado.</p>
+        <p class="gap">Un hombre que no solo te quiso por tu cuerpo —<span class="circ">aunque me moría por tenerte a mi
+            lado</span>—.</p>
+      </div>
+
+      <div class="tape-quote rose">
+        💕 "Un hombre que pide exclusividad, que insiste, que protege las cosas, y que siempre te quiere ayudar a pesar
+        de todo, no es un tonto. Es un hombre que realmente aprecia..." ❤️🩹
+      </div>
+
+      <div class="letter-body">
+        <p>...y que no te quiere solo por tu cuerpo. Quiero que entiendas eso muy claro, para que sepas elegir el tipo
+          de persona a la cual quieras brindarle tu confianza de nuevo.</p>
+        <p class="gap"><span class="red">DIVIÉRTETE, PERO NO OLVIDES TUS SUEÑOS.</span> Diviértete, pásala rico, no pasa
+          nada. Pero recuerda tu objetivo. Despeja la mente de vez en cuando, pero no descuides tus sueños. Ten
+          prioridad en cosas que realmente aporten valor a tu vida. Los amigos, la fiesta, las personas… todo es
+          pasajero.</p>
+      </div>
+
+      <div class="doodle-hearts">🌸 💗 🌸 💗 🌸</div>
+      <p class="page-num">③ / ⑦</p>
     </div>
-    <div class="sticker" style="position:absolute;bottom:-15px;left:0px;width:80px;height:80px;transform:rotate(-14deg)">
-      <img src="STIKCET/MORAT-2.png" alt="Morat logo">
+
+    <!-- ══ PÁGINA 3 — SUEÑOS + SECRETO ══ -->
+    <div class="paper-page page-hidden" id="p3" style="transform:rotate(0.8deg)">
+      <div class="tape" style="top:-9px;left:50%;width:100px;height:18px;transform:translateX(-50%) rotate(.5deg)">
+      </div>
+
+      <!-- Morat 5 top right -->
+      <div class="sticker" style="top:-24px;right:4px;width:82px;height:82px;transform:rotate(6deg)">
+        <img src="STIKCET/MORAT-5png.png" alt="Morat 5">
+      </div>
+      <!-- Jarras de canciones Morat -->
+      <div class="sticker" style="top:-20px;left:-10px;width:95px;height:95px;transform:rotate(-12deg)">
+        <img src="STIKCET/PEGATINAS/d920a29c3deb51be7d3719283fdf1510.jpg" alt="Jarras Morat">
+      </div>
+      <!-- Morat 6 bottom right -->
+      <div class="sticker" style="bottom:-24px;right:-8px;width:88px;height:88px;transform:rotate(10deg)">
+        <img src="STIKCET/MORAT-6.png" alt="Morat 6">
+      </div>
+      <!-- sctiker+1 bottom left -->
+      <div class="sticker" style="bottom:-26px;left:8px;width:82px;height:82px;transform:rotate(-9deg)">
+        <img src="STIKCET/sctiker+1.png" alt="Sticker flores">
+      </div>
+      <!-- CSP 3 -->
+      <div class="sticker" style="top:40px;right:-18px;width:80px;height:80px;transform:rotate(16deg)">
+        <img src="STIKCET/CHICASUPERPODEROSAS-3.png" alt="CSP 3">
+      </div>
+
+      <span class="margin-note" style="top:90px">4/7 · me dolió</span>
+
+      <h2 class="ch-title">3. Yo ya cumplí mi misión</h2>
+      <span class="ch-sub">(te hice sentir especial)</span>
+
+      <svg class="doodle" viewBox="0 0 300 22" fill="none">
+        <path d="M10 11 L290 11" stroke="#c9922e" stroke-width="2" stroke-dasharray="6 4" stroke-linecap="round" />
+      </svg>
+
+      <div class="letter-body">
+        <p>Solo dímelo, ¿ok? Dime: <span class="red">"No te quiero, no quiero estar contigo"</span>. Solo dilo, di: "No
+          quiero". Di que no quieres estar conmigo, dímelo y te dejaré en paz.</p>
+        <p>Dime lo que quieres, dime lo que sientes. Por más cruel que suene, creo que me merezco la verdad de saber qué
+          fui yo para ti. ¿Qué querías? ¿Qué quieres?</p>
+      </div>
+
+      <div class="tape-quote" style="border-left-color:#e8637a">
+        🔐 <span class="red">Mi misión:</span><br><br>
+        Yo ya cumplí mi misión… Te hice reír, te hice sentir especial, te cuidé a mi manera, y estuve siempre para ti.
+        Ahora solo quiero que seas feliz, aunque no sea conmigo.<br><br>
+      </div>
+
+      <div class="letter-body">
+        <p>Sí, <span class="uline">me dolió que no fuimos ni somos nada.</span> Me dolió no saber nunca qué sentías por
+          mí, aunque en su mayor parte siempre lo sospeché. Y siempre entendí que solo iba a ser tu persona segura, la
+          que no te falla.</p>
+        <p>Me molesta mucho no saber lo que fui yo para ti. Me molesta no saber cuáles fueron tus intenciones reales. Y
+          si mentir sería decir que fui tu opción más ideal, creo que prefiero la verdad, aunque sea fría y horrible.
+        </p>
+      </div>
+
+      <div class="doodle-hearts">🎸 🌟 🎸 🌟 🎸</div>
+      <p class="page-num">④ / ⑦</p>
     </div>
-  </div>
 
-  <!-- Firma -->
-  <div class="firma-wrap">
-    <p class="firma-text">Con todo mi corazón,<br>Reydel ❤️🩹</p>
-    <p class="firma-sub">🌷❤️🩹</p>
-  </div>
+    <!-- ══ PÁGINA 4 — LA VERDAD ══ -->
+    <div class="paper-page page-hidden" id="p4" style="transform:rotate(-0.6deg)">
+      <div class="tape" style="top:-9px;left:26px;width:68px;height:18px;transform:rotate(-2deg)"></div>
+      <div class="tape" style="top:-9px;right:28px;width:78px;height:18px;transform:rotate(1.5deg)"></div>
 
-  <div class="doodle-hearts" style="margin-top:18px">🌷 ❤️ 🌷 ❤️ 🌷</div>
-  <p class="page-num">⑦ / ⑦</p>
-</div>
+      <!-- "Estoy llamando porque…" top right -->
+      <div class="sticker" style="top:-28px;right:-5px;width:100px;height:100px;transform:rotate(6deg)">
+        <img src="STIKCET/PEGATINAS/aa9cf8348a5770294de23f49838df350.jpg" alt="Como estás">
+      </div>
+      <!-- Morat 7 top left -->
+      <div class="sticker" style="top:-26px;left:-8px;width:100px;height:100px;transform:rotate(-9deg)">
+        <img src="STIKCET/MORAT-7.png" alt="Morat 7">
+      </div>
+      <!-- "Yo te hubiera abrazado más fuerte" bottom right -->
+      <div class="sticker" style="bottom:-24px;right:-10px;width:110px;height:70px;transform:rotate(8deg)">
+        <img src="STIKCET/PEGATINAS/f1062bfdc8a9abac9673bc008cd90030.png" alt="Abrazo">
+      </div>
+      <!-- Tulipanes bottom left -->
+      <div class="sticker" style="bottom:-24px;left:10px;width:82px;height:82px;transform:rotate(-7deg)">
+        <img src="STIKCET/TULIPANES.png" alt="Tulipanes">
+      </div>
 
-</div><!-- /letter-wrap -->
+      <span class="margin-note" style="top:90px">5/7 · no fuimos nada</span>
 
-<script>
-gsap.registerPlugin(ScrollTrigger);
+      <h2 class="ch-title">4. No fuimos nada, pero...</h2>
+      <span class="ch-sub">(siempre fuimos algo)</span>
 
-// ── OPEN LETTER ──
-let opened = false;
+      <svg class="doodle" viewBox="0 0 300 22" fill="none">
+        <path d="M0 11 Q30 3 60 11 Q90 20 120 11 Q150 3 180 11 Q210 20 240 11 Q270 3 300 11" stroke="#e8637a"
+          stroke-width="2.5" stroke-linecap="round" />
+      </svg>
 
-function openLetter() {
-  if (opened) return;
-  opened = true;
+      <div class="letter-body">
+        <p>Me molesta no saber por qué te celo, si tú no eres nada mío. Si estás con alguien más, me pregunto: ¿fue cosa
+          del destino ponerte en mi camino?</p>
+        <p>Para ti, de pronto, no fui nada. Pero tú para mí lo fuiste todo. Quien te quería como yo, va a estar difícil
+          de conseguir. Por ti, iba contra la marea si era posible.</p>
+      </div>
 
-  gsap.to('#envelope-intro', {
-    y: -40, opacity: 0, duration: .55, ease: 'power2.in',
-    onComplete: () => {
-      document.getElementById('envelope-intro').style.display = 'none';
-      document.getElementById('letter-wrap').style.display = 'flex';
+      <div class="opts">
+        <div class="opt" style="padding: 10px 14px; margin-bottom: 2px;">
+          No fuimos nada, pero cómo me encantaba verte.<br>
+          No fuimos nada, pero nos dijimos "te quiero".<br>
+          No fuimos nada, pero la pasamos tan bien al inicio.<br>
+          No fuimos nada, pero moría por tocar tus manos.<br>
+          No fuimos nada, pero aprendí a extrañar tus silencios.<br>
+          No fuimos nada, pero hice planes que nunca sucedieron.<br>
+          No fuimos nada, pero sigo imaginando lo que pudo haber sido.<br>
+          No fuimos nada, pero entendí que algunos amores llegan para enseñarte a soltar.<br>
+          <span class="red" style="font-weight:700">No fuimos nada, pero siempre serás mía.</span>
+        </div>
+      </div>
 
-      // First page
-      animatePageIn('#p0', .1);
+      <div class="letter-body">
+        <p>Y sí, a veces los "casi algo" nos enseñan a volver a nosotros mismos, a amarnos más profundamente y a
+          entender que no necesitamos a nadie más para sentirnos completos.</p>
+        <p class="gap">Nunca fuimos nada, pero siempre fuimos algo. Y ese algo fue suficiente para confundirme,
+          romperme, emocionarme y hacerme sentir que tal vez, si el mundo hubiera girado diferente, sí habríamos sido.
+        </p>
+      </div>
 
-      // Rest scroll-triggered
-      ['#p1','#p2','#p3','#p4','#p5','#p6'].forEach(id => {
-        ScrollTrigger.create({
-          trigger: id, start: 'top 82%', once: true,
-          onEnter: () => animatePageIn(id, 0)
-        });
+      <div class="doodle-hearts">💔 🩹 💔 🩹 💔</div>
+      <p class="page-num">⑤ / ⑦</p>
+    </div>
+
+    <!-- ══ PÁGINA 5 — CIERRE + FOTO ══ -->
+    <div class="paper-page page-hidden" id="p5" style="transform:rotate(0.4deg)">
+      <div class="tape" style="top:-9px;left:50%;transform:translateX(-50%) rotate(-0.5deg);width:95px;height:18px">
+      </div>
+
+      <!-- EDIT sticker top right (hoja completa stickers Morat) -->
+      <div class="sticker" style="top:-30px;right:-10px;width:105px;height:105px;transform:rotate(8deg)">
+        <img src="STIKCET/PEGATINAS/EDIT.png" alt="Morat sheet">
+      </div>
+      <!-- Tulipanes reales top left -->
+      <div class="sticker" style="top:-24px;left:-8px;width:90px;height:90px;transform:rotate(-12deg)">
+        <img src="STIKCET/PEGATINAS/a30a1dc84da77c8604e49ad3562cea18.jpg" alt="Tulipanes reales">
+      </div>
+      <!-- "i Love You" corte periódico bottom left -->
+      <div class="sticker" style="bottom:-26px;left:10px;width:90px;height:90px;transform:rotate(-8deg)">
+        <img src="STIKCET/PEGATINAS/cc420c2ddd3c4b88d8e1ca306f79a3fb.jpg" alt="i Love You">
+      </div>
+      <!-- Morat 3 bottom right -->
+      <div class="sticker" style="bottom:-20px;right:12px;width:76px;height:76px;transform:rotate(6deg)">
+        <img src="STIKCET/MORAT-3.png" alt="Morat 3">
+      </div>
+
+      <span class="margin-note" style="top:90px">6/7 · la motivación</span>
+
+      <h2 class="ch-title">5. Conocerte fue un regalo</h2>
+      <span class="ch-sub">(y motivación para ti)</span>
+
+      <div class="tape-quote green">
+        🌿 <span class="red">Emi</span>, conocerte pudo ser cuestión de suerte o una simple coincidencia, pero prefiero
+        interpretarlo como un regalo que me dio esta vida. Siempre te dije que me llevaría una buena perspectiva de
+        ti.<br><br>
+        Que alguien te conozca en tu peor momento y no se asuste ni se aleje, sino que elija estar contigo, es una de
+        las mejores demostraciones de amor. Intenta reconocer eso en cada persona.<br><br>
+        <span style="color:var(--warm3);font-weight:700">Siéntete privilegiada. A ti te lo di todo. Nunca dejes de ser
+          buena persona, aunque te pasen cosas malas. 🌷</span>
+      </div>
+
+      <div class="letter-body">
+        <p>Ahora que llegues, solo preocúpate por hacer las cosas bien. La vida siempre te recompensa todo lo bueno que
+          haces. Intenta aprender de tus errores.</p>
+        <p>Demuéstrale a tu familia de lo que estás hecha. Que eres capaz, valiente, que te puedes superar
+          constantemente. No tengas miedo de los nuevos comienzos. Vienen nuevas personas, nuevos lugares... abraza las
+          nuevas oportunidades.</p>
+        <p class="gap"><span class="circ red">Si quieres volar, renuncia a lo que te hunde.</span> Recuerda que el que
+          no arriesga, se queda en el mismo lugar toda la vida. Eres un ser importante y único en este mundo.</p>
+      </div>
+
+      <div class="doodle-hearts" style="margin-top:18px">🌷 ❤️ 🌷 ❤️ 🌷</div>
+      <p class="page-num">⑥ / ⑦</p>
+    </div>
+
+    <!-- ══ PÁGINA 6 — MAS TEXTO ══ -->
+    <div class="paper-page page-hidden" id="p6" style="transform:rotate(-0.3deg)">
+      <div class="tape" style="top:-9px;right:30px;transform:rotate(1.5deg);width:80px;height:18px"></div>
+      <div class="tape" style="top:-9px;left:25px;transform:rotate(-1.5deg);width:80px;height:18px"></div>
+
+      <span class="margin-note" style="top:90px">7/7 · el trabajo</span>
+
+      <h2 class="ch-title">6. Haz el trabajo</h2>
+      <span class="ch-sub">(y nunca es tarde)</span>
+
+      <div class="letter-body">
+        <p>Si te sirve de algo, nunca es muy tarde para ser quien tú quieras ser. No hay tiempo límite. Empieza cuando
+          quieras. Puedes cambiar o seguir igual; la vida no tiene reglas.</p>
+        <p>Hazte un favor: no le hagas caso a la gente que te dice "no puedes", que "eso no es lo tuyo". Cree en ti.
+          Solo necesitas creer en ti misma. Nadie va a entender tu proceso, y está bien.</p>
+        <p class="gap">Nadie se va a disculpar por las cosas que te hicieron. Pasa la gente. Solo no dejes que eso te
+          afecte tanto e intenta sacarle provecho a todo.</p>
+        <p>A veces, cuando uno no sabe para dónde ir, no tiene que ir para ningún lado. Solo hay que quedarse quieto y
+          aclarar lo que uno quiere.</p>
+        <p>Tú te sigues levantando todos los días a pesar de todo, con el corazón confundido... pero lo valioso de ti es
+          que sigues intentando. Eres alguien admirable.</p>
+      </div>
+
+      <div class="tape-quote" style="border-left-color:var(--blue-ink)">
+        🔥 <span class="blue">Haz el trabajo.</span> Todos los días tienes que hacer algo que no quieres hacer.
+        Desafíate a sentirte incómoda. Supera la apatía, la pereza y el miedo. Deja que los momentos difíciles te
+        empujen hacia adelante.
+      </div>
+
+      <!-- ✨ LA FOTO ESPECIAL — El remate emocional ✨ -->
+      <div style="position:relative;margin:30px 0 16px;padding-left:46px">
+        <p
+          style="font-family:'Caveat',cursive;font-size:13px;color:var(--ink2);opacity:.6;margin-bottom:10px;letter-spacing:2px;text-align:center">
+          · la niña que siempre estuvo ahí ·
+        </p>
+
+        <div class="polaroid-wrap" id="special-photo">
+          <img src="STIKCET/PEGATINAS/FOTO FOCUS DE EMELIS FONDO DE MORAT FOCUS FOCUS.png"
+            alt="Emelis de niña con fondo Morat 🌷">
+          <p class="polaroid-caption">
+            Emi 🌷<br>
+            <span style="font-size:13px;opacity:.7">ella siempre fue su favorita de Morat 🎸</span>
+          </p>
+        </div>
+
+        <!-- Stickers decorando la foto -->
+        <div class="sticker"
+          style="position:absolute;top:-10px;right:10px;width:70px;height:42px;transform:rotate(10deg)">
+          <img src="STIKCET/PEGATINAS/6c07ed813cebe437ef7fd507547a2f1e.png" alt="Fav">
+        </div>
+        <div class="sticker"
+          style="position:absolute;bottom:-10px;right:5px;width:75px;height:45px;transform:rotate(-6deg)">
+          <img src="STIKCET/PEGATINAS/985c95653926a5e0fbd06ecf5214f38a.png" alt="Nunca">
+        </div>
+        <div class="sticker"
+          style="position:absolute;bottom:-15px;left:0px;width:80px;height:80px;transform:rotate(-14deg)">
+          <img src="STIKCET/MORAT-2.png" alt="Morat logo">
+        </div>
+      </div>
+
+      <!-- Firma -->
+      <div class="firma-wrap">
+        <p class="firma-text">Con todo mi corazón,<br>Reydel ❤️🩹</p>
+        <p class="firma-sub">🌷❤️🩹</p>
+      </div>
+
+      <div class="doodle-hearts" style="margin-top:18px">🌷 ❤️ 🌷 ❤️ 🌷</div>
+      <p class="page-num">⑦ / ⑦</p>
+    </div>
+
+  </div><!-- /letter-wrap -->
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── OPEN LETTER ──
+    let opened = false;
+
+    function openLetter() {
+      if (opened) return;
+      opened = true;
+
+      gsap.to('#envelope-intro', {
+        y: -40, opacity: 0, duration: .55, ease: 'power2.in',
+        onComplete: () => {
+          document.getElementById('envelope-intro').style.display = 'none';
+          document.getElementById('letter-wrap').style.display = 'flex';
+
+          // First page
+          animatePageIn('#p0', .1);
+
+          // Rest scroll-triggered
+          ['#p1', '#p2', '#p3', '#p4', '#p5', '#p6'].forEach(id => {
+            ScrollTrigger.create({
+              trigger: id, start: 'top 82%', once: true,
+              onEnter: () => animatePageIn(id, 0)
+            });
+          });
+        }
       });
+
+      tryPlayMusic();
     }
-  });
 
-  tryPlayMusic();
-}
+    function animatePageIn(sel, delay) {
+      gsap.to(sel, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', delay });
+    }
 
-function animatePageIn(sel, delay) {
-  gsap.to(sel, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', delay });
-}
+    // Intro animation
+    gsap.to('#envelope-intro', { opacity: 1, y: 0, duration: 1, ease: 'back.out(1.5)', delay: .3 });
+    gsap.from('#env-emoji', { scale: 0, rotation: -20, duration: 1.2, ease: 'elastic.out(1,.5)', delay: .3 });
 
-// Intro animation
-gsap.to('#envelope-intro', { opacity: 1, y: 0, duration: 1, ease: 'back.out(1.5)', delay: .3 });
-gsap.from('#env-emoji', { scale: 0, rotation: -20, duration: 1.2, ease: 'elastic.out(1,.5)', delay: .3 });
+    // Sticker hover GSAP
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.sticker').forEach(s => {
+        const rot = parseFloat((s.style.transform.match(/rotate\(([-\d.]+)deg\)/) || [0, 0])[1]);
+        s.addEventListener('mouseenter', () => gsap.to(s, { scale: 1.18, duration: .25, ease: 'back.out(2)' }));
+        s.addEventListener('mouseleave', () => gsap.to(s, { scale: 1, duration: .35, ease: 'elastic.out(1,.6)' }));
+      });
+    });
 
-// Sticker hover GSAP
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.sticker').forEach(s => {
-    const rot = parseFloat((s.style.transform.match(/rotate\(([-\d.]+)deg\)/) || [0, 0])[1]);
-    s.addEventListener('mouseenter', () => gsap.to(s, { scale: 1.18, duration: .25, ease: 'back.out(2)' }));
-    s.addEventListener('mouseleave', () => gsap.to(s, { scale: 1, duration: .35, ease: 'elastic.out(1,.6)' }));
-  });
-});
+    // ── READING PROGRESS ──
+    window.addEventListener('scroll', () => {
+      const st = window.scrollY;
+      const dh = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('progress-tape').style.width = (dh > 0 ? st / dh * 100 : 0) + '%';
+    });
 
-// ── READING PROGRESS ──
-window.addEventListener('scroll', () => {
-  const st = window.scrollY;
-  const dh = document.documentElement.scrollHeight - window.innerHeight;
-  document.getElementById('progress-tape').style.width = (dh > 0 ? st / dh * 100 : 0) + '%';
-});
+    // ── MUSIC ──
+    const audio = document.getElementById('bg-audio');
+    const playBtn = document.getElementById('play-btn');
+    const seekBar = document.getElementById('seek-bar');
+    let isPlaying = false, userPaused = false, panelOpen = false;
+    audio.volume = .7;
 
-// ── MUSIC ──
-const audio  = document.getElementById('bg-audio');
-const playBtn = document.getElementById('play-btn');
-const seekBar = document.getElementById('seek-bar');
-let isPlaying = false, userPaused = false, panelOpen = false;
-audio.volume = .7;
+    function tryPlayMusic() {
+      audio.play().then(() => {
+        isPlaying = true; playBtn.textContent = '⏸';
+        document.getElementById('music-btn').classList.add('playing');
+      }).catch(() => { });
+    }
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause(); isPlaying = false; userPaused = true;
+        playBtn.textContent = '▶';
+        document.getElementById('music-btn').classList.remove('playing');
+      } else {
+        audio.play(); isPlaying = true; userPaused = false;
+        playBtn.textContent = '⏸';
+        document.getElementById('music-btn').classList.add('playing');
+      }
+    }
+    function toggleMusicPanel() {
+      panelOpen = !panelOpen;
+      document.getElementById('music-panel').classList.toggle('show', panelOpen);
+      if (!isPlaying && !userPaused) tryPlayMusic();
+    }
+    function setVol(v) { audio.volume = v / 100; }
+    function rewind() { audio.currentTime = Math.max(0, audio.currentTime - 10); }
+    function forward() { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10); }
+    function seekMusic(v) { if (audio.duration) audio.currentTime = (v / 100) * audio.duration; }
 
-function tryPlayMusic() {
-  audio.play().then(() => {
-    isPlaying = true; playBtn.textContent = '⏸';
-    document.getElementById('music-btn').classList.add('playing');
-  }).catch(() => {});
-}
-function toggleMusic() {
-  if (isPlaying) {
-    audio.pause(); isPlaying = false; userPaused = true;
-    playBtn.textContent = '▶';
-    document.getElementById('music-btn').classList.remove('playing');
-  } else {
-    audio.play(); isPlaying = true; userPaused = false;
-    playBtn.textContent = '⏸';
-    document.getElementById('music-btn').classList.add('playing');
-  }
-}
-function toggleMusicPanel() {
-  panelOpen = !panelOpen;
-  document.getElementById('music-panel').classList.toggle('show', panelOpen);
-  if (!isPlaying && !userPaused) tryPlayMusic();
-}
-function setVol(v)    { audio.volume = v / 100; }
-function rewind()     { audio.currentTime = Math.max(0, audio.currentTime - 10); }
-function forward()    { audio.currentTime = Math.min(audio.duration||0, audio.currentTime + 10); }
-function seekMusic(v) { if (audio.duration) audio.currentTime = (v/100)*audio.duration; }
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      seekBar.value = (audio.currentTime / audio.duration) * 100;
+    });
 
-audio.addEventListener('timeupdate', () => {
-  if (!audio.duration) return;
-  seekBar.value = (audio.currentTime / audio.duration) * 100;
-});
-
-function firstInteract() {
-  if (!isPlaying && !userPaused) tryPlayMusic();
-  document.removeEventListener('click', firstInteract);
-  document.removeEventListener('touchstart', firstInteract);
-}
-document.addEventListener('click', firstInteract);
-document.addEventListener('touchstart', firstInteract);
-tryPlayMusic();
-</script>
+    function firstInteract() {
+      if (!isPlaying && !userPaused) tryPlayMusic();
+      document.removeEventListener('click', firstInteract);
+      document.removeEventListener('touchstart', firstInteract);
+    }
+    document.addEventListener('click', firstInteract);
+    document.addEventListener('touchstart', firstInteract);
+    tryPlayMusic();
+  </script>
 </body>
+
 </html>
