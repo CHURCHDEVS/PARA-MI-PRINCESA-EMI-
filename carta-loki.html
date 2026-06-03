@@ -3,56 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>De Loki, con amor 🐾</title>
+  <title>🐾 De Loki, con amor — Para Emi</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Playpen+Sans:wght@400;600;700;800&display=swap');
+
+    :root {
+      --ink-blue: #1E3A5F;
+      --ink-mid: #3A5F8A;
+      --ink-gold: #B07D2C;
+      --ink-rose: #C25975;
+      --ink-soft: #4A638D;
+      --paper-cream: #FFFBF2;
+      --paper-warm: #FFF3D6;
+      --font-hand: 'Patrick Hand', cursive;
+      --font-title: 'Caveat', cursive;
+      --font-body: 'Playpen Sans', cursive;
     }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
     body {
-      background-color: #A8D7F2;
-      background-image: 
-        radial-gradient(circle at 50% 0%, #D6F0FD 0%, transparent 60%),
-        radial-gradient(circle at 80% 80%, #F5D78D 0%, transparent 50%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      background-image: url('sky-bg.png');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
       min-height: 100vh;
       min-height: -webkit-fill-available;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      font-family: 'Patrick Hand', cursive;
+      font-family: var(--font-hand);
+      position: relative;
     }
 
-    /* CLOUDS ANIMATION */
-    .clouds {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 100%;
-      background: 
-        radial-gradient(ellipse at 20% 30%, rgba(247, 244, 236, 0.4) 0%, transparent 20%),
-        radial-gradient(ellipse at 70% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 15%),
-        radial-gradient(ellipse at 40% 60%, rgba(247, 244, 236, 0.5) 0%, transparent 25%),
-        radial-gradient(ellipse at 90% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 18%);
-      filter: blur(20px);
-      z-index: 0;
-      animation: drift 40s linear infinite;
+    /* Overlay suave encima de la imagen para darle ese toque dorado-celestial */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.08) 0%,
+        rgba(255,220,100,0.05) 60%,
+        rgba(255,180,150,0.08) 100%
+      );
       pointer-events: none;
+      z-index: 1;
     }
 
-    @keyframes drift {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    /* ─── CANVAS DE PARTÍCULAS ─── */
+    #particles-canvas {
+      position: fixed; inset: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 2;
     }
 
-    /* SCENE & ENVELOPE */
+    /* ─── ESCENA ─── */
     .scene {
       position: relative;
       z-index: 10;
@@ -60,327 +67,724 @@
       max-width: 400px;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      perspective: 1000px;
+      perspective: 1200px;
     }
 
+    /* ─── TÍTULO CELESTIAL ─── */
+    .heaven-title {
+      font-family: var(--font-title);
+      font-size: 2.4rem;
+      color: #FFF;
+      text-align: center;
+      width: 88%;
+      margin-bottom: 28px;
+      text-shadow: 0 2px 16px rgba(30, 58, 95, 0.35), 0 1px 3px rgba(0,0,0,0.15);
+      pointer-events: none;
+      z-index: 12;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.55s cubic-bezier(0.25, 1, 0.5, 1), transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    body.is-open .heaven-title {
+      opacity: 0 !important;
+      transform: translateY(-28px);
+      pointer-events: none;
+    }
+
+    /* ─── SOBRE ─── */
     .envelope-wrapper {
       position: relative;
       width: 320px;
-      height: 230px;
-      animation: float 4s ease-in-out infinite;
+      height: 220px;
+      transform-style: preserve-3d;
       cursor: pointer;
-      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      filter: drop-shadow(0 18px 40px rgba(30, 58, 95, 0.28));
+      animation: float 4s ease-in-out infinite;
+      transition: filter 0.3s ease;
     }
-    
+
     .envelope-wrapper:hover {
-      transform: scale(1.02);
+      filter: drop-shadow(0 22px 50px rgba(30, 58, 95, 0.38));
+      transform: scale(1.015);
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-13px); }
     }
 
-    /* CSS ENVELOPE PARTS */
-    .envelope {
-      position: absolute;
-      inset: 0;
-      background: #DFAF4A;
-      border-radius: 6px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 40px rgba(200, 149, 51, 0.2);
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-    }
+    .envelope-back, .envelope-front { position: absolute; inset: 0; pointer-events: none; }
+    .envelope-back { z-index: 1; }
+    .envelope-front { z-index: 3; }
 
-    .front {
+    .envelope-top-flap {
       position: absolute;
-      inset: 0;
-      z-index: 3;
-      border-left: 160px solid #EFC86D;
-      border-right: 160px solid #EFC86D;
-      border-top: 115px solid transparent;
-      border-bottom: 115px solid #C89533;
-      border-radius: 6px;
-      pointer-events: none;
-      filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.05));
-    }
-
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-top: 130px solid #F5D78D;
+      top: 1px; left: 0;
+      width: 320px; height: 120px;
+      transform-origin: center top;
+      transform-style: preserve-3d;
+      transition: transform 1.3s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 4;
-      transform-origin: top;
-      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0.2s;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
     }
 
-    /* STAMP */
-    .stamp {
+    .flap-outer, .flap-inner {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      backface-visibility: hidden;
+    }
+    .flap-inner { transform: rotateX(180deg); }
+
+    /* sello de huella */
+    .paw-stamp-container {
       position: absolute;
-      bottom: -110px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 40px;
-      background: #c24040;
-      border-radius: 50%;
+      left: 50%; top: 96px;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.14));
+      transition: opacity 0.4s ease, transform 0.35s ease;
       z-index: 5;
+    }
+    .paw-stamp-svg { width: 100%; height: 100%; transform: rotate(-12deg); transition: transform 0.3s ease; }
+    .envelope-wrapper:hover .paw-stamp-svg { transform: rotate(6deg) scale(1.1); }
+
+    /* APERTURA */
+    body.is-open .envelope-top-flap { transform: rotateX(180deg); z-index: 1; }
+    body.is-open .envelope-wrapper   { animation-play-state: paused; }
+
+    /* ─── CARTA ─── */
+    .letter-card {
+      position: absolute;
+      bottom: 10px; left: 14px;
+      width: 292px; height: 200px;
+      z-index: 2;
+      border-radius: 14px;
+      overflow: hidden;
+      padding: 18px 16px 14px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: opacity 0.3s;
-      font-size: 20px;
+      flex-direction: column;
+      cursor: default;
+      transition: all 1.25s cubic-bezier(0.4, 0, 0.2, 1);
+      /* Fondo colorido: crema cálida + arco de color suave desde las esquinas */
+      background-color: var(--paper-cream);
+      background-image:
+        radial-gradient(ellipse at 0% 0%,   rgba(255,220,140,0.45) 0%, transparent 55%),
+        radial-gradient(ellipse at 100% 0%,  rgba(168,215,242,0.35) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(255,190,210,0.30) 0%, transparent 55%),
+        radial-gradient(ellipse at 0% 100%,  rgba(200,240,200,0.30) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23B07D2C' fill-opacity='0.032'%3E%3Cpath d='M13 13c-.9 0-1.6-.6-1.8-1.5-.1-.3-.3-.6-.5-.7-.3-.3-.5-.7-.5-1.1 0-.5.3-.9.7-1.1.4-.2.7-.5.9-.9.3-.4.7-.6 1.2-.6s.9.2 1.2.6c.2.4.5.7.9.9.4.2.7.6.7 1.1 0 .4-.2.8-.5 1.1-.2.1-.4.4-.5.7-.2.9-.9 1.5-1.8 1.5z'/%3E%3Ccircle cx='9' cy='9' r='.9'/%3E%3Ccircle cx='11' cy='7' r='1.1'/%3E%3Ccircle cx='15' cy='7' r='1.1'/%3E%3Ccircle cx='17' cy='9' r='.9'/%3E%3C/g%3E%3C/svg%3E");
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06), inset 0 0 0 1.5px rgba(176,125,44,0.18);
     }
 
-    /* THE LETTER */
-    .letter {
-      position: absolute;
-      bottom: 10px;
-      left: 5%;
-      width: 90%;
-      height: 95%;
-      background: #FAFAF7;
-      border-radius: 12px;
-      z-index: 2;
-      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    /* Borde interior decorativo */
+    .letter-card::before {
+      content: '';
+      position: absolute; inset: 7px;
+      border: 1.5px dashed rgba(176,125,44,0.22);
+      border-radius: 10px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Estado abierto: carta sube y pasa al frente */
+    body.is-open .letter-card {
+      transform: translateY(-178px);
+      height: 235px;
+      z-index: 5;
+      box-shadow: 0 18px 40px rgba(30,58,95,0.22);
+    }
+
+    /* ─── CONTENIDO INICIAL ─── */
+    .card-intro {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 30px 20px;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      z-index: 2;
     }
 
-    .letter-preview {
-      text-align: center;
-      color: #4A72B8;
-      width: 100%;
-    }
-
-    .letter-preview h2 {
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-      font-weight: 500;
-      margin-bottom: 5px;
-      white-space: nowrap;
-    }
-    
-    .instruction {
-      font-size: 0.9rem;
-      color: rgba(74, 114, 184, 0.6);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 1; }
-    }
-
-    /* OPEN STATE */
-    .is-open .flap {
-      transform: rotateX(180deg);
-      z-index: 1;
-    }
-    .is-open .stamp {
-      opacity: 0;
-    }
-    .is-open .letter {
-      transform: translateY(-80px);
-      z-index: 5;
-    }
-    
-    .envelope-wrapper.is-open {
-      animation: none;
-      transform: translateY(40px);
-    }
-
-    /* FULL LETTER MODAL */
-    .letter-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
+    /* Mini doodle de cabecera */
+    .card-header-doodle {
       display: flex;
+      align-items: center;
       justify-content: center;
-      align-items: flex-end;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      gap: 7px;
+      margin-bottom: 7px;
     }
-    
-    .letter-modal.active {
-      pointer-events: all;
-      opacity: 1;
+    .header-svg { width: 60px; height: 28px; }
+    .header-tag {
+      font-family: var(--font-title);
+      font-size: 1.18rem;
+      color: var(--ink-gold);
+      transform: rotate(-3deg);
+      display: block;
     }
 
-    .modal-bg {
+    .intro-greeting {
+      font-family: var(--font-body);
+      color: var(--ink-mid);
+      font-size: 0.83rem;
+      margin-bottom: 9px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* ─── BOTÓN "LEER CARTA COMPLETA" — Gold Standard 2026 ─── */
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 6px;
+      padding: 9px 22px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      z-index: 6;
+      /* Gradiente brillante estilo 2026 */
+      background: linear-gradient(135deg, #4A8FD4 0%, #3566A8 40%, #5B3FA8 100%);
+      box-shadow:
+        0 4px 15px rgba(74,143,212,0.45),
+        0 1px 0 rgba(255,255,255,0.25) inset,
+        0 -1px 0 rgba(0,0,0,0.12) inset;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    /* Brillo interno deslizante */
+    .read-more-btn::before {
+      content: '';
       position: absolute;
-      inset: 0;
-      background: rgba(168, 215, 242, 0.85);
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+    .read-more-btn:hover::before { left: 125%; }
+    .read-more-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow:
+        0 8px 25px rgba(74,143,212,0.55),
+        0 1px 0 rgba(255,255,255,0.25) inset;
+    }
+    .read-more-btn:active { transform: scale(0.97); }
+
+    .btn-paw { font-size: 1rem; animation: wiggle 1.6s infinite ease-in-out; }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      50%       { transform: rotate(16deg) scale(1.12); }
+    }
+
+    /* ─── MARCA DE AGUA LOKI ÁNGEL ─── */
+    .angel-dog-bg {
+      position: absolute;
+      top: 55%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 185px; height: 148px;
+      opacity: 0.07;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ─── CONTENIDO COMPLETO (OCULTO HASTA EXPANDIR) ─── */
+    .card-full-content {
+      opacity: 0; max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.9s ease, max-height 0.9s ease;
+      width: 100%; z-index: 2;
+    }
+
+    /* ─── ESTADO EXPANDIDO ─── */
+    body.is-expanded .letter-card {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: min(93vw, 460px);
+      height: 85vh;
+      transform: translate(-50%, -50%) !important;
+      z-index: 100;
+      border-radius: 20px;
+      padding: 42px 26px 30px;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(30,58,95,0.28);
+      animation: expand-in 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes expand-in {
+      from { transform: translate(-50%, -50%) scale(0.88); opacity: 0.7; }
+      to   { transform: translate(-50%, -50%) scale(1);    opacity: 1;   }
+    }
+
+    body.is-expanded .card-intro {
+      border-bottom: 1.5px dashed rgba(176,125,44,0.2);
+      padding-bottom: 16px; margin-bottom: 22px;
+    }
+    body.is-expanded .read-more-btn { display: none; }
+    body.is-expanded .card-full-content { opacity: 1; max-height: 10000px; overflow: visible; }
+
+    body.is-expanded .envelope-back,
+    body.is-expanded .envelope-front,
+    body.is-expanded .envelope-top-flap,
+    body.is-expanded .heaven-title { opacity: 0 !important; pointer-events: none; transition: opacity 0.8s ease; }
+
+    /* ─── TIPOGRAFÍA DE LA CARTA ─── */
+    .letter-p {
+      font-family: var(--font-body);
+      color: var(--ink-blue);
+      font-size: 1.01rem;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 22px;
+      font-weight: 400;
+    }
+
+    .letter-box {
+      background: linear-gradient(135deg, rgba(216,241,254,0.35) 0%, rgba(255,240,180,0.25) 100%);
+      border: 1.5px dashed rgba(74,99,141,0.28);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+    }
+    .letter-box p {
+      font-family: var(--font-body);
+      color: var(--ink-blue);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .letter-divider {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 20px 0;
+      letter-spacing: 6px;
+      opacity: 0.55;
+    }
+
+    /* Resaltados de color */
+    .hl-gold  { color: var(--ink-gold);  font-weight: 700; }
+    .hl-rose  { color: var(--ink-rose);  font-weight: 700; }
+    .hl-blue  { color: var(--ink-mid);   font-weight: 700; }
+    .hl-bold  { font-weight: 800; }
+
+    .letter-signature {
+      margin-top: 36px;
+      text-align: right;
+      font-family: var(--font-title);
+      color: var(--ink-blue);
+      font-size: 1.65rem;
+      line-height: 1.35;
+      padding-right: 8px;
+    }
+    .signature-name {
+      display: block;
+      font-size: 2.2rem;
+      color: var(--ink-gold);
+      margin-top: 6px;
+    }
+
+    /* Revelación en scroll */
+    .letter-p, .letter-box, .letter-divider, .letter-signature {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .letter-p.visible, .letter-box.visible, .letter-divider.visible, .letter-signature.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ─── BOTÓN CERRAR ─── */
+    .close-card-btn {
+      margin: 42px auto 8px;
+      padding: 11px 28px;
+      background: linear-gradient(135deg, #C25975 0%, #a03355 100%);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-family: var(--font-hand);
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      box-shadow: 0 5px 18px rgba(194,89,117,0.38);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    .close-card-btn:hover {
+      background: linear-gradient(135deg, #a03355 0%, #C25975 100%);
+      transform: scale(1.04) translateY(-2px);
+      box-shadow: 0 8px 24px rgba(194,89,117,0.48);
+    }
+
+    /* ─── BOTÓN DE MÚSICA (Glassmorphism 2026) ─── */
+    .music-toggle {
+      position: fixed;
+      top: 18px; right: 18px;
+      z-index: 1000;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255,255,255,0.55);
+      color: #fff;
+      display: flex; justify-content: center; align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(30,58,95,0.2);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    .music-toggle:hover { transform: scale(1.1); background: rgba(255,255,255,0.35); }
+    .music-toggle.muted::after {
+      content: '';
+      position: absolute;
+      width: 26px; height: 2px;
+      background: #f87171;
+      transform: rotate(-45deg);
+    }
+
+    /* ─── BOTÓN "TOCA PARA ABRIR" (Glassmorphism Premium) ─── */
+    .tap-instruction {
+      position: absolute;
+      bottom: -50px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      pointer-events: none;
+      animation: pulse 2.2s infinite ease-in-out;
+      /* Glassmorphism */
+      background: rgba(255,255,255,0.22);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.45);
+      border-radius: 50px;
+      padding: 8px 20px;
+      box-shadow: 0 4px 20px rgba(30,58,95,0.15);
+      text-shadow: 0 1px 4px rgba(30,58,95,0.2);
+      letter-spacing: 0.3px;
     }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, 0) scale(1); }
+      50%       { opacity: 1;   transform: translate(-50%, -5px) scale(1.02); }
+    }
+    body.is-open .tap-instruction { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
 
-    .full-letter-content {
-      position: relative;
-      z-index: 2;
-      width: 92%;
-      max-width: 440px;
-      height: 85vh;
-      background: #FAFAF7;
-      border-radius: 16px 16px 0 0;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
-      transform: translateY(100%);
-      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-      overflow-y: auto;
-      padding: 40px 24px 60px;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    }
-
-    .letter-modal.active .full-letter-content {
-      transform: translateY(0);
-    }
-
-    /* TYPOGRAPHY */
-    .txt {
-      color: #4A72B8;
-      font-size: 1.35rem;
-      line-height: 1.4;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .txt-highlight {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #365691;
-      display: block;
-      margin: 15px 0;
-      letter-spacing: 2px;
-      line-height: 1.1;
-    }
-
-    .watermark {
-      position: fixed;
-      left: 10px;
-      bottom: 40%;
-      transform: rotate(-90deg);
-      transform-origin: left bottom;
-      font-size: 0.9rem;
-      color: rgba(74, 114, 184, 0.2);
-      letter-spacing: 3px;
-      pointer-events: none;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(74, 114, 184, 0.1);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-family: inherit;
-      font-size: 20px;
-      color: #4A72B8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
+    /* Scrollbar bonito */
+    .letter-card::-webkit-scrollbar { width: 5px; }
+    .letter-card::-webkit-scrollbar-track { background: transparent; }
+    .letter-card::-webkit-scrollbar-thumb { background: rgba(176,125,44,0.25); border-radius: 10px; }
   </style>
 </head>
 <body>
-  
-  <div class="clouds"></div>
 
-  <div class="scene">
-    <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
-      <div class="envelope"></div>
-      <div class="letter" id="small-letter">
-        <div class="letter-preview">
-          <h2>PARA MI HUMANA FAVORITA...</h2>
-          <span class="instruction">Toca para abrir 🐾</span>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- BOTÓN DE MÚSICA -->
+  <button class="music-toggle" id="music-toggle" onclick="toggleMusic(event)" aria-label="Música">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+    </svg>
+  </button>
+
+  <div class="scene" id="scene">
+    <h2 class="heaven-title" id="heaven-title">✨ Alguien te manda una carta desde el cielo... ✨</h2>
+
+    <div class="envelope-wrapper" id="envelope" onclick="openEnvelope(event)">
+
+      <!-- Parte trasera -->
+      <div class="envelope-back">
+        <svg viewBox="0 0 320 220" width="320" height="220">
+          <defs>
+            <linearGradient id="eg-back" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F0CC72"/>
+              <stop offset="100%" stop-color="#C48E28"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="316" height="216" rx="13" fill="url(#eg-back)" stroke="#A87820" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <!-- LA CARTA -->
+      <div class="letter-card" id="letter-card">
+
+        <!-- Marca de agua Loki ángel -->
+        <div class="angel-dog-bg">
+          <svg viewBox="0 0 200 160" width="100%" height="100%">
+            <path d="M40 120c-10 0-18-8-18-18 0-7 4-13 11-16 1-12 10-21 22-21 4 0 8 1 12 3 5-9 14-15 25-15 13 0 24 9 27 21 3-1 6-2 9-2 11 0 20 9 20 20 0 1-.1 2-.2 3 6 3 10 9 10 16 0 10-8 18-18 18H40z" fill="#7BB8D4" opacity="0.9"/>
+            <ellipse cx="95" cy="43" rx="17" ry="5.5" fill="none" stroke="#FFD700" stroke-width="2.5" opacity="0.9"/>
+            <path d="M80 65c-15-5-28 5-32 15-2 5 1 10 5 12 8-5 18-8 27-2z" fill="#FFF" opacity="0.9"/>
+            <path d="M110 65c15-5 28 5 32 15 2 5-1 10-5 12-8-5-18-8-27-2z" fill="#FFF" opacity="0.9"/>
+            <path d="M75 95c0-10 8-18 18-18h15c10 0 18 8 18 18s-8 18-18 18H93c-10 0-18-8-18-18z" fill="#D2B48C"/>
+            <path d="M80 88c-2 4-2 10 2 12s8-2 6-8-4-6-8-6z" fill="#8B4513"/>
+            <path d="M82 94c2 2 5 2 7 0" fill="none" stroke="#5C4033" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="76" cy="98" r="2.5" fill="#3E2723"/>
+            <path d="M125 98c8 2 12-3 15-2 2 1 1 5-2 5-6 0-10-3-13-3z" fill="#D2B48C"/>
+          </svg>
+        </div>
+
+        <!-- Intro (sin el texto de culpa) -->
+        <div class="card-intro">
+          <div class="card-header-doodle">
+            <svg viewBox="0 0 120 50" class="header-svg">
+              <path d="M15 35c-4 0-7-3-7-7 0-3 2-5 4-6 0-4 4-8 8-8 1 0 3 0 4 1 2-3 5-5 9-5 5 0 9 3 10 8 1 0 2-1 3-1 4 0 7 3 7 7v1c2 1 4 3 4 6 0 4-3 7-7 7H15z" fill="#D8F0FF" opacity="0.9"/>
+              <ellipse cx="44" cy="18" rx="6" ry="2" fill="none" stroke="#FFD700" stroke-width="1"/>
+              <circle cx="44" cy="27" r="5.5" fill="#DCAF4A"/>
+              <path d="M40 25c-1 1-1 3 0 4s3-1 2-3-1-2-2-2z" fill="#b58a2e"/>
+              <path d="M49 23c2-1 4 0 5 2s0 2-2 2-2-1-3-4z" fill="#FFF" opacity="0.9"/>
+            </svg>
+            <span class="header-tag">Desde el cielo... 🌈</span>
+          </div>
+
+          <p class="intro-greeting">✉️ Para mi humana favorita, <span class="hl-gold">mi Emi</span>...</p>
+
+          <button class="read-more-btn" id="read-more-btn" onclick="expandLetter(event)">
+            <span>Abrir mi carta 💌</span>
+            <span class="btn-paw">🐾</span>
+          </button>
+        </div>
+
+        <!-- Carta completa -->
+        <div class="card-full-content" id="card-content">
+
+          <p class="letter-p">☁️ Oye, te estoy viendo desde acá arriba y, ¡madre mía!, ¿por qué tantas lágrimas? Si yo estoy aquí corriendo como loco persiguiendo mariposas (y sí, sigo sin atrapar ni una sola, pero no le digas a nadie 🤫).</p>
+
+          <div class="letter-box">
+            <p>🌟 <span class="hl-rose">NO QUIERO QUE TE QUEDES CON LA CULPA.</span><br>
+            <span class="hl-bold" style="font-size:1.2rem; color:#1E3A5F;">NUNCA FUE TU CULPA.</span> 💙</p>
+          </div>
+
+          <div class="letter-divider">🐾 · 🌸 · 🐾</div>
+
+          <p class="letter-p">Yo sé que ahora mismo te estás preguntando: <span class="hl-rose">"¿Qué voy a hacer sin él? ¿Quién me va a hacer compañía?"</span> 💭<br><br>
+          Sé que sientes que perdiste a tu <span class="hl-gold">mayor inspiración</span> y que extrañas cuando te sentías mal, te acostabas a abrazarme y yo me quedaba quietecito a tu lado consolándote 🤗. Pero escúchame bien, <span class="hl-gold">mi niña</span>: claro que vas a poder seguir adelante. Siempre has sido una mujer <span class="hl-rose">increíblemente valiente</span> 💪. Mi trabajo era inspirarte un ratito, pero esa fuerza siempre ha estado dentro de ti.</p>
+
+          <div class="letter-divider">✨ · 💛 · ✨</div>
+
+          <p class="letter-p">Además, sé que no te quedas sola 🤍. Tienes a una <span class="hl-gold">personita que te quiere muchísimo</span>, que te cuida y que siempre estará para ti. A él también le dolió bastante mi partida, pero como es fuerte y sabe todo el amor que nos tenemos, decidió ayudarte a recibir este mensaje de mi parte 💌.</p>
+
+          <div class="letter-divider">🐾 · 🌈 · 🐾</div>
+
+          <p class="letter-p">Yo estoy feliz porque me tocó ser <span class="hl-gold">TU perro</span> 👑. Fui el rey de la casa. ¿Te acuerdas de mis travesuras? Acepta que a veces yo era un poquito insoportable y me encantaba dañarte las cosas cuando no me sacabas a pasear rápido 😅. Y ni hablemos de cuando intentabas tomarme fotos... ¡Me movía a propósito porque a los guapos no nos gustan las cámaras! 📸🐕</p>
+
+          <p class="letter-p">Y aunque odiaba bañarme y me gustaba la mala vida 😂, acepto que me encantaba cómo me dejabas oliendo de rico. Fui tu mejor compañero esos días en los que te daba pereza levantarte de la cama 🛏️🐶.</p>
+
+          <p class="letter-p">Mientras otros perritos la pasan mal, yo tuve la enorme suerte de que fueras mi <span class="hl-rose">mamá</span> 🥰. Me cuidaste, me consentiste y me amaste toda tu vida.</p>
+
+          <div class="letter-divider">💛 · 🌸 · 💛</div>
+
+          <p class="letter-p">Mami, eres una mujer <span class="hl-rose">fuerte y guerrera</span> 🦋, y sé que podrás con esto y con mucho más. Sé que es difícil, pero créeme que yo estoy súper bien acá arriba ☁️✨. Estoy muy orgulloso de ti y de la vida tan espectacular que me diste.</p>
+
+          <p class="letter-p">Por favor, no quiero que sigas llorando 🙏. Solo quiero que estés bien, que no sufras más de lo que has sufrido. <span class="hl-bold">Para ya.</span> De ahora en adelante, solo recuérdame en los buenos momentos y no te lastimes tanto 🌻.</p>
+
+          <div class="letter-box">
+            <p>🐾 <em>Sigo estando contigo, moviendo la cola cada vez que te veo feliz.</em> 💛</p>
+          </div>
+
+          <div class="letter-signature">
+            <span>Con mucho amor, babas y ladridos felices,</span>
+            <strong class="signature-name">Tu loquito de siempre, Loki. 🐾</strong>
+          </div>
+
+          <button class="close-card-btn" onclick="collapseLetter(event)">Guardar en mi corazón 💖</button>
         </div>
       </div>
-      <div class="flap"></div>
-      <div class="front"></div>
-      <div class="stamp">🐾</div>
+
+      <!-- Frente del sobre (sellado hermético con líneas rectas) -->
+      <div class="envelope-front">
+        <svg viewBox="0 0 320 220" width="320" height="220">
+          <defs>
+            <linearGradient id="eg-left"   x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0CC72"/><stop offset="100%" stop-color="#DCAF4A"/></linearGradient>
+            <linearGradient id="eg-right"  x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0CC72"/><stop offset="100%" stop-color="#DCAF4A"/></linearGradient>
+            <linearGradient id="eg-bottom" x1=".5" y1="1" x2=".5" y2="0"><stop offset="0%" stop-color="#C48E28"/><stop offset="100%" stop-color="#DCAF4A"/></linearGradient>
+          </defs>
+          <path d="M 2 2 L 160 110 L 2 218 Z"   fill="url(#eg-left)"   stroke="#A87820" stroke-width="1.5"/>
+          <path d="M 318 2 L 160 110 L 318 218 Z" fill="url(#eg-right)"  stroke="#A87820" stroke-width="1.5"/>
+          <path d="M 2 218 L 160 110 L 318 218 Z" fill="url(#eg-bottom)" stroke="#A87820" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <!-- Solapa superior -->
+      <div class="envelope-top-flap">
+        <div class="flap-outer">
+          <svg viewBox="0 0 320 120" width="320" height="120">
+            <defs>
+              <linearGradient id="eg-top" x1=".5" y1="0" x2=".5" y2="1"><stop offset="0%" stop-color="#F0CC72"/><stop offset="100%" stop-color="#C48E28"/></linearGradient>
+            </defs>
+            <path d="M 2 2 L 160 115 L 318 2 Z" fill="url(#eg-top)" stroke="#A87820" stroke-width="1.5"/>
+          </svg>
+          <div class="paw-stamp-container">
+            <svg viewBox="0 0 100 100" width="48" height="48" class="paw-stamp-svg">
+              <path d="M50 78c-8.8 0-16.5-6.5-18.7-14.8-1-3.7-2.6-6-4.8-7.5-3.3-2.3-5-6-4.5-10.2.7-5.5 5.5-9.5 11.2-8.8 3.5.4 7.2-1.3 9.4-4.2 1.9-2.5 5-4 8.4-4s6.5 1.5 8.4 4c2.2 2.9 5.9 4.6 9.4 4.2 5.7-.7 10.5 3.3 11.2 8.8.5 4.2-1.2 7.9-4.5 10.2-2.2 1.5-3.8 3.8-4.8 7.5-2.2 8.3-9.9 14.8-18.7 14.8z" fill="#9c6a1a"/>
+              <ellipse cx="22" cy="36" rx="8" ry="11" fill="#9c6a1a" transform="rotate(-30 22 36)"/>
+              <ellipse cx="40" cy="22" rx="9" ry="13" fill="#9c6a1a" transform="rotate(-10 40 22)"/>
+              <ellipse cx="60" cy="22" rx="9" ry="13" fill="#9c6a1a" transform="rotate(10 60 22)"/>
+              <ellipse cx="78" cy="36" rx="8" ry="11" fill="#9c6a1a" transform="rotate(30 78 36)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="flap-inner">
+          <svg viewBox="0 0 320 120" width="320" height="120">
+            <path d="M 2 2 L 160 115 L 318 2 Z" fill="#DCAF4A" stroke="#A87820" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Botón "Toca para abrir" rediseñado -->
+      <div class="tap-instruction">Toca para abrir 🐾✨</div>
+
     </div>
   </div>
 
-  <div class="letter-modal" id="modal">
-    <div class="modal-bg" onclick="closeLetter()"></div>
-    <div class="full-letter-content">
-      <button class="close-btn" onclick="closeLetter()">✖</button>
-      
-      <div class="watermark">ENVIADO DESDE EL CIELO CON AMOR 🐾</div>
-
-      <p class="txt">Para mi humana favorita, mi Emi...</p>
-      <p class="txt">Oye, te estoy viendo desde acá arriba y, ¡madre mía!, ¿por qué tantas lágrimas? Si yo estoy aquí corriendo como loco persiguiendo mariposas (y sí, sigo sin atrapar ni una sola, pero no le digas a nadie).</p>
-      <p class="txt">Sé que te duele, pero no quiero que te quedes con ninguna culpa.</p>
-      
-      <span class="txt-highlight" style="font-size: 1.3rem;">NUNCA</span>
-      <span class="txt-highlight">FUE TU CULPA.</span>
-
-      <p class="txt">Yo sé que ahora mismo te estás preguntando: <em>"¿Qué voy a hacer sin él? ¿Quién me va a hacer compañía?"</em>. Sé que sientes que perdiste a tu mayor inspiración y que extrañas cuando te sentías mal, te acostabas a abrazarme y yo me quedaba quietecito a tu lado consolándote. Pero escúchame bien, mi niña: claro que vas a poder seguir adelante. Siempre has sido una mujer increíblemente valiente. Mi trabajo era inspirarte un ratito, pero esa fuerza siempre ha estado dentro de ti.</p>
-
-      <p class="txt">Además, sé que no te quedas sola. Tienes a una personita que te quiere muchísimo, que te cuida y que siempre estará para ti. A él también le dolió bastante mi partida, pero como es fuerte y sabe todo el amor que nos tenemos, decidió ayudarte a recibir este mensaje de mi parte.</p>
-
-      <p class="txt">Yo estoy feliz porque me tocó ser TU perro. Fui el rey de la casa. ¿Te acuerdas de mis travesuras? Acepta que a veces yo era un poquito insoportable y me encantaba dañarte las cosas cuando no me sacabas a pasear rápido. Y ni hablemos de cuando intentabas tomarme fotos... ¡Me movía a propósito porque a los guapos no nos gustan las cámaras!</p>
-      
-      <p class="txt">Y aunque odiaba bañarme y me gustaba la mala vida, acepto que me encantaba cómo me dejabas oliendo de rico. Fui tu mejor compañero esos días en los que te daba pereza levantarte de la cama.</p>
-
-      <p class="txt">Mientras otros perritos la pasan mal, yo tuve la enorme suerte de que fueras mi mamá. Me cuidaste y me consentiste.</p>
-
-      <p class="txt">Mami, eres una mujer fuerte y guerrera, y sé que podrás con esto y con mucho más. Sé que es difícil, pero créeme que yo estoy súper bien acá arriba. Estoy muy orgulloso de ti y de la vida tan espectacular que me diste. Por favor, no quiero que sigas llorando. Solo quiero que estés bien, que no sufras más de lo que has sufrido. Para ya. De ahora en adelante, solo recuérdame en los buenos momentos y no te lastimes tanto.</p>
-
-      <p class="txt" style="font-weight:bold; margin-top:30px;">Sigo estando contigo, moviendo la cola cada vez que te veo feliz.</p>
-
-      <p class="txt" style="text-align: right; font-size: 1.5rem; margin-top: 40px; color: #C89533;">
-        Con mucho amor, babas y ladridos felices,<br>
-        <strong>Tu loquito de siempre, Loki. 🐾</strong>
-      </p>
-    </div>
-  </div>
-
-  <audio id="bgm" src="MUSICA DE FONDO/Morat - Enamórate De Alguien Más (Video Oficial).mp3" loop preload="auto"></audio>
+  <audio id="bgm" src="Somewhere_over_the_Rainbow.mp3" loop preload="auto"></audio>
 
   <script>
-    const envelope = document.getElementById('envelope');
-    const modal = document.getElementById('modal');
-    const bgm = document.getElementById('bgm');
-    let hasOpened = false;
+    const body       = document.body;
+    const envelope   = document.getElementById('envelope');
+    const letterCard = document.getElementById('letter-card');
+    const bgm        = document.getElementById('bgm');
+    const musicToggle= document.getElementById('music-toggle');
+    const canvas     = document.getElementById('particles-canvas');
+    const ctx        = canvas.getContext('2d');
 
-    function openEnvelope() {
-      if(hasOpened) return;
-      hasOpened = true;
-      
-      // Intentar reproducir música si existe el archivo
-      try { bgm.play(); } catch(e){}
+    let isOpen = false, isMusicPlaying = false, particles = [], observer;
 
-      envelope.classList.add('is-open');
-      
-      // Mostrar modal después de la animación
-      setTimeout(() => {
-        modal.classList.add('active');
-      }, 1200);
+    /* --- CANVAS --- */
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    window.addEventListener('resize', resize); resize();
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x; this.y = y;
+        this.sz = Math.random() * 9 + 4;
+        this.vx = Math.random() * 1.8 - 0.9;
+        this.vy = -(Math.random() * 1.8 + 0.6);
+        this.a  = 1;
+        this.da = Math.random() * 0.007 + 0.004;
+        this.t  = Math.floor(Math.random() * 3); // 0=heart, 1=paw, 2=star
+        this.r  = Math.random() * Math.PI * 2;
+        this.dr = Math.random() * 0.03 - 0.015;
+      }
+      update() { this.x += this.vx; this.y += this.vy; this.a -= this.da; this.r += this.dr; }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.a;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.r);
+        if (this.t === 0) {
+          ctx.fillStyle = 'rgba(242,140,170,0.65)';
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.bezierCurveTo(-this.sz/2,-this.sz/2,-this.sz,this.sz/3,0,this.sz);
+          ctx.bezierCurveTo(this.sz,this.sz/3,this.sz/2,-this.sz/2,0,0);
+          ctx.fill();
+        } else if (this.t === 1) {
+          ctx.fillStyle = 'rgba(176,125,44,0.35)';
+          ctx.beginPath(); ctx.arc(0,this.sz/4,this.sz/2.5,0,Math.PI*2); ctx.fill();
+          for (let i=0;i<4;i++){const a=-Math.PI/2+(i-1.5)*0.6;ctx.beginPath();ctx.arc(Math.cos(a)*this.sz/2,Math.sin(a)*this.sz/2+this.sz/4,this.sz/6,0,Math.PI*2);ctx.fill();}
+        } else {
+          ctx.fillStyle = 'rgba(255,230,100,0.8)';
+          ctx.beginPath();
+          ctx.moveTo(0,-this.sz);ctx.quadraticCurveTo(0,0,this.sz,0);ctx.quadraticCurveTo(0,0,0,this.sz);ctx.quadraticCurveTo(0,0,-this.sz,0);ctx.quadraticCurveTo(0,0,0,-this.sz);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
     }
 
-    function closeLetter() {
-      modal.classList.remove('active');
-      setTimeout(() => {
+    function spawnParticles(x, y, n=6) { for(let i=0;i<n;i++) particles.push(new Particle(x,y)); }
+
+    function loop() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=particles.length-1;i>=0;i--) {
+        particles[i].update(); particles[i].draw();
+        if(particles[i].a <= 0) particles.splice(i,1);
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Partículas de fondo suaves
+    setInterval(() => {
+      if(!body.classList.contains('is-expanded') && Math.random() < 0.28)
+        particles.push(new Particle(Math.random()*canvas.width, canvas.height+10));
+    }, 900);
+
+    // Tap → partículas
+    function onTap(e) {
+      const x = e.clientX ?? e.touches?.[0]?.clientX;
+      const y = e.clientY ?? e.touches?.[0]?.clientY;
+      if(x&&y) spawnParticles(x,y, body.classList.contains('is-expanded')?2:6);
+    }
+    window.addEventListener('click', onTap);
+    window.addEventListener('touchstart', onTap, {passive:true});
+
+    /* --- MÚSICA --- */
+    function playMusic() {
+      bgm.play().then(()=>{ isMusicPlaying=true; musicToggle.classList.remove('muted'); }).catch(()=>{});
+    }
+    function toggleMusic(e) {
+      e.stopPropagation();
+      isMusicPlaying ? (bgm.pause(), isMusicPlaying=false, musicToggle.classList.add('muted'))
+                     : (bgm.play(),  isMusicPlaying=true,  musicToggle.classList.remove('muted'));
+      spawnParticles(musicToggle.getBoundingClientRect().left+23, musicToggle.getBoundingClientRect().top+23, 7);
+    }
+
+    /* --- APERTURA DEL SOBRE --- */
+    function openEnvelope(e) {
+      if(isOpen) return; isOpen = true;
+      playMusic();
+      body.classList.add('is-open');
+      envelope.classList.add('is-open');
+      const r = envelope.getBoundingClientRect();
+      spawnParticles(r.left+r.width/2, r.top+50, 20);
+    }
+
+    /* --- EXPANSIÓN DE LA CARTA --- */
+    function expandLetter(e) {
+      e?.stopPropagation();
+      body.classList.add('is-expanded');
+      const r = letterCard.getBoundingClientRect();
+      spawnParticles(r.left+r.width/2, r.top+r.height/2, 28);
+      setTimeout(initObserver, 520);
+    }
+
+    /* --- COLAPSO DE LA CARTA --- */
+    function collapseLetter(e) {
+      e?.stopPropagation();
+      body.classList.remove('is-expanded');
+      document.querySelectorAll('.letter-p,.letter-box,.letter-divider,.letter-signature')
+              .forEach(el=>el.classList.remove('visible'));
+      setTimeout(()=>{
+        body.classList.remove('is-open');
         envelope.classList.remove('is-open');
-        hasOpened = false;
-      }, 500);
+        isOpen = false; letterCard.scrollTop = 0;
+        const r = envelope.getBoundingClientRect();
+        spawnParticles(r.left+r.width/2, r.top+r.height/2, 10);
+      }, 860);
+    }
+
+    /* --- SCROLL OBSERVER --- */
+    function initObserver() {
+      const els = document.querySelectorAll('.letter-p,.letter-box,.letter-divider,.letter-signature');
+      if(observer) observer.disconnect();
+      observer = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting) {
+            e.target.classList.add('visible');
+            if(Math.random()<0.45){const r=e.target.getBoundingClientRect();spawnParticles(r.left+Math.random()*r.width,r.top+10,2);}
+          }
+        });
+      },{root:letterCard,threshold:0.1,rootMargin:'0px 0px -25px 0px'});
+      els.forEach(el=>observer.observe(el));
+      if(els.length>0) els[0].classList.add('visible');
     }
   </script>
 </body>
