@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>De Loki, con amor 🐾</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #A8D7F2;
+      background-image: 
+        radial-gradient(circle at 50% 0%, #D6F0FD 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, #F5D78D 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Patrick Hand', cursive;
+    }
+
+    /* CLOUDS ANIMATION */
+    .clouds {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 30%, rgba(247, 244, 236, 0.4) 0%, transparent 20%),
+        radial-gradient(ellipse at 70% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 15%),
+        radial-gradient(ellipse at 40% 60%, rgba(247, 244, 236, 0.5) 0%, transparent 25%),
+        radial-gradient(ellipse at 90% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 18%);
+      filter: blur(20px);
+      z-index: 0;
+      animation: drift 40s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SCENE & ENVELOPE */
+    .scene {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 320px;
+      height: 230px;
+      animation: float 4s ease-in-out infinite;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .envelope-wrapper:hover {
+      transform: scale(1.02);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* CSS ENVELOPE PARTS */
+    .envelope {
+      position: absolute;
+      inset: 0;
+      background: #DFAF4A;
+      border-radius: 6px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15), inset 0 0 40px rgba(200, 149, 51, 0.2);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+    }
+
+    .front {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      border-left: 160px solid #EFC86D;
+      border-right: 160px solid #EFC86D;
+      border-top: 115px solid transparent;
+      border-bottom: 115px solid #C89533;
+      border-radius: 6px;
+      pointer-events: none;
+      filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.05));
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 130px solid #F5D78D;
+      z-index: 4;
+      transform-origin: top;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), z-index 0.2s;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+
+    /* STAMP */
+    .stamp {
+      position: absolute;
+      bottom: -110px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background: #c24040;
+      border-radius: 50%;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: opacity 0.3s;
+      font-size: 20px;
+    }
+
+    /* THE LETTER */
+    .letter {
+      position: absolute;
+      bottom: 10px;
+      left: 5%;
+      width: 90%;
+      height: 95%;
+      background: #FAFAF7;
+      border-radius: 12px;
+      z-index: 2;
+      transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+
+    .letter-preview {
+      text-align: center;
+      color: #4A72B8;
+      width: 100%;
+    }
+
+    .letter-preview h2 {
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      white-space: nowrap;
+    }
+    
+    .instruction {
+      font-size: 0.9rem;
+      color: rgba(74, 114, 184, 0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* OPEN STATE */
+    .is-open .flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .is-open .stamp {
+      opacity: 0;
+    }
+    .is-open .letter {
+      transform: translateY(-80px);
+      z-index: 5;
+    }
+    
+    .envelope-wrapper.is-open {
+      animation: none;
+      transform: translateY(40px);
+    }
+
+    /* FULL LETTER MODAL */
+    .letter-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .letter-modal.active {
+      pointer-events: all;
+      opacity: 1;
+    }
+
+    .modal-bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(168, 215, 242, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .full-letter-content {
+      position: relative;
+      z-index: 2;
+      width: 92%;
+      max-width: 440px;
+      height: 85vh;
+      background: #FAFAF7;
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+      transform: translateY(100%);
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow-y: auto;
+      padding: 40px 24px 60px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+
+    .letter-modal.active .full-letter-content {
+      transform: translateY(0);
+    }
+
+    /* TYPOGRAPHY */
+    .txt {
+      color: #4A72B8;
+      font-size: 1.35rem;
+      line-height: 1.4;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .txt-highlight {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #365691;
+      display: block;
+      margin: 15px 0;
+      letter-spacing: 2px;
+      line-height: 1.1;
+    }
+
+    .watermark {
+      position: fixed;
+      left: 10px;
+      bottom: 40%;
+      transform: rotate(-90deg);
+      transform-origin: left bottom;
+      font-size: 0.9rem;
+      color: rgba(74, 114, 184, 0.2);
+      letter-spacing: 3px;
+      pointer-events: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(74, 114, 184, 0.1);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-family: inherit;
+      font-size: 20px;
+      color: #4A72B8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="clouds"></div>
+
+  <div class="scene">
+    <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+      <div class="envelope"></div>
+      <div class="letter" id="small-letter">
+        <div class="letter-preview">
+          <h2>PARA MI HUMANA FAVORITA...</h2>
+          <span class="instruction">Toca para abrir 🐾</span>
+        </div>
+      </div>
+      <div class="flap"></div>
+      <div class="front"></div>
+      <div class="stamp">🐾</div>
+    </div>
+  </div>
+
+  <div class="letter-modal" id="modal">
+    <div class="modal-bg" onclick="closeLetter()"></div>
+    <div class="full-letter-content">
+      <button class="close-btn" onclick="closeLetter()">✖</button>
+      
+      <div class="watermark">ENVIADO DESDE EL CIELO CON AMOR 🐾</div>
+
+      <p class="txt">Para mi humana favorita, mi Emi...</p>
+      <p class="txt">Oye, te estoy viendo desde acá arriba y, ¡madre mía!, ¿por qué tantas lágrimas? Si yo estoy aquí corriendo como loco persiguiendo mariposas (y sí, sigo sin atrapar ni una sola, pero no le digas a nadie).</p>
+      <p class="txt">Sé que te duele, pero no quiero que te quedes con ninguna culpa.</p>
+      
+      <span class="txt-highlight" style="font-size: 1.3rem;">NUNCA</span>
+      <span class="txt-highlight">FUE TU CULPA.</span>
+
+      <p class="txt">Yo sé que ahora mismo te estás preguntando: <em>"¿Qué voy a hacer sin él? ¿Quién me va a hacer compañía?"</em>. Sé que sientes que perdiste a tu mayor inspiración y que extrañas cuando te sentías mal, te acostabas a abrazarme y yo me quedaba quietecito a tu lado consolándote. Pero escúchame bien, mi niña: claro que vas a poder seguir adelante. Siempre has sido una mujer increíblemente valiente. Mi trabajo era inspirarte un ratito, pero esa fuerza siempre ha estado dentro de ti.</p>
+
+      <p class="txt">Además, sé que no te quedas sola. Tienes a una personita que te quiere muchísimo, que te cuida y que siempre estará para ti. A él también le dolió bastante mi partida, pero como es fuerte y sabe todo el amor que nos tenemos, decidió ayudarte a recibir este mensaje de mi parte.</p>
+
+      <p class="txt">Yo estoy feliz porque me tocó ser TU perro. Fui el rey de la casa. ¿Te acuerdas de mis travesuras? Acepta que a veces yo era un poquito insoportable y me encantaba dañarte las cosas cuando no me sacabas a pasear rápido. Y ni hablemos de cuando intentabas tomarme fotos... ¡Me movía a propósito porque a los guapos no nos gustan las cámaras!</p>
+      
+      <p class="txt">Y aunque odiaba bañarme y me gustaba la mala vida, acepto que me encantaba cómo me dejabas oliendo de rico. Fui tu mejor compañero esos días en los que te daba pereza levantarte de la cama.</p>
+
+      <p class="txt">Mientras otros perritos la pasan mal, yo tuve la enorme suerte de que fueras mi mamá. Me cuidaste y me consentiste.</p>
+
+      <p class="txt">Mami, eres una mujer fuerte y guerrera, y sé que podrás con esto y con mucho más. Sé que es difícil, pero créeme que yo estoy súper bien acá arriba. Estoy muy orgulloso de ti y de la vida tan espectacular que me diste. Por favor, no quiero que sigas llorando. Solo quiero que estés bien, que no sufras más de lo que has sufrido. Para ya. De ahora en adelante, solo recuérdame en los buenos momentos y no te lastimes tanto.</p>
+
+      <p class="txt" style="font-weight:bold; margin-top:30px;">Sigo estando contigo, moviendo la cola cada vez que te veo feliz.</p>
+
+      <p class="txt" style="text-align: right; font-size: 1.5rem; margin-top: 40px; color: #C89533;">
+        Con mucho amor, babas y ladridos felices,<br>
+        <strong>Tu loquito de siempre, Loki. 🐾</strong>
+      </p>
+    </div>
+  </div>
+
+  <audio id="bgm" src="MUSICA DE FONDO/Morat - Enamórate De Alguien Más (Video Oficial).mp3" loop preload="auto"></audio>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const modal = document.getElementById('modal');
+    const bgm = document.getElementById('bgm');
+    let hasOpened = false;
+
+    function openEnvelope() {
+      if(hasOpened) return;
+      hasOpened = true;
+      
+      // Intentar reproducir música si existe el archivo
+      try { bgm.play(); } catch(e){}
+
+      envelope.classList.add('is-open');
+      
+      // Mostrar modal después de la animación
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 1200);
+    }
+
+    function closeLetter() {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        envelope.classList.remove('is-open');
+        hasOpened = false;
+      }, 500);
+    }
+  </script>
+</body>
+</html>
